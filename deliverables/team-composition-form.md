@@ -12,7 +12,7 @@
     * UID: U01051503
     * Email: tincher.15@wright.edu
     * GitHub @ [David-Tincher](https://github.com/David-Tincher/)
-    * [Resume](../assets/resume/RESUME.pdf)
+    * [Resume](../assets/resume/RESUME_David_Tincher.pdf)
   * Name: Dilean Munoz
     * UID: U01135139
     * Email: munozcabrera.2@wright.edu
@@ -22,7 +22,7 @@
     * UID: U01042496
     * Email: nam.6@wright.edu
     * GitHub @ [jinhoishere](https://github.com/jinhoishere)
-    * [Resume](../assets/resume/dilean_munoz_resume_2024.pdf)
+    * [Resume](../assets/resume/Resume%20(Jinho%20Nam).pdf)
   * Name: Revanth Reddy Banala 
     * UID: U01110200
     * Email: banala.20@wright.edu
