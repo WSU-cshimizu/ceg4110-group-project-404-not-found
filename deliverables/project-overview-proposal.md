@@ -14,7 +14,7 @@ Describe each component briefly. How do the components fit together (i.e., predi
 
 1. Front End (React)
 2. Middleware (API: Flask)
-3. Backend (MongoDB)
+3. Backend (PostgreSQL)
 4. Container (Docker)
 5. Design (Figma)
 6. Hosting (Heroku, AWS)
@@ -36,8 +36,8 @@ Include a response to: "Why are you picking the tech stack that you are?"
 - React
     - React is the most popular JS framework utilized in many companies. While none of our team members have experience in it, we value the skills that could be gained from the project.
  
-- Tailwind CSS
-    - This CSS library will give us plenty of customization options as well as provide an abstraction that will allow us to learn CSS but not get too deep into the details.
+- Boostrap
+    - We decided on bootsrap because of it's ample documentation and it's ease of learning curve. With tailwaind we would have to create our own components while with bootstrap would be already made. We value this feautre from bootstrap becase all the members in our group are not very good with css.
 
 - State Management: Redux / Recoil / Zustand:
     - Although none of our members are familiar with state management, from the research done, this is integral to the developing process, and we are in between choosing Redux (complex but widely used), Recoil / Zustand (simpler), or using the native options in React.
@@ -48,8 +48,9 @@ Include a response to: "Why are you picking the tech stack that you are?"
 2. API: Python - Flask, Django, FastApi.
 - We choose Python for its simple syntax and ease of learning curve and because most of our team members are familiar with the language.
 
-3. Backend: MongoDB
-- We decided to go for a document-based database because of its ease of use and easy to understand, as well as its flexibility to change things as the requirements list grows and shrinks.
+3. Backend: PostgreSQL
+- We decided to use a relational database because of its ease of use and easy to understand, as well as its access to to related data points.
+
 4. Docker
 - We are thinking of using Docker because it is becoming an industry standard and will allow us to easily be able to deploy and run the app no matter the OS being used, improving our productivity.
 5. Design: Figma
