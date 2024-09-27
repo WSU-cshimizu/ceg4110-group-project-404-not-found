@@ -100,8 +100,3 @@ __"As a User, I want to track my progress over time through detailed charts and 
     2.1 The chart shall include a visual indicator (e.g., color coding) to show the user’s consistency in completing workouts, making it easy to identify trends.
 
     2.2 Data for the chart shall be retrieved from the user’s workout logs, ensuring accurate representation of their workout frequency.
-
-// do we need this?
-## Test Story 1
-
-## Test Story 2
