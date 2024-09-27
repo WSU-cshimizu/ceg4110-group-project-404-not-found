@@ -41,8 +41,7 @@ We anticipate communicating via discord outside of meetings. We have committed t
 ## Timeline
 ### Gantt Chart
 ![Gantt-Chart](../assets/GanttChart.png)
-1. Requirements - due 20th September
-2. Design Specification - due 24th September
-3. Milestones (i.e., "Check ins") - Every 2 weeks(first check in being October 1st)
-4. MVS (Minimal viable Specification) - due 27th September 
-5. Gantt - due 1st October
+1. Requirements - due 27th September
+2. Design Specification - due 4th October
+3. Milestones (i.e., "check-in") - Every 2 weeks(first check-in being October 1st)
+4. MVS (Minimal viable Specification) - due 8th October 
