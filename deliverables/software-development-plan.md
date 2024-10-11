@@ -40,7 +40,7 @@ We anticipate communicating via discord outside of meetings. We have committed t
 
 ## Timeline
 ### Gantt Chart
-![Gantt-Chart](../assets/GanttChart.png)
+![Gantt-Chart](../assets/GanttChartV2.0.png)
 1. Requirements - due 27th September
 2. Design Specification - due 4th October
 3. Milestones (i.e., "check-in") - Every 2 weeks(first check-in being October 1st)
