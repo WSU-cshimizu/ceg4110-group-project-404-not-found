@@ -6,6 +6,25 @@
 - Python => 3.13
 - postgresql14
 
+## Running Container
+
+1. Build containers
+```shell
+docker-compose build
+```
+2. Run container
+```shell
+docker-compose up -d
+```
+
+The `-d` flag will run the container detached
+
+3. Shutting down the containers
+
+```shell
+docker-compose down
+```
+
 ## Front-end
 
 ### Running the app

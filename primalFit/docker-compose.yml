@@ -1,0 +1,22 @@
+version: '3'
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - 3000:3000
+  backend:
+    build: ./backend
+    ports:
+      - 5000:5000
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://citizix_user:S3cret@db/citizix_db
+  db:
+    image: postgres:14-alpine
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=S3cret
+      - POSTGRES_USER=citizix_user
+      - POSTGRES_DB=citizix_db
