@@ -12,6 +12,8 @@ services:
       - db
     environment:
       - DATABASE_URL=postgresql://citizix_user:S3cret@db/citizix_db
+    volumes:
+      - ./backend:/usr/src
   db:
     image: postgres:14-alpine
     ports:

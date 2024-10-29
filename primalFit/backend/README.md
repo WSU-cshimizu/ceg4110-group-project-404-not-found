@@ -56,7 +56,8 @@ python3 -m venv .venv
     source venv/bin/activate
     ```
     * Windows
-    ```shell
+    ```powershell
+    venv\Scripts\Activate.ps1
     ```
 
 > Ensure VS Code has the right interpreter selected by using the command palette `CMD+SHIFT+P`, select `Python: Select Interpreter` select `venv` option, if not, type the path to the interpreter (venv/bin).  
