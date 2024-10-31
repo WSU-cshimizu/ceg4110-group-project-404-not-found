@@ -13,7 +13,7 @@ services:
     depends_on:
       - db
     environment:
-      - DATABASE_URL=postgresql://citizix_user:S3cret@db/citizix_db
+      - DATABASE_URL=postgresql://postgres:postgres@db/primalfit
     volumes:
       - ./backend:/usr/src
   db:
@@ -21,6 +21,6 @@ services:
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_PASSWORD=S3cret
-      - POSTGRES_USER=citizix_user
-      - POSTGRES_DB=citizix_db
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=primalfit
