@@ -3,3 +3,4 @@ flask-sqlalchemy
 python-dotenv
 flask-cors
 psycopg2-binary
+pytest
