@@ -5,6 +5,7 @@ services:
       - 3000:3000
     volumes:
       - ./frontend:/src
+    command: npm start
   backend:
     build: ./backend
     ports:

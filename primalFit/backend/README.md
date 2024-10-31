@@ -82,4 +82,11 @@ flask run --debug
 deactivate
 ```
 
+## Testing the Application
 
+A Test driven development is meant to be used with this application and therefore pytest framework is being used.
+To launch the tests, do the following command:
+
+```shell
+python -m pytest
+```
