@@ -4,9 +4,9 @@ from datetime import datetime
 from flask_cors import CORS
 
 app = Flask(__name__)
-# app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://citizix_user:S3cret@db/citizix_db"
-# db = SQLAlchemy(app)
-# CORS(app)
+#app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://citizix_user:S3cret@db/citizix_db"
+#db = SQLAlchemy(app)
+#CORS(app)
 
 # class Event(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
