@@ -18,9 +18,9 @@ class User(db.Model):
     userName = db.Column(db.String(80), unique=True, nullable= False)
     email = db.Column(db.String(80), unique=True, nullable= False)
     password = db.Column(db.String(80), unique = True, nullable = False)
-    age = db.Column(db.String(2), unique = False, nullable = False)
-    weight = db.Column(db.String(3), unique=False, nullable =False)
-    height = db.Column(db.String(3), unique = False, nullable = False)
+    age = db.Column(db.Integer, nullable = False)
+    weight = db.Column(db.Double, nullable =False)
+    height = db.Column(db.Double, nullable = False)
 
     def __repr__(self):
         return f"User(name = {self.name}, email = {self.email}, age = {self.age}, weight = {self.weight}, height = {self.height})"
@@ -41,7 +41,7 @@ class Routine(db.Model):
         self.routineName = routineName
         self.days = days
     
-class Excersize(db.Model):
+class Exercise(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     excersizeName = db.Column(db.String(20), unique =False, nullable = False)
     type = db.Column(db.String(10), unique =False, nullable = False)
@@ -72,12 +72,6 @@ class Food(db.Model):
         self.protein = protein
         self.fat = fat
         self.calories = calories
-
-# Workout Model
-
-# Routine Model
-
-# 
 
 # For Testing Purposes
 class Event(db.Model):

@@ -90,3 +90,30 @@ To launch the tests, do the following command:
 ```shell
 python -m pytest
 ```
+
+## Seeding the Database
+> Make sure you are inside the devcontainer
+
+1. Test to see if models.py compiles
+
+```shell
+python models.py
+```
+
+2. open the python interpreter
+```shell
+python
+```
+
+3. Run db.create_all():
+```python
+from app import app, db
+import models
+
+with app.app_context():
+    db.create_all()
+```
+
+Hit `ENTER` twice to make sure it runs. 
+
+5. Confirm tables where created inside pgAdmin 4 `primalFit`
