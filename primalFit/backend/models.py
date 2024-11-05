@@ -4,15 +4,74 @@ from datetime import datetime
 
 # User Model
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(100), nullable=False)
-    password = db.Column(db.String(100), nullable=False)
+# class User(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     email = db.Column(db.String(100), nullable=False)
+#     password = db.Column(db.String(100), nullable=False)
 
+#     def __init__(self, email, password):
+#         self.email = email
+#         self.password = password
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    userName = db.Column(db.String(80), unique=True, nullable= False)
+    email = db.Column(db.String(80), unique=True, nullable= False)
+    password = db.Column(db.String(80), unique = True, nullable = False)
+    age = db.Column(db.String(2), unique = False, nullable = False)
+    weight = db.Column(db.String(3), unique=False, nullable =False)
+    height = db.Column(db.String(3), unique = False, nullable = False)
+
+    def __repr__(self):
+        return f"User(name = {self.name}, email = {self.email}, age = {self.age}, weight = {self.weight}, height = {self.height})"
+    
     def __init__(self, email, password):
         self.email = email
         self.password = password
 
+class Routine(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    routineName = db.Column(db.String(80), unique=True, nullable= False)
+    days = db.Column(db.String(7), unique=False, nullable =False)
+
+    def __repr__(self):
+        return f"Routine(name = {self.routineName}, days = {self.days})"
+    
+    def __init__(self, routineName, days):
+        self.routineName = routineName
+        self.days = days
+    
+class Excersize(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    excersizeName = db.Column(db.String(20), unique =False, nullable = False)
+    type = db.Column(db.String(10), unique =False, nullable = False)
+    videoUrl = db.Column(db.String(50), unique =False, nullable = False)
+
+    def __repr__(self):
+        return f"Excersize(name = {self.excersizeName}, type = {self.type})"
+    
+    def __init__(self, excersizeName, type, videoUrl):
+        self.excersizeName = excersizeName
+        self.type = type
+        self.videoUrl = videoUrl
+
+class Food(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    foodName = db.Column(db.String(20), unique = False, nullable = False)
+    carb = db.Column(db.String(3), unique = False, nullable = False)
+    protein = db.Column(db.String(3), unique = False, nullable = False)
+    fat = db.Column(db.String(3), unique = False, nullable = False)
+    calories = db.Column(db.String(4), unique = False, nullable = False)
+
+    def __repr__(self):
+        return f"Food(name = {self.foodName}, type = {self.type})"
+    
+    def __init__(self, foodName, carb, protein, fat, calories):
+        self.foodName = foodName
+        self.carb = carb
+        self.protein = protein
+        self.fat = fat
+        self.calories = calories
 
 # Workout Model
 
