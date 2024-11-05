@@ -1,1 +1,3 @@
 Pipfile.lock
+venv
+__pycache__
