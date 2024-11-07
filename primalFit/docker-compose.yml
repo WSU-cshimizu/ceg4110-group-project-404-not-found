@@ -1,0 +1,26 @@
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/src
+    command: npm start
+  backend:
+    build: ./backend
+    ports:
+      - 5000:5000
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db/primalfit
+    volumes:
+      - ./backend:/usr/src
+  db:
+    image: postgres:14-alpine
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=primalfit
