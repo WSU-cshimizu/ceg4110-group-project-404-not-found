@@ -43,21 +43,21 @@ class Routine(db.Model):
     
 class Exercise(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    excersizeName = db.Column(db.String(20), unique =False, nullable = False)
+    exerciseName = db.Column(db.String(20), unique =False, nullable = False)
     type = db.Column(db.String(10), unique =False, nullable = False)
     videoUrl = db.Column(db.String(50), unique =False, nullable = False)
 
     def __repr__(self):
-        return f"Excersize(name = {self.excersizeName}, type = {self.type})"
+        return f"Exercise(name = {self.exerciseName}, type = {self.type})"
     
-    def __init__(self, excersizeName, type, videoUrl):
-        self.excersizeName = excersizeName
+    def __init__(self, exerciseName, type, videoUrl):
+        self.exerciseName = exerciseName
         self.type = type
         self.videoUrl = videoUrl
 
 class Food(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    foodName = db.Column(db.String(20), unique = False, nullable = False)
+    foodName = db.Column(db.String(20), unique = True, nullable = False)
     carb = db.Column(db.String(3), unique = False, nullable = False)
     protein = db.Column(db.String(3), unique = False, nullable = False)
     fat = db.Column(db.String(3), unique = False, nullable = False)
