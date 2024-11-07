@@ -12,7 +12,7 @@
 #### Response
 ```javascript
 {
-    user: {
+    routine: {
         id: Integer,
         user_name: String(80),
         email: String(80),

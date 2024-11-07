@@ -105,11 +105,10 @@ python models.py
 python
 ```
 
-3. Run db.create_all():
+3. Copy and paste the code below:
 ```python
 from app import app, db
 import models
-
 with app.app_context():
     db.create_all()
 ```
