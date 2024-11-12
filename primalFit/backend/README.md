@@ -85,10 +85,13 @@ deactivate
 ## Testing the Application
 
 A Test driven development is meant to be used with this application and therefore pytest framework is being used.
-To launch the tests, do the following command:
+
+1. Create a database called primalfit_test inside pgAdmin.
+
+2. To launch the tests, do the following command:
 
 ```shell
-python -m pytest
+pytest
 ```
 
 ## Seeding the Database
