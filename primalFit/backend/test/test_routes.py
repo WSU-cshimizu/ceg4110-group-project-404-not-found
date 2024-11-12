@@ -4,7 +4,7 @@ def test_home(client):
     assert b"Hello, World!" in response.data
 
 def test_add_user(client):
-    response = client.get("/add_user")
+    response = client.post("/add_user")
     assert response.status_code == 200
     data = response.get_json()
     assert data["message"] == "User added!"
