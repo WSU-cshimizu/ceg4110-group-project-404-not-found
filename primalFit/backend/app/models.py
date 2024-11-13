@@ -29,7 +29,7 @@ class User(db.Model):
     is_male = db.Column(db.Boolean, nullable = False)
     routines = db.relationship('Routine', backref='user') 
     eaten_food = db.relationship('Food', backref='user')
-    goales = db.relationship('Goal', backref='user')
+    goals = db.relationship('Goal', backref='user')
 
     def __repr__(self):
         return f"<User {self.name}>"
@@ -74,7 +74,7 @@ class Exercise(db.Model):
     duration = db.Column(db.Double, default=0)
     calories_burned = db.Column(db.Double, default=0)
     video_url = db.Column(db.String, unique=True, nullable=False)
-    date = db.Column(db.DateTime)
+    date = db.Column(db.DateTime, default=date.today)
 
     def __repr__(self):
         return f"<Exercise name {self.name}>"
@@ -85,12 +85,12 @@ class Food(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    name = db.Column(db.String, unique=True, nullable=False)
+    name = db.Column(db.String, nullable=False)
     meal_type = db.Column(db.String, nullable=False, default='') # breakfast, lunch, dinner, etc...
     calories = db.Column(db.Integer, nullable=False)
-    proteins = db.Column(db.Integer, nullable=False)
-    carbs = db.Column(db.Integer, nullable=False)
-    fats = db.Column(db.Integer, nullable=False)
+    proteins = db.Column(db.Integer, nullable=False, default=0)
+    carbs = db.Column(db.Integer, nullable=False, default=0)
+    fats = db.Column(db.Integer, nullable=False, default=0)
     date = db.Column(db.DateTime, default=date.today)
 
     def __repr__(self):
@@ -105,5 +105,8 @@ class Goal(db.Model):
     type = db.Column(db.String)
     target = db.Column(db.Double)
     progress = db.Column(db.Double)
+
+    def __repr__(self):
+        return f"<Goal type {self.type}>"
 
 
