@@ -40,6 +40,6 @@ def create_exercise(name, type):
 
 with app.app_context():
     db.create_all()
-    create_users()
+    #create_users()
 
 
