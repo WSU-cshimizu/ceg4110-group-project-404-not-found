@@ -16,62 +16,62 @@ python drop_db.py
 ```
 ## Routes
 
-| Method | Route                                   | Description                    |
-|--------|-----------------------------------------|--------------------------------|
-| POST   | /login                                  | log a user with email password |
-| POST   | /register                               | register a user                |
-| GET    | /users                                  | get all user                   |
-| GET    | /users/:id                              | get user by id                 |
-| PUT    | /users/:id                              | update user by id              |
-| DELETE | /users/:id                              | delete user by id              |
-| GET    | /users/:id/routines                     | get all routines               |
-| GET    | /users/:uid/routines/:rid               | get routine by id              |
-| POST   | /users/:id/routines                     | create a routine               |
-| DELETE | /users/:uid/routines/:rid               | delete routine                 |
-| PUT    | /users/:uid/routines/:rid               | update routine                 |
-| GET    | /users/:uid/routines/:rid/exercise      | get all exercise in a routine  |
-| POST   | /users/:uid/routines/:rid/exercise      | add an exercise                |
-| DELETE | /users/:uid/routines/:rid/exercise/:eid | delete an exercise             |
-| GET    | /users/:id/foods                        | get all food eaten             |
-| GET    | /users/:uid/foods/:fid                  | get a single food by id        |
-| POST   | /users/:id/foods                        | add a food to the user         |
-| DELETE | /users/:uid/foods/:fid                  | delete a food from the user    |
-| GET    | /users/:id/goals                        | get all goals for a user       |
-| GET    | /users/:uid/goals/:gid                  | get a goal from a user         |
-| POST   | /users/:id/goals                        | add a goal for a user          |
-| PUT    | /users/:uid/goals/:gid                  | edit a goal for a user         |
-| DELETE | /users/:uid/goals/:gid                  | delete a goal for a user       |
+| Method | Route                                    | Description                    |
+|--------|------------------------------------------|--------------------------------|
+| POST   | /login                                   | log a user with email password |
+| POST   | /register                                | register a user                |
+| GET    | /users                                   | get all user                   |
+| GET    | /users/:id                               | get user by id                 |
+| PUT    | /users/:id                               | update user by id              |
+| DELETE | /users/:id                               | delete user by id              |
+| GET    | /users/:id/routines                      | get all routines               |
+| GET    | /users/:uid/routines/:rid                | get routine by id              |
+| POST   | /users/:id/routines                      | create a routine               |
+| DELETE | /users/:uid/routines/:rid                | delete routine                 |
+| PUT    | /users/:uid/routines/:rid                | update routine                 |
+| GET    | /users/:uid/routines/:rid/exercises      | get all exercise in a routine  |
+| POST   | /users/:uid/routines/:rid/exercises      | add an exercise                |
+| DELETE | /users/:uid/routines/:rid/exercises/:eid | delete an exercise             |
+| GET    | /users/:id/foods                         | get all food eaten             |
+| GET    | /users/:uid/foods/:fid                   | get a single food by id        |
+| POST   | /users/:id/foods                         | add a food to the user         |
+| DELETE | /users/:uid/foods/:fid                   | delete a food from the user    |
+| GET    | /users/:id/goals                         | get all goals for a user       |
+| GET    | /users/:uid/goals/:gid                   | get a goal from a user         |
+| POST   | /users/:id/goals                         | add a goal for a user          |
+| PUT    | /users/:uid/goals/:gid                   | edit a goal for a user         |
+| DELETE | /users/:uid/goals/:gid                   | delete a goal for a user       |
 
 ### POST: /login
+Logs the user into the app
 
-Body
+**Body**
 ```json
 {
     "email":"string",
     "password":"string"
 }
 ```
-Response: 200 OK
+**Response: 200 OK**
 ```json
-    {
-        "user": {
-            "id":"Integer",
-            "name":"String",
-            "email":"String",
-            "birthdate":"Date (e.g. 2024-10-11)",
-            "weight":"Double",
-            "height":"Double",
-            "is_male":"Boolean",
-            "routines":["<Rountine>"],
-            "eaten_food":["<Food>"],
-            "goals":["<Goal>"]
-        }
-    }
+{
+    "id":"Integer",
+    "name":"String",
+    "email":"String",
+    "birthdate":"Date (e.g. 2024-10-11)",
+    "weight":"Double",
+    "height":"Double",
+    "is_male":"Boolean",
+    "routines":["<Routine>"],
+    "eaten_food":["<Food>"],
+    "goals":["<Goal>"] 
+}
 ```
 
 ### POST: /register
+Adds the user to the database
 
-Body
+**Body**
 ```json
 {
     "name":"String",
@@ -83,28 +83,59 @@ Body
 
 }
 ```
-Response: 201 OK
+**Response: 201 OK**
 ```json
-    {
-        "user": {
-            "id":"Integer",
-            "name":"String",
-            "email":"String",
-            "birthdate":"Date (e.g. 2024-10-11)",
-            "weight":"Double",
-            "height":"Double",
-            "is_male":"Boolean",
-            "routines":null,
-            "eaten_food":null,
-            "goals": null
-        }
-    }
+{
+    "id":"Integer",
+    "name":"String",
+    "email":"String",
+    "birthdate":"Date (e.g. 2024-10-11)",
+    "weight":"Double",
+    "height":"Double",
+    "is_male":"Boolean",
+    "routines":null,
+    "eaten_food":null,
+    "goals": null
+}
 ```
 
 ### GET: /users
-get all users
+Retrieves all users
+
+**Body**
+```
+```
+**Response: 200 OK**
+
+```json
+{
+    "users":["<User>"]
+}
+```
+
 ### GET: /users/:id
-get a single user
+Retrieves a single user from the database based on id
+
+**Body**
+```
+```
+
+**Response: 200 OK**
+```json
+{
+    "id":"Integer",
+    "name":"String",
+    "email":"String",
+    "birthdate":"Date (e.g. 2024-10-11)",
+    "weight":"Double",
+    "height":"Double",
+    "is_male":"Boolean",
+    "routines":["<Routine>"],
+    "eaten_food":["<Food>"],
+    "goals":["<Goal>"] 
+}
+```
+
 ### PUT: /users/:id
 Body
 ```json
@@ -142,22 +173,120 @@ Response
 ```
 
 ### DELETE: /users/:id
-Delete a user
+Deletes a user from the database
+
+**Body**
+```
+```
+**Response: 204 OK**
+```
+```
+
 ### GET: /users/:id/routines
-get all routines of user
+Get all the routines from a specific user
+
+**Body**
+```
+```
+
+**Response: 200 OK**
+```json
+{
+    "routines":["<Routine>"]
+}
+```
+
 ### GET: /users/:uid/routines/:rid
-get a single routine from the user
+Get a single routine from a user by id
+
+**Body**
+```
+```
+
+**Response: 200 OK**
+```json
+{
+    "id":"Integer",
+    "user_id":"Integer",
+    "name":"String",
+    "exercises":["<Exercise>"],
+    "days":"String",
+}
+```
 ### POST: /users/:id/routines
-create a routine for the user
+Create a new routine for a user
+
+**Body**
+```json
+{
+    "name":"String",
+    "exercises":["<Exercise>"]
+}
+```
+
+**Response: 201 OK**
+```json
+{
+    "id":"Integer",
+    "user_id":"Integer",
+    "name":"String",
+    "exercises":["<Exercise>"],
+    "days":"String",
+}
+```
+
 ### DELETE: /users/:uid/routines/:rid
-delete a routine for a user
+Deletes a routine from a specific user by id
+
+**Body**
+```
+```
+
+**Response: 204 OK**
+```
+```
 ### PUT: /users/:uid/routines/:rid
-update a routine from a user
-### GET: /users/:uid/routines/:rid/exercise
-get all exercise from a rountine
-### POST: /users/:uid/routines/:rid/exercise
+Update a routine for a user
+
+**Body**
+```json
+{
+    "id":"Integer",
+    "user_id":"Integer",
+    "name":"String",
+    "exercises":["<Exercise>"],
+    "days":"String",
+}
+```
+
+**Response: 201 OK**
+```json
+{
+    "id":"Integer",
+    "user_id":"Integer",
+    "name":"String",
+    "exercises":["<Exercise>"],
+    "days":"String",
+}
+```
+
+### GET: /users/:uid/routines/:rid/exercises
+get all exercises from a routine from a user
+
+**Body**
+```
+```
+
+**Response: 200 OK**
+```json
+{
+    "exercises":["<Exercise>"]
+}
+```
+
+### POST: /users/:uid/routines/:rid/exercises
 add an exercise to the routine
-### DELETE: /users/:uid/routines/:rid/exercise/:eid
+### DELETE: /users/:uid/routines/:rid/exercises/:eid
 delete an exercise in the routine
 ### GET: /users/:id/foods
 get all foods eaten by a user
