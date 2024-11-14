@@ -10,14 +10,28 @@ class User(db.Model):
     password = db.Column(db.String, nullable =False)
     birthdate = db.Column(db.Date, nullable=False)
     weight = db.Column(db.Double, nullable=False)
+    weight_goal = db.Column(db.Double, nullable=False)
     height = db.Column(db.Double, nullable=False)
     is_male = db.Column(db.Boolean, nullable = False)
     routines = db.relationship('Routine', backref='user') 
     eaten_food = db.relationship('Food', backref='user')
-    goals = db.relationship('Goal', backref='user')
 
     def __repr__(self):
         return f"<User {self.name}>"
+    
+    def to_json(self):
+        return{
+            "id": self.id,
+            "name": self.name,
+            "email": self.email,
+            "birthdate": str(self.birthdate),
+            "weight": self.weight,
+            "weightGoal": self.weight_goal,
+            "height": self.height,
+            "isMale": self.is_male,
+            "routines": self.routines,
+            "eatenFood": self.eaten_food,
+        }
 
 # one to many with User
 class Routine(db.Model):
@@ -80,18 +94,6 @@ class Food(db.Model):
 
     def __repr__(self):
         return f"<Food name {self.name}>"
-    
-# One to many with User
-class Goal(db.Model):
-    __tablename__ = 'goals' 
 
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    type = db.Column(db.String)
-    target = db.Column(db.Double)
-    progress = db.Column(db.Double, default=0)
-
-    def __repr__(self):
-        return f"<Goal type {self.type}>"
 
 
