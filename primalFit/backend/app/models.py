@@ -89,7 +89,7 @@ class Goal(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     type = db.Column(db.String)
     target = db.Column(db.Double)
-    progress = db.Column(db.Double)
+    progress = db.Column(db.Double, default=0)
 
     def __repr__(self):
         return f"<Goal type {self.type}>"

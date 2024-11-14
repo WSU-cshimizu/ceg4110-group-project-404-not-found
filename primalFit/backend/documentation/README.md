@@ -61,9 +61,9 @@ Logs the user into the app
     "birthdate":"Date (e.g. 2024-10-11)",
     "weight":"Double",
     "height":"Double",
-    "is_male":"Boolean",
+    "isMale":"Boolean",
     "routines":["<Routine>"],
-    "eaten_food":["<Food>"],
+    "eatenFood":["<Food>"],
     "goals":["<Goal>"] 
 }
 ```
@@ -79,7 +79,7 @@ Adds the user to the database
     "birthdate":"Date (e.g. 2024-10-11)",
     "weight":"Double",
     "height":"Double",
-    "is_male":"Boolean",
+    "isMale":"Boolean",
 
 }
 ```
@@ -92,9 +92,9 @@ Adds the user to the database
     "birthdate":"Date (e.g. 2024-10-11)",
     "weight":"Double",
     "height":"Double",
-    "is_male":"Boolean",
+    "isMale":"Boolean",
     "routines":null,
-    "eaten_food":null,
+    "eatenFood":null,
     "goals": null
 }
 ```
@@ -129,9 +129,9 @@ Retrieves a single user from the database based on id
     "birthdate":"Date (e.g. 2024-10-11)",
     "weight":"Double",
     "height":"Double",
-    "is_male":"Boolean",
+    "isMale":"Boolean",
     "routines":["<Routine>"],
-    "eaten_food":["<Food>"],
+    "eatenFood":["<Food>"],
     "goals":["<Goal>"] 
 }
 ```
@@ -139,37 +139,35 @@ Retrieves a single user from the database based on id
 ### PUT: /users/:id
 Body
 ```json
-    {
-        "user": {
-            "id":"Integer",
-            "name":"String",
-            "email":"String",
-            "birthdate":"Date (e.g. 2024-10-11)",
-            "weight":"Double",
-            "height":"Double",
-            "is_male":"Boolean",
-            "routines":["<Routine>"],
-            "eaten_food":["<Food>"],
-            "goals": ["<Goal>"]
-        }
-    }
+{
+    
+    "id":"Integer",
+    "name":"String",
+    "email":"String",
+    "birthdate":"Date (e.g. 2024-10-11)",
+    "weight":"Double",
+    "height":"Double",
+    "isMale":"Boolean",
+    "routines":["<Routine>"],
+    "eatenFood":["<Food>"],
+    "goals": ["<Goal>"]
+    
+}
 ```
 Response
 ```json
-    {
-        "user": {
-            "id":"Integer",
-            "name":"String",
-            "email":"String",
-            "birthdate":"Date (e.g. 2024-10-11)",
-            "weight":"Double",
-            "height":"Double",
-            "is_male":"Boolean",
-            "routines":["<Routine>"],
-            "eaten_food":["<Food>"],
-            "goals": ["<Goal>"]
-        }
-    }
+{
+    "id":"Integer",
+    "name":"String",
+    "email":"String",
+    "birthdate":"Date (e.g. 2024-10-11)",
+    "weight":"Double",
+    "height":"Double",
+    "isMale":"Boolean",
+    "routines":["<Routine>"],
+    "eatenFood":["<Food>"],
+    "goals": ["<Goal>"]
+}
 ```
 
 ### DELETE: /users/:id
@@ -207,7 +205,7 @@ Get a single routine from a user by id
 ```json
 {
     "id":"Integer",
-    "user_id":"Integer",
+    "userId":"Integer",
     "name":"String",
     "exercises":["<Exercise>"],
     "days":"String",
@@ -228,7 +226,7 @@ Create a new routine for a user
 ```json
 {
     "id":"Integer",
-    "user_id":"Integer",
+    "userId":"Integer",
     "name":"String",
     "exercises":["<Exercise>"],
     "days":"String",
@@ -252,7 +250,7 @@ Update a routine for a user
 ```json
 {
     "id":"Integer",
-    "user_id":"Integer",
+    "userId":"Integer",
     "name":"String",
     "exercises":["<Exercise>"],
     "days":"String",
@@ -263,7 +261,7 @@ Update a routine for a user
 ```json
 {
     "id":"Integer",
-    "user_id":"Integer",
+    "userId":"Integer",
     "name":"String",
     "exercises":["<Exercise>"],
     "days":"String",
@@ -285,24 +283,184 @@ get all exercises from a routine from a user
 ```
 
 ### POST: /users/:uid/routines/:rid/exercises
-add an exercise to the routine
+Add an exercise to the routine
+
+**Body**
+```json
+{
+    "name":"String",
+    "type":"String",
+    "videoUrl":"String"
+}
+```
+
+**Response: 201 OK**
+```json
+{
+    "id":"Integer",
+    "routineId":"Integer",
+    "name":"String",
+    "type":"String",
+    "duration":"Double",
+    "caloriesBurned":"Double",
+    "videoUrl":"String",
+    "date":"Date (2024-11-12)"
+}
+```
 ### DELETE: /users/:uid/routines/:rid/exercises/:eid
-delete an exercise in the routine
+Delete an exercise in the routine
+
+**Body**
+```
+```
+
+**Response: 204 OK**
+```
+```
 ### GET: /users/:id/foods
-get all foods eaten by a user
+Get all foods eaten by a user
+
+**Body**
+```
+```
+
+**Response: 200 OK**
+```json
+{
+    "foods":["<Food>"]
+}
+```
 ### GET: /users/:uid/foods/:fid
-get a single food eaten by a user
+Get a single food eaten by a user
+
+**Body**
+```
+```
+
+**Response: 200 OK**
+```json
+{
+    "id":"Integer",
+    "userId":"Integer",
+    "name":"String",
+    "mealType":"String",
+    "calories":"Integer",
+    "proteins":"Integer",
+    "carbs":"Integer",
+    "fats":"Integer",
+    "date":"Date (2024-11-14)"
+}
+```
+
 ### POST: /users/:id/foods
-add a food eaten by a user
+Add a food eaten by a user
+
+**Body**
+```json
+{
+    "name":"String",
+    "mealType":"String",
+    "calories":"Integer",
+    "proteins":"Integer",
+    "carbs":"Integer",
+    "fats":"Integer",
+}
+```
 ### DELETE: /users/:uid/foods/:fid
-deletes a food from the list of eaten food by user
+Deletes a food from the list of eaten food by user
+
+**Body**
+```
+```
+
+**Response: 204 OK**
+```
+```
 ### GET: /users/:id/goals
-get all goals for the user
+Get all goals for the user
+
+**Body**
+```
+```
+
+**Response: 200 OK**
+```json
+{
+    "goals":["<Goal>"]
+}
+```
+
 ### GET: /users/:uid/goals/:gid
-get a single goal for a user
+Get a single goal for a user by id
+
+**Body**
+```
+```
+
+**Response: 200 OK**
+```json
+{
+    "id":"Integer",
+    "userId":"Integer",
+    "type":"String",
+    "target":"Double",
+    "progress":"Double"
+}
+```
 ### POST: /users/:id/goals
-add a goal for a user
+Add a goal for a user
+
+**Body**
+```json
+{
+    "type":"String",
+    "target":"Double"
+}
+```
+
+**Response: 201 OK**
+```json
+{
+    "id":"Integer",
+    "userId":"Integer",
+    "type":"String",
+    "target":"Double",
+    "progress":"Double",
+}
+```
+
 ### PUT: /users/:uid/goals/:gid
 Edit a goal for a user
+
+**Body**
+```json
+{
+    "id":"Integer",
+    "userId":"Integer",
+    "type":"String",
+    "target":"Double",
+    "progress":"Double",
+}
+```
+
+**Response: 200 OK**
+```json
+{
+    "id":"Integer",
+    "userId":"Integer",
+    "type":"String",
+    "target":"Double",
+    "progress":"Double",
+}
+```
+
 ### DELETE: /users/:uid/goals/:gid
 Delete a goal for a user
+
+**Body**
+```
+```
+
+**Response: 204**
+```
+```
