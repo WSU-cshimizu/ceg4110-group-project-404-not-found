@@ -1,21 +1,6 @@
 from . import db
 from datetime import date
 
-
-# db.Table only allows a simple M-M relationship.
-"""
-class ExerciseRoutine(db.Model):
-    __tablename__ = 'exercise_routine'
-
-    exercise_id = db.Column(db.Integer, db.ForeignKey('exercises.id'), primary_key=True)
-    routine_id = db.Column(db.Integer, db.ForeignKey('routines.id'), primary_key=True)
-    sets = db.Column(db.Integer, nullable=False)
-    reps = db.Column(db.Integer, nullable=False)
-
-    exercise = db.relationship("Exercise", backref="exercise_routines")
-    routine = db.relationship("Routine", backref="routine_exercises")
-"""
-
 class User(db.Model):
     __tablename__ = 'users'
 
