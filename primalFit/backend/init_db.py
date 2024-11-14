@@ -61,5 +61,6 @@ def create_users():
 with app.app_context():
     db.create_all()
     create_users()
+    print("Tables and users created successfully")
 
 

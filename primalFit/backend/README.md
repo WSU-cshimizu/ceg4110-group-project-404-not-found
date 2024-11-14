@@ -103,19 +103,16 @@ pytest
 python models.py
 ```
 
-2. open the python interpreter
+2. seed the database by running the following file:
 ```shell
-python
+python init_db.py
 ```
 
-3. Copy and paste the code below:
-```python
-from app import app, db
-import models
-with app.app_context():
-    db.create_all()
+3. Confirm tables where created inside pgAdmin 4 `primalFit`
+
+4. If you wish to drop all tables in db. Run the following file:
+```shell
+python drop_db.py
 ```
 
-Hit `ENTER` twice to make sure it runs. 
 
-5. Confirm tables where created inside pgAdmin 4 `primalFit`
