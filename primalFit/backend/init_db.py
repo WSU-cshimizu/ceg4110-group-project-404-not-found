@@ -24,7 +24,7 @@ def create_users():
 
     exercise1 = Exercise(name='Push Ups', type='aerobic', duration=12.42, video_url='youtube.com', routine=routine1)
     exercise2 = Exercise(name='Push Downs', type='aerobic', duration=12.42, video_url='google.com', routine=routine1)
-    exercise3 = Exercise(name='Pull Ups', type='strenght', duration=10.42, video_url='yahoo.com', routine=routine2)
+    exercise3 = Exercise(name='Pull Ups', type='strength', duration=10.42, video_url='yahoo.com', routine=routine2)
     exercise4 = Exercise(name='Abs Crunch', type='endurance', duration=60, video_url='nice.com')
 
     db.session.add_all([exercise1, exercise2, exercise3, exercise4])
