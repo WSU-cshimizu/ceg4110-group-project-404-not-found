@@ -4,15 +4,15 @@ from datetime import date
 class User(db.Model):
     __tablename__ = 'users'
 
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, unique=True, nullable=False)
-    email = db.Column(db.String, unique=True, nullable=False)
-    password = db.Column(db.String, nullable =False)
+    id:int = db.Column(db.Integer, primary_key=True)
+    name:str = db.Column(db.String, unique=True, nullable=False)
+    email:str = db.Column(db.String, unique=True, nullable=False)
+    password:str = db.Column(db.String, nullable =False)
     birthdate = db.Column(db.Date, nullable=False)
-    weight = db.Column(db.Double, nullable=False)
-    weight_goal = db.Column(db.Double, nullable=False)
-    height = db.Column(db.Double, nullable=False)
-    is_male = db.Column(db.Boolean, nullable = False)
+    weight:float = db.Column(db.Double, nullable=False)
+    weight_goal:float = db.Column(db.Double, nullable=False)
+    height:float = db.Column(db.Double, nullable=False)
+    is_male:bool = db.Column(db.Boolean, nullable = False)
     routines = db.relationship('Routine', backref='user') 
     eaten_food = db.relationship('Food', backref='user')
 
@@ -37,21 +37,21 @@ class User(db.Model):
 class Routine(db.Model):
     __tablename__ = 'routines'
 
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    name = db.Column(db.String, nullable=False)
+    id:int = db.Column(db.Integer, primary_key=True)
+    user_id:int = db.Column(db.Integer, db.ForeignKey('users.id'))
+    name:str = db.Column(db.String, nullable=False)
     exercises = db.relationship('Exercise', backref='routine')
-    _days = db.Column(db.String, default='')
+    _days:str = db.Column(db.String, default='')
     
     # [monday, tuesday, wednesday,...] python
     # "monday;tuesday;wednesday" db
 
     @property
-    def days(self):
+    def days(self) -> list[str]:
         return[str(x) for x in self._days.split(';')]
 
     @days.setter
-    def days(self, list_value):
+    def days(self, list_value:list[str]):
         if not type(list_value) is list:
             raise TypeError('Value is not a list')
         if not all(isinstance(item, str) for item in list_value):
@@ -66,13 +66,13 @@ class Routine(db.Model):
 class Exercise(db.Model):
     __tablename__ = 'exercises'
     
-    id = db.Column(db.Integer, primary_key=True)
-    routine_id = db.Column(db.Integer, db.ForeignKey('routines.id'))
-    name = db.Column(db.String, unique=True, nullable=False)
-    type = db.Column(db.String, nullable=False)
-    duration = db.Column(db.Double, default=0)
-    calories_burned = db.Column(db.Double, default=0)
-    video_url = db.Column(db.String, unique=True, nullable=False)
+    id:int = db.Column(db.Integer, primary_key=True)
+    routine_id:int = db.Column(db.Integer, db.ForeignKey('routines.id'))
+    name:str = db.Column(db.String, unique=True, nullable=False)
+    type:str = db.Column(db.String, nullable=False)
+    duration:float = db.Column(db.Double, default=0)
+    calories_burned:float = db.Column(db.Double, default=0)
+    video_url:str = db.Column(db.String, unique=True, nullable=False)
     date = db.Column(db.DateTime, default=date.today)
 
     def __repr__(self):
@@ -82,14 +82,14 @@ class Exercise(db.Model):
 class Food(db.Model):
     __tablename__= 'foods'
 
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    name = db.Column(db.String, nullable=False)
-    meal_type = db.Column(db.String, nullable=False, default='') # breakfast, lunch, dinner, etc...
-    calories = db.Column(db.Integer, nullable=False)
-    proteins = db.Column(db.Integer, nullable=False, default=0)
-    carbs = db.Column(db.Integer, nullable=False, default=0)
-    fats = db.Column(db.Integer, nullable=False, default=0)
+    id:int = db.Column(db.Integer, primary_key=True)
+    user_id:int = db.Column(db.Integer, db.ForeignKey('users.id'))
+    name:str = db.Column(db.String, nullable=False)
+    meal_type:str = db.Column(db.String, nullable=False, default='') # breakfast, lunch, dinner, etc...
+    calories:int = db.Column(db.Integer, nullable=False)
+    proteins:int = db.Column(db.Integer, nullable=False, default=0)
+    carbs:int = db.Column(db.Integer, nullable=False, default=0)
+    fats:int = db.Column(db.Integer, nullable=False, default=0)
     date = db.Column(db.DateTime, default=date.today)
 
     def __repr__(self):

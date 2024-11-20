@@ -1,6 +1,12 @@
 from datetime import date
 import json
 
+import sys
+
+sys.path.append("..")
+from app.models import User
+
+
 headers={
     'Content-type':'application/json', 
     'Accept':'application/json'
@@ -44,7 +50,7 @@ def test_register(client):
     }
     response = client.post("/register", data= json.dumps(body), headers=headers)
     
-    data = response.get_json()
+    data:map = response.get_json()
     assert response.status_code == 201
     assert data["id"] == 4
     assert data["name"] == "user4"
@@ -58,9 +64,36 @@ def test_register(client):
 
 def test_get_users(client):
     response = client.get('/users')
+    data:map = response.get_json()
+    assert response.status_code == 200
+    assert len(data) == 3
 
+# getting a single user 
+def test_get_user(client):
+    response = client.get('/users/1')
+    data:map = response.get_json()
+    assert response.status_code == 200
+    assert data["id"] == 1
+    assert data["name"] == "user1"
+    assert data["email"] == "test1@test1.com"
+    assert not "password" in data
+    assert data["birthdate"] == date.today()
+    assert data["weight"] == 11.1
+    assert data["weightGoal"] == 111.1
+    assert data["height"]== 11.1
+    assert data["isMale"] == True
+
+def test_put_user(client):
+    user_before = User.query.first().to_json()
+    modified_user:map = user_before
+    modified_user["name"] = 'test1'
+    response = client.put('/users/1', data=json.dumps(modified_user))
+    
     assert response.status_code == 200
 
+    data:map = response.get_json()
+
+    assert data["name"] != user_before["name"]
 
 
 # def test_get_users(client):
