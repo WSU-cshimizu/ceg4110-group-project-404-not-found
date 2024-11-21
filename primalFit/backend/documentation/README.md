@@ -286,7 +286,7 @@ Update a routine for a user
 }
 ```
 
-**Response: 201 OK**
+**Response: 200 OK**
 ```json
 {
     "id":"Integer",

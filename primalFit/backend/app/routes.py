@@ -61,7 +61,7 @@ def login_user():
 
 @bp.route("/users/<id>", methods =["PATCH"])
 def update_user():
-    user =User.query.get(id)
+    user = User.query.get(id)
 
     if not user:
         return jsonify({"message": "User not found"}), 404
@@ -79,15 +79,15 @@ def update_user():
 
     db.session.commit()
     json_values = user.to_json()
-    return(jsonify(json_values), 201,) 
+    return(jsonify(json_values), 201) 
 
-@bp.route("/users/<id>", methods =["DELETE"])
-def delete_user():
-    user =User.query.get(id)
+@bp.route("/users/<int:id>", methods =["DELETE"])
+def delete_user(id):
+    user = User.query.get(id)
 
     if not user:
         return jsonify({"message": "User not found"}), 404
     
     db.session.delete(user)
     db.session.commit()
-    return(204,) 
+    return "", 204

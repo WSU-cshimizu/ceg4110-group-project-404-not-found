@@ -29,8 +29,8 @@ class User(db.Model):
             "weightGoal": self.weight_goal,
             "height": self.height,
             "isMale": self.is_male,
-            "routines": self.routines,
-            "eatenFood": self.eaten_food,
+          #  "routines": self.routines,
+          #  "eatenFood": self.eaten_food,
         }
 
 # one to many with User
