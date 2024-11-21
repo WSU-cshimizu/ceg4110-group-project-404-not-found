@@ -61,6 +61,15 @@ class Routine(db.Model):
     def __repr__(self):
         return f"<Routine name {self.name}>"
     
+    def to_json(self):
+        return {
+            "id": self.id,
+            "userId": self.user_id,
+            "name": self.name,
+            "exercies": self.exercises,
+            "_days": self._days
+        }
+    
 
 # one to many with routine 
 class Exercise(db.Model):
@@ -77,6 +86,18 @@ class Exercise(db.Model):
 
     def __repr__(self):
         return f"<Exercise name {self.name}>"
+    
+    def to_json(self):
+        return {
+            "id": self.id,
+            "routineId": self.routine_id,
+            "name": self.name,
+            "type": self.type,
+            "duration": self.duration,
+            "caloriesBurned": self.calories_burned,
+            "videoUrl": self.video_url,
+            "date": self.date
+        }
 
 # One to many with user
 class Food(db.Model):
@@ -94,6 +115,19 @@ class Food(db.Model):
 
     def __repr__(self):
         return f"<Food name {self.name}>"
+    
+    def to_json(self):
+        return {
+            "id": self.id,
+            "userId": self.user_id,
+            "name": self.name,
+            "mealType": self.meal_type,
+            "calories": self.calories,
+            "proteins": self.proteins,
+            "carbs": self.carbs,
+            "fats": self.fats,
+            "date": self.date
+        }
 
 
 
