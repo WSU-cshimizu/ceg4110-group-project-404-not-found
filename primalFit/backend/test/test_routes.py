@@ -26,7 +26,7 @@ def test_login(client):
 
     assert response.status_code == 200
 
-    data = response.get_json()
+    data:dict = response.get_json()
 
     assert data["id"] == 1
     assert data["name"] == "user1"
@@ -39,7 +39,7 @@ def test_login(client):
     assert data["isMale"] == True
 
 def test_register(client):
-    body = {
+    body:dict = {
         "name":"user4",
         "email":"user4@user4.com",
         "password":"password4",
@@ -86,7 +86,7 @@ def test_get_user(client):
     assert data["isMale"] == True
 
 def test_put_user(client):
-    user_before = User.query.first().to_json()
+    user_before:dict = User.query.first().to_json()
     modified_user:dict = copy.deepcopy(user_before)
     modified_user["name"] = 'test1'
     response = client.put('/users/1', data=json.dumps(modified_user), headers=headers)

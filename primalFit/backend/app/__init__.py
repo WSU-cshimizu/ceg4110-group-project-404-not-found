@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 
-db = SQLAlchemy()
+db:SQLAlchemy = SQLAlchemy()
 
 def create_app(config_filename:str = "app.config.Config"):
     app = Flask(__name__)
