@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from .models import User
+from .models import User, Routine, Exercise
 from . import db
 
 bp = Blueprint("main", __name__)
@@ -61,7 +61,7 @@ def login_user():
 
 @bp.route("/users/<id>", methods =["PATCH"])
 def update_user():
-    user = User.query.get(id)
+    user = User.query.filter(User.id == id)
 
     if not user:
         return jsonify({"message": "User not found"}), 404
@@ -83,7 +83,7 @@ def update_user():
 
 @bp.route("/users/<int:id>", methods =["DELETE"])
 def delete_user(id):
-    user = User.query.get(id)
+    user = User.query.filter(User.id == id)
 
     if not user:
         return jsonify({"message": "User not found"}), 404
@@ -91,3 +91,34 @@ def delete_user(id):
     db.session.delete(user)
     db.session.commit()
     return "", 204
+
+@bp.route("/users/<int:id>/routines", methods =["POST"])
+def create_routine(id):
+    name = request.json.get("name")
+    excercises = request.json.get("excercises")
+    user = User.query.filter(User.id == id).first()
+
+    if not name: 
+        return(
+            jsonify({"message": "Invalid Inputs"}), 400,
+        ) 
+    
+    new_routine = Routine(name = name, user = user)
+    try:
+        db.session.add(new_routine)
+        db.session.commit()
+    except Exception as e:
+        return jsonify({"message": str(e)}), 400
+    
+    if(excercises != None):
+        for x in excercises:
+            new_excercise = Exercise(name = excercises(x["name"]), type = excercises(x["type"]),
+                            duration = excercises(x["duration"]), video_url = excercises(x["videoUrl"]), routine = new_routine)
+            try:
+                db.session.add(new_excercise)
+                db.session.commit()
+            except Exception as e:
+                return jsonify({"message": str(e)}), 400
+    
+    json_values = new_routine.to_json()
+    return(jsonify(json_values), 201) 
