@@ -165,7 +165,7 @@ Response
 ```
 
 ### PATCH: /users/:id
-Patially update the user. For things like updating the goal
+Partially update the user. For things like updating the goal
 
 **Body: All fields are optional**
 ```json

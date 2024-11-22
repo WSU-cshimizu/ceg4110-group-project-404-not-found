@@ -196,8 +196,8 @@ def test_add_exercise(client):
     user_id:int = 1
     routine_id:int = 1
     exercise_name:str = "Dead Lift"
-    exercise_type:str = "Strenght"
-    exercise_video_url:str = "clubpenguin.com"
+    exercise_type:str = "Strength"
+    exercise_video_url:str = "https://www.crazygames.com/"
     body:dict = {"name":exercise_name, "type":exercise_type, "videoUrl":exercise_video_url}
 
     response = client.post(f'/users/{user_id}/routines/{routine_id}/exercises', data=json.dumps(body), headers=headers)
@@ -220,8 +220,8 @@ def test_patch_exercise(client):
     exercise_id:int = 1
     exercise_before:dict =  Exercise.query.filter(Exercise.id == exercise_id).to_json()
     modified_exercise:dict = copy.deepcopy(exercise_before)
-    modified_caloried_burned:float = 234.74
-    modified_exercise["caloriesBurned"] = modified_caloried_burned
+    modified_calories_burned:float = 234.74
+    modified_exercise["caloriesBurned"] = modified_calories_burned
 
     response = client.patch(f"/users/{user_id}/routines/{routine_id}/exercises/{exercise_id}", data=json.dumps(modified_exercise), headers=headers)
 
@@ -230,8 +230,8 @@ def test_patch_exercise(client):
     
     assert data["routineId"] == routine_id
     assert data["name"] == modified_exercise["name"]
-    assert data["caloriesBurned"] != exercise_before["caloriedBurned"]
-    assert data["caloriedBurned"] == modified_exercise["caloriesBurned"]
+    assert data["caloriesBurned"] != exercise_before["caloriesBurned"]
+    assert data["caloriesBurned"] == modified_exercise["caloriesBurned"]
 
 def test_delete_exercise(client):
     user_id:int = 1

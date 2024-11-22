@@ -95,7 +95,7 @@ def delete_user(id):
 @bp.route("/users/<int:id>/routines", methods =["POST"])
 def create_routine(id):
     name = request.json.get("name")
-    excercises = request.json.get("excercises")
+    exercises = request.json.get("exercises")
     user = User.query.filter(User.id == id).first()
 
     if not name: 
@@ -110,12 +110,12 @@ def create_routine(id):
     except Exception as e:
         return jsonify({"message": str(e)}), 400
     
-    if(excercises != None):
-        for x in excercises:
-            new_excercise = Exercise(name = excercises(x["name"]), type = excercises(x["type"]),
-                            duration = excercises(x["duration"]), video_url = excercises(x["videoUrl"]), routine = new_routine)
+    if(exercises != None):
+        for x in exercises:
+            new_exercise = Exercise(name = exercises(x["name"]), type = exercises(x["type"]),
+                            duration = exercises(x["duration"]), video_url = exercises(x["videoUrl"]), routine = new_routine)
             try:
-                db.session.add(new_excercise)
+                db.session.add(new_exercise)
                 db.session.commit()
             except Exception as e:
                 return jsonify({"message": str(e)}), 400
