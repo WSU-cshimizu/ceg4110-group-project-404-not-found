@@ -16,12 +16,12 @@ def create_users() -> dict:
     result["users"] = [user1, user2, user3]
 
     routine1:Routine = Routine(name='Routine 1', user=user1)
-    routine2:Routine = Routine(name='Routine 2', user=user2)
-    routine3:Routine = Routine(name='Routine 1', user=user3)
+    routine2:Routine = Routine(name='Routine 2', user=user1)
+    routine3:Routine = Routine(name='Routine 3', user=user2)
     routine4:Routine = Routine(name='Routine 4')
-    routine5:Routine = Routine(name='Routine 5', user=user1)
 
-    result["routines"] = [routine1, routine2, routine3, routine4, routine5]
+
+    result["routines"] = [routine1, routine2, routine3, routine4]
 
 
     exercise1:Exercise = Exercise(name='Push Ups', type='aerobic', duration=12.42, video_url='youtube.com', routine=routine1)

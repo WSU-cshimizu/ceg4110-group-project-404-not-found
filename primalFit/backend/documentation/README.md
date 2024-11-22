@@ -336,6 +336,37 @@ Add an exercise to the routine
     "date":"Date (2024-11-12)"
 }
 ```
+
+### PATCH: /users/:uid/routines/:rid/exercises/:eid
+Update an exercise in the routine. **All fields in body are optional.**
+
+**Body**
+```json
+{   
+    "id":"Integer",
+    "routineId":"Integer",
+    "name":"String",
+    "type":"String",
+    "duration":"Double",
+    "caloriesBurned":"Double",
+    "videoUrl":"String",
+    "date":"Date (2024-11-12)"
+}
+```
+
+**Response: 201 OK**
+```json
+{
+    "id":"Integer",
+    "routineId":"Integer",
+    "name":"String",
+    "type":"String",
+    "duration":"Double",
+    "caloriesBurned":"Double",
+    "videoUrl":"String",
+    "date":"Date (2024-11-12)"
+}
+```
 ### DELETE: /users/:uid/routines/:rid/exercises/:eid
 Delete an exercise in the routine
 
@@ -387,6 +418,20 @@ Add a food eaten by a user
 **Body**
 ```json
 {
+    "name":"String",
+    "mealType":"String",
+    "calories":"Integer",
+    "proteins":"Integer",
+    "carbs":"Integer",
+    "fats":"Integer",
+}
+```
+
+**Response: 201 OK**
+```json
+{
+    "id":"Integer",
+    "userId":"Integer",
     "name":"String",
     "mealType":"String",
     "calories":"Integer",
