@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, session
 from .models import User, Routine, Exercise
 from . import db
 
@@ -9,11 +9,19 @@ bp = Blueprint("main", __name__)
 def home():
     return "Hello, World!"
 
-@bp.route("/users", methods =["GET"])
-def get_users():
-    users = User.query.all()
-    json_users = list(map(lambda x: x.to_json(), users))
-    return(jsonify({"users": json_users}), 200)
+
+@bp.route("/login", methods =["POST"])
+def login_user():
+    email = request.json.get("email")
+    password = request.json.get("password")
+
+    user = User.query.filter(User.email == email).first_or_404()
+    
+    if(user.password == password):
+        json_values = user.to_json()
+        return(jsonify(json_values), 200)
+    else:
+        return(jsonify({"message": "Wrong Password"}), 401)
 
 
 @bp.route("/register", methods =["POST"])
@@ -43,23 +51,29 @@ def create_user():
     json_values = new_user.to_json()
     return(jsonify(json_values), 201,) 
 
-@bp.route("/login", methods =["POST"])
-def login_user():
-    email = request.json.get("email")
-    password = request.json.get("password")
 
-    user = User.query.filter(User.email == email).first_or_404()
-    
-    if(user.password == password):
-        json_values = user.to_json()
-        return(jsonify(json_values), 200)
+@bp.route("/users", methods =["GET"])
+def get_users():
+    users = User.query.all()
+    json_users = list(map(lambda x: x.to_json(), users))
+    return(jsonify({"users": json_users}), 200)
+
+
+@bp.route("/users/<int:id>", methods=["GET"])
+def get_user_by_id(id):
+    user = User.query.get(id)
+
+    if not user:
+        return jsonify({"message": "User Not Found"}), 404
     else:
-        return(jsonify({"message": "Wrong Password"}), 401)
-    
-    
+        return user.to_json(), 201
 
 
-@bp.route("/users/<id>", methods =["PATCH"])
+# Do we need this method?
+# @bp.route("/users/<int:id>", methods = ["PUT"])
+    
+
+@bp.route("/users/<int:id>", methods =["PATCH"])
 def update_user():
     user = User.query.filter(User.id == id)
 
@@ -81,6 +95,7 @@ def update_user():
     json_values = user.to_json()
     return(jsonify(json_values), 201) 
 
+
 @bp.route("/users/<int:id>", methods =["DELETE"])
 def delete_user(id):
     user = User.query.filter(User.id == id)
@@ -91,6 +106,28 @@ def delete_user(id):
     db.session.delete(user)
     db.session.commit()
     return "", 204
+
+
+# I think GitHub Documentation needs to be fixed.
+# we don't need user id in the route for getting all routines
+@bp.route("/routines", methods = ["GET"])
+def get_routines():
+    routines = Routine.query.all()
+    routines_to_json = list(map(lambda x: x.to_json(), routines))
+    return routines_to_json, 200
+
+
+@bp.route("/users/<int:id>/routines", methods = ["GET"])
+def get_routines_by(id):
+    user = User.query.get(id)
+
+    if not user:
+        return jsonify({"message": "User Not Found"}), 404
+    else:
+        routines_of_user = Routine.query.filter(Routine.user_id == id).all()
+        routines_of_user_to_json = list(map(lambda x: x.to_json(), routines_of_user))
+        return routines_of_user_to_json, 200
+
 
 @bp.route("/users/<int:id>/routines", methods =["POST"])
 def create_routine(id):
@@ -129,3 +166,18 @@ def update_routine(id,rid):
     db.session.commit()
     json_values = routine_update.to_json()
     return (json_values, 201) 
+
+
+
+@bp.route("/users/<int:uid>/routines/<int:rid>", methods = ["DELETE"])
+def delete_routine(uid, rid):
+    user = User.query.filter(User.id == uid)
+
+    if not user:
+        return jsonify({"message": "User Not Found"}), 404
+    
+    else:
+        routine_to_delete = session.get(Routine, {"id": rid, "user_id": uid})
+        db.session.delete(routine_to_delete)
+        db.session.commit()
+        return jsonify({"message": "Routine deleted successfully"}), 204
