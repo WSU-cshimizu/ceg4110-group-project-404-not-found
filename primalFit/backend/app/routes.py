@@ -95,7 +95,7 @@ def delete_user(id):
 @bp.route("/users/<int:id>/routines", methods =["POST"])
 def create_routine(id):
     name = request.json.get("name")
-    exercises = request.json.get("exercises")
+    days = request.json.get("days")
     user = User.query.filter(User.id == id).first()
 
     if not name: 
@@ -103,22 +103,29 @@ def create_routine(id):
             jsonify({"message": "Invalid Inputs"}), 400,
         ) 
     
-    new_routine = Routine(name = name, user = user)
+    new_routine = Routine(name = name, user = user, _days = days)
     try:
         db.session.add(new_routine)
         db.session.commit()
     except Exception as e:
         return jsonify({"message": str(e)}), 400
     
-    if(exercises != None):
-        for x in exercises:
-            new_exercise = Exercise(name = exercises(x["name"]), type = exercises(x["type"]),
-                            duration = exercises(x["duration"]), video_url = exercises(x["videoUrl"]), routine = new_routine)
-            try:
-                db.session.add(new_exercise)
-                db.session.commit()
-            except Exception as e:
-                return jsonify({"message": str(e)}), 400
-    
     json_values = new_routine.to_json()
     return(jsonify(json_values), 201) 
+
+@bp.route("/users/<int:id>/routines/<int:rid>", methods =["PATCH"])
+def update_routine(id,rid):
+    user = User.query.filter(User.id == id).first()
+    routine_update = db.session.get(Routine, rid)
+
+    if not user:
+        return jsonify({"message": "User not found"}), 404
+    if not routine_update:
+        return jsonify({"message" : "Routine does not exist"}), 404
+    
+    data = request.json
+    routine_update.name = data.get("name", routine_update.name)
+    routine_update._days = data.get("days", routine_update._days)
+    db.session.commit()
+    json_values = routine_update.to_json()
+    return (json_values, 201) 
