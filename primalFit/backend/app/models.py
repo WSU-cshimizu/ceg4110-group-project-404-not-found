@@ -13,8 +13,13 @@ class User(db.Model):
     weight_goal:float = db.Column(db.Double, nullable=False)
     height:float = db.Column(db.Double, nullable=False)
     is_male:bool = db.Column(db.Boolean, nullable = False)
+    activity_level:int = db.Column(db.Integer,  default = 0)
+    #0 = sedentary, 1 = lightly active, 2 = active, 3 = very active
     routines = db.relationship('Routine', backref='user') 
     eaten_food = db.relationship('Food', backref='user')
+    calorie_goal:int = db.Column(db.String, nullable=False, default = 0)
+    carbohydrate_goal:int = db.Column(db.String, nullable=False, default = 0)
+    protein_goal:int = db.Column(db.String, nullable=False, default = 0)
 
     def __repr__(self):
         return f"<User {self.name}>"
@@ -31,6 +36,9 @@ class User(db.Model):
             "isMale": self.is_male,
             "routines":  [routine.to_json() for routine in self.routines],
             "eatenFood": [food.to_json() for food in self.eaten_food],
+            "calorieGoal": self.calorie_goal,
+            "carbohydrateGoal": self.carbohydrate_goal,
+            "proteinGoal": self.protein_goal
         }
 
 # one to many with User
@@ -110,7 +118,7 @@ class Food(db.Model):
     name:str = db.Column(db.String, nullable=False)
     meal_type:str = db.Column(db.String, nullable=False, default='') # breakfast, lunch, dinner, etc...
     calories:int = db.Column(db.Integer, nullable=False)
-    proteins:int = db.Column(db.Integer, nullable=False, default=0)
+    protein:int = db.Column(db.Integer, nullable=False, default=0)
     carbs:int = db.Column(db.Integer, nullable=False, default=0)
     fats:int = db.Column(db.Integer, nullable=False, default=0)
     date = db.Column(db.DateTime, default=date.today)
@@ -125,11 +133,8 @@ class Food(db.Model):
             "name": self.name,
             "mealType": self.meal_type,
             "calories": self.calories,
-            "proteins": self.proteins,
+            "protein": self.protein,
             "carbs": self.carbs,
             "fats": self.fats,
             "date": self.date
         }
-
-
-

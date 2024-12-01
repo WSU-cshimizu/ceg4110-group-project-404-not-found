@@ -5,13 +5,14 @@ from datetime import date
 app = create_app()
 
 def create_users() -> dict:
+    #result:map[str,list] = {"users":[], "routines":[], "exercises":[], "foods":[]}
     result:map[str,list] = {"users":[], "routines":[], "exercises":[], "foods":[]}
     # Has two of everything
-    user1:User = User(name='user1', email='test1@test1.com', password='password1', birthdate= date.today(), weight=11.1, weight_goal=111.1, height=11.1, is_male=True)
+    user1:User = User(name='user1', email='test1@test1.com', password='password1', birthdate= date.today(), weight=11.1, weight_goal=111.1, height=11.1, is_male=True, activity_level = 1)
     # Has one of everything
-    user2:User = User(name='user2', email='test2@test2.com', password='password2', birthdate= date.today(), weight=22.2, weight_goal=222.2, height=22.2, is_male=False)
+    user2:User = User(name='user2', email='test2@test2.com', password='password2', birthdate= date.today(), weight=22.2, weight_goal=222.2, height=22.2, is_male=False,activity_level = 0)
     # Has nothing    
-    user3:User = User(name='user3', email='test3@test3.com', password='password3', birthdate= date.today(), weight=33.3, weight_goal=333.3, height=33.3, is_male=True)
+    user3:User = User(name='user3', email='test3@test3.com', password='password3', birthdate= date.today(), weight=33.3, weight_goal=333.3, height=33.3, is_male=True, activity_level = 2)
 
     result["users"] = [user1, user2, user3]
 
