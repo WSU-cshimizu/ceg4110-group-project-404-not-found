@@ -269,7 +269,7 @@ Deletes a routine from a specific user by id
 **Response: 204 OK**
 ```
 ```
-### PUT: /users/:uid/routines/:rid
+### PATCH: /users/:uid/routines/:rid
 Update a routine for a user
 
 **Body**
