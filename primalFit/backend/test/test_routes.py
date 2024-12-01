@@ -5,7 +5,7 @@ import copy
 import sys
 
 sys.path.append("..")
-from app.models import User, Routine
+from app.models import User, Routine, Exercise
 
 
 headers: dict = {
@@ -26,7 +26,7 @@ def test_login(client):
 
     assert response.status_code == 200
 
-    data = response.get_json()
+    data:dict = response.get_json()
 
     assert data["id"] == 1
     assert data["name"] == "user1"
@@ -39,7 +39,7 @@ def test_login(client):
     assert data["isMale"] == True
 
 def test_register(client):
-    body = {
+    body:dict = {
         "name":"user4",
         "email":"user4@user4.com",
         "password":"password4",
@@ -86,7 +86,7 @@ def test_get_user(client):
     assert data["isMale"] == True
 
 def test_put_user(client):
-    user_before = User.query.first().to_json()
+    user_before:dict = User.query.first().to_json()
     modified_user:dict = copy.deepcopy(user_before)
     modified_user["name"] = 'test1'
     response = client.put('/users/1', data=json.dumps(modified_user), headers=headers)
@@ -192,21 +192,109 @@ def test_get_all_exercises(client):
 
     assert len(data["exercises"]) == 2
 
+def test_add_exercise(client):
+    user_id:int = 1
+    routine_id:int = 1
+    exercise_name:str = "Dead Lift"
+    exercise_type:str = "Strength"
+    exercise_video_url:str = "https://www.crazygames.com/"
+    body:dict = {"name":exercise_name, "type":exercise_type, "videoUrl":exercise_video_url}
 
-#def test_post_exercises(client):
+    response = client.post(f'/users/{user_id}/routines/{routine_id}/exercises', data=json.dumps(body), headers=headers)
 
+    assert response.status_code == 201
 
+    data:dict = response.get_json()
 
-# def test_get_users(client):
-#     # First, add a user
-#     client.post("/add_user", data=data)
+    assert data["routineId"] == routine_id
+    assert data["name"] == exercise_name
+    assert data["type"] == exercise_type
+    assert data["duration"] == 0.0
+    assert data["caloriesBurned"] == 0.0
+    assert data["videoUrl"] == exercise_video_url
+    assert data["date"] == str(date.today())
 
-#     # Then, fetch the list of users
-#     response = client.get("/users")
-#     data = response.get_json()
+def test_patch_exercise(client):
+    user_id:int = 1
+    routine_id:int = 1
+    exercise_id:int = 1
+    exercise_before:dict =  Exercise.query.filter(Exercise.id == exercise_id).to_json()
+    modified_exercise:dict = copy.deepcopy(exercise_before)
+    modified_calories_burned:float = 234.74
+    modified_exercise["caloriesBurned"] = modified_calories_burned
 
-#     assert response.status_code == 200
-#     assert len(data) == 1
-#     assert data[0]["username"] == "example_user"
-#     assert data[0]["email"] == "example@example.com"
- 
+    response = client.patch(f"/users/{user_id}/routines/{routine_id}/exercises/{exercise_id}", data=json.dumps(modified_exercise), headers=headers)
+
+    assert response.status_code == 201
+    data:dict = response.get_json()
+    
+    assert data["routineId"] == routine_id
+    assert data["name"] == modified_exercise["name"]
+    assert data["caloriesBurned"] != exercise_before["caloriesBurned"]
+    assert data["caloriesBurned"] == modified_exercise["caloriesBurned"]
+
+def test_delete_exercise(client):
+    user_id:int = 1
+    routine_id:int = 1
+    exercise_id:int = 1
+
+    response = client.delete(f"/users/{user_id}/routines/{routine_id}/exercises/{exercise_id}")
+
+    assert response.status_code == 204
+
+def test_get_all_foods(client):
+    user_id:int = 1
+
+    response = client.get(f"/users/{user_id}/foods")
+    assert response.status_code == 200
+
+    data:dict = response.get_json()
+    
+    assert "foods" in data 
+    assert len(data["foods"]) == 2
+
+def test_get_food(client):
+    user_id:int = 1
+    food_id:int = 1
+
+    response = client.get(f"/users/{user_id}/foods/{food_id}")
+
+    assert response.status_code == 200
+
+    #Food(name='banana', meal_type='breakfast', calories=50, user=user1)
+    data:dict = response.get_json()
+
+    assert data["userId"] == user_id
+    assert data["name"] == "banana"
+    assert data["mealType"] == "breakfast"
+    assert data["calories"] == 50
+    assert data["proteins"] == 0
+    assert data["carbs"] == 0
+    assert data["fats"] == 0
+    assert data["date"] == str(date.today())
+
+def test_post_food(client):
+    user_id:int = 1
+    body:dict = {"name":"chocolate", "mealType":"dessert", "calories":200,"proteins":5, "carbs":148, "fats":125}
+
+    response = client.post(f"/users/{user_id}/foods", data=json.dumps(body), headers=headers)
+
+    assert response.status_code == 201
+    
+    data:dict = response.get_json()
+
+    assert data["userId"] == user_id
+    assert data["name"] == body["name"]
+    assert data["mealType"] == body["mealType"]
+    assert data["calories"] == body["calories"]
+    assert data["proteins"] == body["proteins"]
+    assert data["carbs"] == body["carbs"]
+    assert data["fats"] == body["fats"]
+
+def test_delete_food(client):
+    user_id:int = 1
+    food_id:int = 1
+
+    response = client.delete(f"/users/{user_id}/foods/{food_id}")
+
+    assert response.status_code == 204 

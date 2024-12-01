@@ -29,8 +29,8 @@ class User(db.Model):
             "weightGoal": self.weight_goal,
             "height": self.height,
             "isMale": self.is_male,
-          #  "routines": self.routines,
-          #  "eatenFood": self.eaten_food,
+            "routines":  [routine.to_json() for routine in self.routines],
+            "eatenFood": [food.to_json() for food in self.eaten_food],
         }
 
 # one to many with User
@@ -48,6 +48,8 @@ class Routine(db.Model):
 
     @property
     def days(self) -> list[str]:
+        if not self._days:
+            return None
         return[str(x) for x in self._days.split(';')]
 
     @days.setter
@@ -66,8 +68,8 @@ class Routine(db.Model):
             "id": self.id,
             "userId": self.user_id,
             "name": self.name,
-            "exercies": self.exercises,
-            "_days": self._days
+            "exercises": [e.to_json() for e in self.exercises],
+            "days": self.days
         }
     
 
