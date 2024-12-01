@@ -1,0 +1,221 @@
+/* Apply a consistent background color for the entire body */
+body {
+  background-color: #f0ead6; /* Standard beige background */
+  margin: 0; /* Remove default margin */
+  height: auto; /* Allow height to adjust dynamically */
+  min-height: 100vh; /* Ensure the viewport height is covered */
+  overflow-y: auto; /* Enable vertical scrolling only when needed */
+}
+
+/* Main page layout container for the content */
+.main-page-container {
+  display: flex; /* Arrange sections horizontally */
+  justify-content: space-between; /* Space sections evenly */
+  align-items: stretch; /* Ensure all sections have the same height */
+  min-height: 600px; /* Minimum height for the sections */
+  background-color: #f0ead6; /* Consistent beige background */
+  margin-top: 30px; /* Offset the container from the top */
+  padding: 0;
+  border-top: 10px solid #494F55; /* Thick border at the top */
+  box-sizing: border-box; /* Include borders and padding in height calculation */
+}
+
+/* Common styles for all sections on the page */
+.section {
+  flex: 1; /* Equal width for all sections */
+  background-color: #f0ead6; /* Same background color for consistency */
+  box-sizing: border-box; /* Include padding/borders in the total size */
+  padding: 15px;
+  overflow: hidden; /* Prevent internal scrolling unless specified */
+}
+
+/* History section styles */
+.History {
+  border: none; /* No borders for this section */
+  display: flex; /* Flexible layout */
+  flex-direction: column; /* Arrange items vertically */
+}
+
+/* Subsections within the History section */
+.history-subsections {
+  display: flex; /* Arrange subsections horizontally */
+  min-height: 80%; /* Ensure subsections take up necessary height */
+  margin-top: 10px; /* Space below the History title */
+  width: 100%; /* Full width of the History section */
+  background-color: #f0ead6; /* Consistent beige background */
+  box-sizing: border-box; /* Include padding and borders in sizing */
+}
+
+/* Styles for individual subsections within History */
+.subsection {
+  flex: 1; /* Equal width for subsections */
+  padding: 10px;
+  box-sizing: border-box; /* Include padding in sizing */
+  border-left: 5px solid #494F55; /* Divider between subsections */
+  min-height: 110%; /* Adjust for content size */
+  margin-top: -10px; /* Slight adjustment for alignment */
+}
+
+/* Remove the left border for the first subsection */
+.subsection:first-child {
+  border-left: none;
+}
+
+/* Styles for subsection titles */
+.subsection h3 {
+  font-size: 1.5rem; /* Font size for subsection titles */
+  text-align: left; /* Align the titles to the left */
+  margin: 0; /* Remove default margin */
+  padding-bottom: 10px; /* Add spacing below the title */
+  border-bottom: 5px solid #494F55; /* Divider for subsection titles */
+  margin-bottom: 10px; /* Space below the divider */
+}
+
+/* Placeholder text inside subsections */
+.subsection p {
+  font-size: 1rem; /* Font size for placeholders */
+  color: #494F55; /* Dark gray text for placeholders */
+  margin: 0; /* Remove default margin */
+}
+
+/* Workouts section styling */
+.Workouts {
+  border-left: 10px solid #494F55; /* Thick left border */
+  border-right: 10px solid #494F55; /* Thick right border */
+  padding: 15px; /* Padding inside the section */
+  overflow-y: auto; /* Enable vertical scrolling for dynamic content */
+  min-height: 100%; /* Allow height to adjust dynamically */
+}
+
+/* Styles for the list of workouts */
+.workout-list {
+  margin-top: 10px; /* Add spacing above the workout list */
+  padding-right: 10px; /* Prevent content from touching the scrollbar */
+}
+ 
+/* Styles for individual workout items */
+.workout-item {
+  margin-bottom: 10px; /* Space between each workout */
+  font-size: 1.2rem; /* Slightly larger font size for readability */
+  color: #494F55; /* Dark gray text color */
+  line-height: 1.5; /* Improve readability */
+  word-wrap: break-word; /* Prevent text from overflowing */
+}
+
+/* Log Foods section styling */
+.Log-Foods {
+  border: none; /* No borders for this section */
+  padding: 15px; /* Padding for the content inside */
+  overflow-y: auto; /* Enable scrolling only if needed */
+}
+
+/* Styling for the logger section (a divider) */
+.Logger {
+  border-bottom: 5px solid #494F55; /* Thick bottom border */
+  width: 100%; /* Full width */
+}
+
+/* Styling for section titles */
+.section h2 {
+  font-size: 2.5rem; /* Larger font size for titles */
+  text-align: center; /* Center-align titles */
+  margin: 0; /* Remove default margin */
+  border-bottom: 5px solid #494F55; /* Divider line below section titles */
+}
+
+/* Styles for Log Foods section content titles */
+.Log-Foods h2 {
+  font-size: 2.5rem; /* Font size for the section title */
+  text-align: center; /* Align title to the center */
+  color: #494f55; /* Consistent color for titles */
+  margin-bottom: 10px; /* Space below the title */
+  border-bottom: 5px solid #494f55; /* Add a bottom border for the title */
+}
+
+/* Subsection titles within Log Foods */
+.Log-Foods h3 {
+  font-size: 1.8rem; /* Font size for subsection titles */
+  margin-top: 15px; /* Space above subsections */
+  text-align: left; /* Align text to the left */
+  color: #494f55; /* Dark gray color */
+  border-bottom: 3px solid #494f55; /* Bottom border for subsections */
+  padding-bottom: 5px; /* Spacing below subsection headers */
+}
+
+/* List styling within Log Foods section */
+.Log-Foods ul {
+  list-style-type: none; /* Remove bullet points */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margin */
+  margin-top: -10px; /* Adjust for better alignment */
+}
+
+/* List item styling for Log Foods section */
+.Log-Foods li {
+  font-size: 1.5rem; /* Slightly larger text size */
+  font-weight: bold; /* Bold text */
+  color: #494f55; /* Consistent dark gray color */
+  margin-bottom: 10px; /* Space between items */
+  text-align: left; /* Align text to the left */
+  padding-left: 10px; /* Add slight padding for readability */
+}
+
+/* Styles for lists within History subsections */
+.history-subsections ul {
+  margin-left: 17px; /* Adjust margin to move the list to the left */
+  padding-left: 0; /* Remove additional padding */
+}
+
+.history-subsections li {
+  margin-bottom: 30px; /* Add spacing between each list item */
+}
+
+/* Sliding menu styles */
+/* Sliding menu styles */
+.menu { 
+  position: fixed; /* Fixed positioning to stay visible */
+  top: 30px; /* Offset the entire menu by 30px from the top */
+  left: 0; /* Align to the left of the page */
+  width: 250px; /* Fixed width for the menu */
+  height: calc(100% - 30px); /* Adjust height to fit viewport minus offset */
+  background-color: #f0ead6; /* Consistent beige background */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5); /* Add a shadow for better visibility */
+  z-index: 1000; /* Ensure it appears above other content */
+  padding: 0; /* Remove padding from the container */
+  box-sizing: border-box; /* Include padding in total size */
+  border-right: 10px solid #494f55; /* Add a right border */
+  overflow-y: auto; /* Allow scrolling for longer content */
+  display: flex; /* Use flexbox for layout */
+  flex-direction: column; /* Arrange elements vertically */
+  justify-content: flex-start; /* Start items from the top */
+  align-items: center; /* Center items horizontally */
+}
+
+/* Menu list styling */
+.menu ul {
+  list-style: none; /* Remove default list styling */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove default margin */
+  width: 100%; /* Full width of the menu container */
+  text-align: center; /* Center-align text inside menu items */
+}
+
+/* Individual menu items */
+.menu li {
+  display: flex; /* Arrange icons and text horizontally */
+  align-items: center; /* Align items vertically */
+  padding: 15px 10px; /* Add padding to menu items */
+  cursor: pointer; /* Show pointer cursor on hover */
+}
+
+/* First item in the menu */
+.menu li:first-child {
+  margin-top: 70px; /* Add a 30px margin above the first item */
+  border-top: 5px solid #494f55; /* Maintain top border */
+}
+
+/* Last item in the menu */
+.menu li:last-child {
+  margin-bottom: 10px; /* Add some spacing below the last item */
+  border-bottom: 5px solid #494f55; /* Add bottom border */
+}

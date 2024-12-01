@@ -1,0 +1,241 @@
+/* Overall Account Page Styling */
+.account-page {
+  background-color: #f0ead6; /* Standard beige background */
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px;
+  box-sizing: border-box;
+  position: relative;
+  overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+/* Hide content when menu is active */
+.menu-active {
+  overflow: hidden; /* Prevent scrolling */
+}
+
+/* Menu Styling */
+.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100%;
+  background-color: #f0ead6; /* Consistent beige background */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  transform: translateX(0); /* Slide-in effect */
+  transition: transform 0.3s ease-in-out;
+  padding: 0;
+  box-sizing: border-box;
+  border-right: 10px solid #494f55; /* Right border */
+  overflow-y: auto;
+}
+
+/* Menu item list styling */
+.menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Individual menu items */
+.menu li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px 15px;
+  cursor: pointer;
+  border-bottom: 5px solid #494f55;
+  box-sizing: border-box;
+}
+
+.menu li img {
+  width: 40px;
+  height: 40px;
+}
+
+.menu li span {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #494f55;
+  flex-grow: 1;
+  text-align: left;
+  margin-left: 10px;
+}
+
+/* Close Button in the Menu */
+.menu-close {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.menu-close img {
+  width: 40px;
+  height: 40px;
+}
+
+/* Menu Toggle Button Styling */
+.menu-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1100;
+}
+
+.menu-toggle img {
+  width: 40px;
+  height: 40px;
+}
+
+/* Page Title Styling */
+.account-page-title {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #494f55;
+  margin-top: 70px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+/* Account Info Container */
+.account-info-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  gap: 20px;
+}
+
+/* Section Styling */
+.account-info-section {
+  flex: 1;
+  min-width: 300px;
+  margin: 0 20px;
+  box-sizing: border-box;
+}
+
+/* Section Headers */
+.account-info-section h2 {
+  font-size: 2.5rem;
+  color: #494f55;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+/* Account Items Styling */
+.account-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+/* Icons in Account Items */
+.account-item img {
+  width: 50px;
+  height: 50px;
+}
+
+/* Text Styling in Account Items */
+.account-item span {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #494f55;
+}
+
+/* Edit Button Styling */
+.edit-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+}
+
+.edit-button img {
+  width: 30px;
+  height: 30px;
+}
+
+/* Media Query: Adjust layout for smaller screens */
+@media screen and (max-width: 768px) {
+  .account-info-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .account-page-title {
+    font-size: 2.5rem;
+  }
+
+  .account-info-section h2 {
+    font-size: 2rem;
+  }
+
+  .account-item span {
+    font-size: 1.6rem;
+  }
+
+  .account-item img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .edit-button img {
+    width: 25px;
+    height: 25px;
+  }
+
+  .menu-toggle img,
+  .menu-close img {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+/* Media Query: Adjust layout for very small screens */
+@media screen and (max-width: 480px) {
+  .account-page-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  .account-info-section h2 {
+    font-size: 1.8rem;
+  }
+
+  .account-item span {
+    font-size: 1.4rem;
+  }
+
+  .account-item img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .edit-button img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .menu-toggle img,
+  .menu-close img {
+    width: 30px;
+    height: 30px;
+  }
+}
