@@ -7,7 +7,7 @@ const useFetch = () => {
             const sanitizedItem = {};
             Object.keys(item).forEach(key => {
                 const sanitizedKey = key.toLowerCase();
-                sanitizedItem[sanitizedKey] = item[key];
+                sanitizedItem[sanitizedKey] = item[key] == 't' ? 0 : item[key];
             });
             return sanitizedItem;
         });
