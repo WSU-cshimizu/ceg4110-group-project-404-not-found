@@ -1,7 +1,8 @@
 from flask import Blueprint, jsonify, request, session
 from .models import User, Routine, Exercise, Food
 from . import db
-
+from .formulas import *
+from datetime import date, datetime
 bp = Blueprint("main", __name__)
 
 
@@ -34,6 +35,21 @@ def create_user():
     weight_goal = request.json.get("weightGoal")
     height = request.json.get("height")
     is_male = request.json.get("isMale")
+    activity_level = request.json.get("activityLevel")
+
+
+    year, month, day = map(int, birthdate.split("-"))
+
+    bday = date(year, month, day)
+
+    age = date.today().year - bday.year
+
+    if (date.today().month, date.today().day) < (bday.month, bday.day):
+        age -= 1
+    
+    bmr = calculate_bmr(weight, height, age, is_male)
+    result = calculate_daily_calories(bmr, activity_level)
+    calories, protein, carbohydrates = result
 
     if not name or not email or not password or not birthdate or not weight or not weight_goal or not height or is_male == None: 
         return(
@@ -41,7 +57,7 @@ def create_user():
         ) 
     
     new_user = User(name = name, email = email, password = password, birthdate = birthdate, weight = weight, weight_goal =weight_goal, 
-        height = height, is_male = is_male)
+        height = height, is_male = is_male, calorie_goal = calories, protein_goal = protein , carbohydrate_goal = carbohydrates)
     try:
         db.session.add(new_user)
         db.session.commit()
@@ -67,15 +83,11 @@ def get_user_by_id(id):
         return jsonify({"message": "User Not Found"}), 404
     else:
         return user.to_json(), 201
-
-
-# Do we need this method?
-# @bp.route("/users/<int:id>", methods = ["PUT"])
     
 
 @bp.route("/users/<int:id>", methods =["PATCH"])
-def update_user():
-    user = User.query.filter(User.id == id)
+def update_user(id):
+    user = User.query.filter(User.id == id).first()
 
     if not user:
         return jsonify({"message": "User not found"}), 404
@@ -98,7 +110,7 @@ def update_user():
 
 @bp.route("/users/<int:id>", methods =["DELETE"])
 def delete_user(id):
-    user = User.query.filter(User.id == id)
+    user = User.query.filter(User.id == id).first()
 
     if not user:
         return jsonify({"message": "User not found"}), 404
@@ -128,6 +140,16 @@ def get_routines_by(id):
         routines_of_user_to_json = list(map(lambda x: x.to_json(), routines_of_user))
         return routines_of_user_to_json, 200
 
+@bp.route("/routines/<int:rid>", methods = ["GET"])
+def get_routine_by(rid):
+    routine = Routine.query.get(rid)
+
+    if not routine:
+        return jsonify({"message": "Routine Not Found"}), 404
+    
+    else:
+        return routine.to_json(), 201
+
 
 @bp.route("/users/<int:id>/routines", methods =["POST"])
 def create_routine(id):
@@ -140,7 +162,7 @@ def create_routine(id):
             jsonify({"message": "Invalid Inputs"}), 400,
         ) 
     
-    new_routine = Routine(name = name, user = user, _days = days)
+    new_routine = Routine(name = name, user = user, days = days)
     try:
         db.session.add(new_routine)
         db.session.commit()
@@ -162,55 +184,51 @@ def update_routine(id,rid):
     
     data = request.json
     routine_update.name = data.get("name", routine_update.name)
-    routine_update._days = data.get("days", routine_update._days)
+    routine_update.days = data.get("days", routine_update.days)
     db.session.commit()
     json_values = routine_update.to_json()
     return (json_values, 201) 
 
 
 
-@bp.route("/users/<int:uid>/routines/<int:rid>", methods = ["DELETE"])
-def delete_routine(uid, rid):
-    user = User.query.filter(User.id == uid)
+@bp.route("/routines/<int:rid>", methods = ["DELETE"])
+def delete_routine(rid):
+    routine_to_delete = Routine.query.get(rid)
 
-    if not user:
-        return jsonify({"message": "User Not Found"}), 404
-    
-    else:
-        routine_to_delete = session.get(Routine, {"id": rid, "user_id": uid})
-        db.session.delete(routine_to_delete)
-        db.session.commit()
-        return jsonify({"message": "Routine deleted successfully"}), 204
+    if not routine_to_delete:
+        return jsonify({"message": "Routine Not Found"}), 404
+
+    db.session.delete(routine_to_delete)
+    db.session.commit()
+    return jsonify({"message": "Routine deleted successfully"}), 204
 
 
-#I dont know if 
-@bp.route("/users/routines/:rid/exercises", methods = ["GET"])
+@bp.route("/users/routines/<int:rid>/exercises", methods = ["GET"])
 def get_exercises(rid):
     routine = Routine.query.get(rid)
 
     if not routine:
         return jsonify({"message": "Routine Not Found"}), 404
     else:
-        exercises_of_routine = Exercise.query.filter(Exercise.routine_id == id).all()
+        exercises_of_routine = Exercise.query.filter(Exercise.routine_id == rid).all()
         exercises_of_routine_to_json = list(map(lambda x: x.to_json(), exercises_of_routine))
         return exercises_of_routine_to_json, 200
 
 
-@bp.route("/users/routines/:rid/exercises", methods = ["POST"])
+@bp.route("/users/routines/<int:rid>/exercises", methods = ["POST"])
 def create_exercise(rid):
     name = request.json.get("name")
     type = request.json.get("type") 
     duration =  request.json.get("duration")
-    calories_burned = 
-    video_url = 
-    routine = Routine.query.filter(Routine.id == rid).first()
+    calories_burned = request.json.get("caloriesBurned")
+    video_url =  request.json.get("videoUrl")
 
     if not name: 
         return(
             jsonify({"message": "Invalid Inputs"}), 400,
         ) 
     
-    new_exercise = Exercise(name = name,  routine = routine, type = type, duration = duration, calories_burned = calories_burned, video_url = video_url)
+    new_exercise = Exercise(name = name,  routine_id = rid, type = type, duration = duration, calories_burned = calories_burned, video_url = video_url)
     try:
         db.session.add(new_exercise)
         db.session.commit()
@@ -220,38 +238,58 @@ def create_exercise(rid):
     json_values = new_exercise.to_json()
     return(jsonify(json_values), 201) 
 
-@bp.route("/users/routines/:rid/exercises/:eid", methods = ["DELETE"])
-def delete_exercise(rid, eid):
-    routine = Routine.query.filter(Routine.id == rid)
+@bp.route("/exercises/<int:eid>", methods = ["DELETE"])
+def delete_exercise(eid):
+    exercise_to_delete = Exercise.query.get(eid)
 
-    if not routine:
-        return jsonify({"message": "Routine Not Found"}), 404
+    if not Exercise:
+        return jsonify({"message": "Exercise Not Found"}), 404
     
-    else:
-        exercise_to_delete = session.get(Exercise, {"id": eid, "routine_id": rid})
-        db.session.delete(exercise_to_delete)
-        db.session.commit()
-        return jsonify({"message": "Exercise deleted successfully"}), 204
+    db.session.delete(exercise_to_delete)
+    db.session.commit()
+    return jsonify({"message": "Exercise deleted successfully"}), 204
 
-
-@bp.route("/foods/", methods = ["POST"])
-def create_foods():
-    id = request.json.get("")
-    
-
-
-
-
-
-@bp.route("/users/:uid/foods/:fid", methods = ["DELETE"])
-def delete_food(uid, fid):
-    user = User.query.filter(User.id == uid)
+@bp.route("/users/<int:id>/foods",methods = ["GET"])
+def get_foods(id):
+    user = User.query.get(id)
 
     if not user:
         return jsonify({"message": "User Not Found"}), 404
-    
     else:
-        food_to_delete = session.get(Food, {"id": fid, "user_id": uid})
-        db.session.delete(food_to_delete)
-        db.session.commit()
-        return jsonify({"message": "Food deleted successfully"}), 204
+        foods_of_user = Food.query.filter(Food.user_id == id).all()
+        foods_of_user_to_json = list(map(lambda x: x.to_json(), foods_of_user))
+        return foods_of_user_to_json, 200
+
+
+@bp.route("/users/<int:id>/foods", methods = ["POST"])
+def add_food(id):
+    name = request.json.get("name")
+    calories = request.json.get("calories")
+    protein = request.json.get("protein")
+    carbs = request.json.get("carbs")   
+    fats = request.json.get("fats") 
+    meal_type = request.json.get("mealType") 
+
+    if not name: 
+        return(
+            jsonify({"message": "Food doesnt exist"}), 400,
+        ) 
+    
+    new_food = Food(name = name, user_id = id, calories = calories, carbs = carbs,protein = protein, fats = fats, meal_type = meal_type)
+    
+    db.session.add(new_food)
+    db.session.commit()
+    
+    json_values = new_food.to_json()
+    return(jsonify(json_values), 201) 
+
+@bp.route("/foods/<int:fid>", methods = ["DELETE"])
+def delete_food(fid):
+    food_to_delete = Food.query.get(fid)
+
+    if not food_to_delete:
+        return jsonify({"message": "Food Not Found"}), 404
+    
+    db.session.delete(food_to_delete)
+    db.session.commit()
+    return jsonify({"message": "Food deleted successfully"}), 204
