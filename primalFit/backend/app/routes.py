@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request, session
-from .models import User, Routine, Exercise
+from .models import User, Routine, Exercise, Food
 from . import db
 
 bp = Blueprint("main", __name__)
@@ -181,3 +181,77 @@ def delete_routine(uid, rid):
         db.session.delete(routine_to_delete)
         db.session.commit()
         return jsonify({"message": "Routine deleted successfully"}), 204
+
+
+#I dont know if 
+@bp.route("/users/routines/:rid/exercises", methods = ["GET"])
+def get_exercises(rid):
+    routine = Routine.query.get(rid)
+
+    if not routine:
+        return jsonify({"message": "Routine Not Found"}), 404
+    else:
+        exercises_of_routine = Exercise.query.filter(Exercise.routine_id == id).all()
+        exercises_of_routine_to_json = list(map(lambda x: x.to_json(), exercises_of_routine))
+        return exercises_of_routine_to_json, 200
+
+
+@bp.route("/users/routines/:rid/exercises", methods = ["POST"])
+def create_exercise(rid):
+    name = request.json.get("name")
+    type = request.json.get("type") 
+    duration =  request.json.get("duration")
+    calories_burned = 
+    video_url = 
+    routine = Routine.query.filter(Routine.id == rid).first()
+
+    if not name: 
+        return(
+            jsonify({"message": "Invalid Inputs"}), 400,
+        ) 
+    
+    new_exercise = Exercise(name = name,  routine = routine, type = type, duration = duration, calories_burned = calories_burned, video_url = video_url)
+    try:
+        db.session.add(new_exercise)
+        db.session.commit()
+    except Exception as e:
+        return jsonify({"message": str(e)}), 400
+    
+    json_values = new_exercise.to_json()
+    return(jsonify(json_values), 201) 
+
+@bp.route("/users/routines/:rid/exercises/:eid", methods = ["DELETE"])
+def delete_exercise(rid, eid):
+    routine = Routine.query.filter(Routine.id == rid)
+
+    if not routine:
+        return jsonify({"message": "Routine Not Found"}), 404
+    
+    else:
+        exercise_to_delete = session.get(Exercise, {"id": eid, "routine_id": rid})
+        db.session.delete(exercise_to_delete)
+        db.session.commit()
+        return jsonify({"message": "Exercise deleted successfully"}), 204
+
+
+@bp.route("/foods/", methods = ["POST"])
+def create_foods():
+    id = request.json.get("")
+    
+
+
+
+
+
+@bp.route("/users/:uid/foods/:fid", methods = ["DELETE"])
+def delete_food(uid, fid):
+    user = User.query.filter(User.id == uid)
+
+    if not user:
+        return jsonify({"message": "User Not Found"}), 404
+    
+    else:
+        food_to_delete = session.get(Food, {"id": fid, "user_id": uid})
+        db.session.delete(food_to_delete)
+        db.session.commit()
+        return jsonify({"message": "Food deleted successfully"}), 204
