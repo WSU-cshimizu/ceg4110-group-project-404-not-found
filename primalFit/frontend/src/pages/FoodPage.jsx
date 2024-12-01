@@ -4,7 +4,10 @@ import SearchBar from '../components/SearchBar'
 import useFetch from "../hooks/useFetch";
 import FoodTable from "../components/FoodTable";
 
-export default function FoodPage() {
+export default function FoodPage(props) {
+
+  const mealType = props.mealType || "breakfast"
+
   const [foodList, setFoodList] = useState([]);
   const [query, setQuery] = useState("");
 
@@ -28,7 +31,7 @@ export default function FoodPage() {
     <div>
       <h1 className="text-center text-2xl mb-2">Food Search</h1>
       <SearchBar onChange={(q) => setQuery(q)} />
-      <FoodTable foodList={search(foodList)} />
+      <FoodTable foodList={search(foodList)} mealType={mealType} />
     </div>
   );
 }
