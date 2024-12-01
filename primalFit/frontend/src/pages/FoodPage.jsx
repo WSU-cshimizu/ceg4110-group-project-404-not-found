@@ -13,7 +13,7 @@ export default function FoodPage() {
   const search = (data) => {
     return data.filter((item) => {
       if (item.food) {
-        return item.food.toLowerCase().includes(query);
+        return item.food.toLowerCase().includes(query.toLowerCase());
       }
       else return false;
     })

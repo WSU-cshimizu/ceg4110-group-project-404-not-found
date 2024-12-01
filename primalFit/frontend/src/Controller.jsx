@@ -1,7 +1,7 @@
 const baseUrl = "http://127.0.0.1:5000";
 
 const headers = {
-    "Content-Type": "application/json",
+    'Content-Type': "application/json; charset=utf8",
 }
 
 const get = async (url, data, options) => {
@@ -29,6 +29,12 @@ const patch = async (url, data, options) => {
     })
 }
 
+const del = async (url, options) => {
+    return await fetch(url, {
+        method: "DELETE", headers: headers, ...options
+    })
+}
+
 
 const login = async (email, password) => {
     const url = `${baseUrl}/login`;
@@ -43,7 +49,7 @@ const login = async (email, password) => {
     return await response.json();
 }
 
-const registerUser = async (name, email, password, birthdate, weight, weightGoal, height, isMale) => {
+const registerUser = async (name, email, password, birthdate, weight, weightGoal, height, isMale, activityLevel) => {
     const url = `${baseUrl}/register`;
 
     const data = {
@@ -54,11 +60,18 @@ const registerUser = async (name, email, password, birthdate, weight, weightGoal
         weight,
         weightGoal,
         height,
-        isMale
+        isMale,
+        activityLevel
     }
 
     const response = await post(url, data);
 
+    return response.json();
+}
+
+const getAllUsers = async () => {
+    const url = `${baseUrl}/users`
+    const response = await get(url);
     return response.json();
 }
 
@@ -70,24 +83,104 @@ const getUser = async (id) => {
 
 const updateUser = async (userId, user) => {
     const url = `${baseUrl}/users/${userId}`
-    console.log(user);
-
-    const response = await patch(url, user, { mode: 'cors' });
-
+    const response = await patch(url, user);
     return response.json();
 }
 
-const addRoutine = async (userId, routine) => {
-    const url = `${baseUrl}/users/${userId}/routines`
+const deleteUser = async (userId) => {
+    const url = `${baseUrl}/users/${userId}`
+    const response = await del(url)
+    return response;
 }
 
-const postFood = async (userId, food) => {
+const getAllRoutines = async () => {
+    const url = `${baseUrl}/routines`;
+    const response = await get(url);
+    return response.json();
+}
+
+const getRoutine = async (routineId) => {
+    const url = `${baseUrl}/routines/${routineId}`;
+    const response = await get(url);
+    return response.json();
+}
+
+const createRoutine = async (userId, name) => {
+    const url = `${baseUrl}/users/${userId}/routines`;
+    const data = {
+        name,
+        "days": []
+    }
+    const response = await post(url, data);
+    return response.json();
+}
+
+const updateRoutine = async (userId, routineId, name) => {
+    const url = `${baseUrl}/users/${userId}/routines/${routineId}`;
+    const data = {
+        name,
+        "days": []
+    }
+    const response = await patch(url, routine);
+    return response.json();
+}
+
+const deleteRoutine = async (routineId) => {
+    const url = `${baseUrl}/routines/${routineId}`;
+    const response = del(url);
+    return response;
+}
+
+const getAllExercises = async (routineId) => {
+    const url = `${baseUrl}/users/routines/${routineId}/exercises`;
+    const response = await get(url);
+    return response.json();
+}
+
+const createExercise = async (routineId, name, type, duration, caloriesBurned, videoUrl) => {
+    const url = `${baseUrl}/users/routines/${routineId}/exercises`;
+    const data = {
+        name,
+        type,
+        duration,
+        caloriesBurned,
+        videoUrl
+    }
+    const response = await post(url, data);
+    return response.json();
+}
+
+const deleteExercise = async (exerciseId) => {
+    const url = `${baseUrl}/exercises/${exerciseId}`;
+    const response = await del(url);
+    return response;
+}
+
+const getAllFoods = async (userId) => {
+    const url = `${baseUrl}/users/${userId}/foods`;
+    const response = await get(url);
+    return response.json()
+}
+
+const addFood = async (userId, name, calories, protein, carbs, fats, mealType) => {
     const url = `${baseUrl}/users/${userId}/foods`;
 
-    const response = await post(url, food, { mode: 'no-cors' });
-
+    const data = {
+        name,
+        calories,
+        protein,
+        carbs,
+        fats,
+        mealType
+    }
+    const response = await post(url, data);
     return await response.json();
+}
 
+const deleteFood = async (foodId) => {
+    const url = `${baseUrl}/foods/${foodId}`
+    const response = await del(url);
+    return response;
 }
 
 
@@ -95,8 +188,19 @@ const postFood = async (userId, food) => {
 module.exports = {
     login,
     registerUser,
+    getAllUsers,
     getUser,
     updateUser,
-    addRoutine,
-    postFood,
+    deleteUser,
+    getAllRoutines,
+    getRoutine,
+    createRoutine,
+    updateRoutine,
+    deleteRoutine,
+    getAllExercises,
+    createExercise,
+    deleteExercise,
+    getAllFoods,
+    addFood,
+    deleteFood
 }
