@@ -7,6 +7,9 @@ const FoodTable = (props) => {
     const foodList = props.foodList;
 
     const addFoodToUser = async (e, food, mealType) => {
+
+        test();
+        return;
         const data = {
             "name": food.food,
             "mealType": mealType,
@@ -20,8 +23,16 @@ const FoodTable = (props) => {
         console.log(id);
         const resJson = await controller.postFood(id, data)
         console.log(resJson);
+    }
 
-
+    const test = async () => {
+        //const response = await controller.registerUser("test4", "test4@test4.com", "password4", "2024-10-11", 187.24, 200, 48.85, true);
+        const user = await controller.getUser(4);
+        const response = await controller.updateUser(4,
+            {
+                ...user, "name": "ChangedUser4"
+            });
+        console.log(response)
 
     }
 

@@ -4,17 +4,29 @@ const headers = {
     "Content-Type": "application/json",
 }
 
+const get = async (url, data, options) => {
+    if (data) return await fetch(url, {
+        body: JSON.stringify(data), headers: headers, ...options
+    })
+    else return await fetch(url);
+}
 
 const post = async (url, data, options) => {
-
-    console.log(data);
     return await fetch(url, {
         method: "POST", body: JSON.stringify(data), headers: headers, ...options
     })
 }
 
-const get = async (url, data) => {
+const put = async (url, data, options) => {
+    return await fetch(url, {
+        method: "PUT", body: JSON.stringify(data), headers: headers, ...options
+    })
+}
 
+const patch = async (url, data, options) => {
+    return await fetch(url, {
+        method: "PATCH", body: JSON.stringify(data), headers: headers, ...options
+    })
 }
 
 
@@ -32,7 +44,7 @@ const login = async (email, password) => {
 }
 
 const registerUser = async (name, email, password, birthdate, weight, weightGoal, height, isMale) => {
-    const url = `${baseUrl}/users`;
+    const url = `${baseUrl}/register`;
 
     const data = {
         name,
@@ -46,6 +58,21 @@ const registerUser = async (name, email, password, birthdate, weight, weightGoal
     }
 
     const response = await post(url, data);
+
+    return response.json();
+}
+
+const getUser = async (id) => {
+    const url = `${baseUrl}/users/${id}`
+    const response = await get(url);
+    return response.json();
+}
+
+const updateUser = async (userId, user) => {
+    const url = `${baseUrl}/users/${userId}`
+    console.log(user);
+
+    const response = await patch(url, user, { mode: 'cors' });
 
     return response.json();
 }
@@ -68,6 +95,8 @@ const postFood = async (userId, food) => {
 module.exports = {
     login,
     registerUser,
+    getUser,
+    updateUser,
     addRoutine,
     postFood,
 }
