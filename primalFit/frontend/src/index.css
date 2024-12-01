@@ -9,3 +9,22 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+/* General styles */
+body {
+  background-color: #f0ead6; /* Standard beige background */
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: #000000; /* Standard black for all text */
+}
+
+h1, h2, h3 {
+  font-weight: bold;
+  color: #000000; /* Standard black for all headings */
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #000000; /* Ensure button text (if any) is black */
+}
