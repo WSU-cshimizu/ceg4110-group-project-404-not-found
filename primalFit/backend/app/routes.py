@@ -242,8 +242,8 @@ def create_exercise(rid):
 def delete_exercise(eid):
     exercise_to_delete = Exercise.query.get(eid)
 
-    if not Exercise:
-        return jsonify({"message": "Exercise Not Found"}), 404
+    if not exercise_to_delete:
+        return jsonify({"message": "The exercise does not exsit"}), 404
     
     db.session.delete(exercise_to_delete)
     db.session.commit()
