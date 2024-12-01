@@ -1,11 +1,28 @@
 import React from "react";
 
+const controller = require("../Controller.jsx")
+
 const FoodTable = (props) => {
 
     const foodList = props.foodList;
 
-    const addFoodToUser = (e, food) => {
-        console.log(food);
+    const addFoodToUser = async (e, food, mealType) => {
+        const data = {
+            "name": food.food,
+            "mealType": mealType,
+            "calories": food.calories,
+            "proteins": food.protein,
+            "carbs": food.carbs,
+            "fats": food.fat,
+        }
+
+        const { id } = await controller.login("test3@test3.com", "password3");
+        console.log(id);
+        const resJson = await controller.postFood(id, data)
+        console.log(resJson);
+
+
+
     }
 
     return (
@@ -31,7 +48,7 @@ const FoodTable = (props) => {
                     <td>{food.carbs}</td>
                     <td>{food.category}</td>
                     <td className="flex items-center justify-center">
-                        <button onClick={(e) => addFoodToUser(e, food)} className="flex justify-center items-center select-none">
+                        <button onClick={(e) => addFoodToUser(e, food, "breakfast")} className="flex justify-center items-center select-none">
                             <svg className="w-6 h-6 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h14m-7 7V5" />
                             </svg>
