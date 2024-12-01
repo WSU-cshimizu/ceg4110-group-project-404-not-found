@@ -69,7 +69,6 @@ const FoodTable = (props) => {
             <table className="w-full text-center">
                 <tr>
                     <th>Food</th>
-                    <th>Grams</th>
                     <th>Calories</th>
                     <th>Proteins</th>
                     <th>Fat</th>
@@ -81,7 +80,6 @@ const FoodTable = (props) => {
                 (
                     <tr>
                         <td>{food.food}</td>
-                        <td>{food.grams}</td>
                         <td>{food.calories}</td>
                         <td>{food.protein}</td>
                         <td>{food.fat}</td>
