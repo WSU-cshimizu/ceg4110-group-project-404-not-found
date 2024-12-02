@@ -162,10 +162,6 @@ function AccountPage() {
               <img src="images/workout.png" alt="Routines" />
               <span>Routines</span>
             </li>
-            <li onClick={() => navigate("/food-search")}>
-              <img src="images/search.png" alt="Food Search" />
-              <span>Food Search</span>
-            </li>
           </ul>
         </div>
       )}

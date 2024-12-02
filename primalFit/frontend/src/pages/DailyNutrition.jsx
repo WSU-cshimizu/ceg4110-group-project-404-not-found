@@ -16,7 +16,7 @@ function DailyNutrition() {
   const [overallProtein, setOverallProtein] = useState(0); // Total protein
   const [overallCarbs, setOverallCarbs] = useState(0); // Total carbs
   const navigate = useNavigate();
-  const userId = 1; // Replace with dynamic user ID if needed
+  const userId = 3; // Replace with dynamic user ID if needed
 
   useEffect(() => {
     const fetchFoods = async () => {
@@ -128,13 +128,9 @@ function DailyNutrition() {
                 <img src="images/apple.png" alt="Nutrition" />
                 <span>Nutrition</span>
               </li>
-              <li onClick={() => navigate("/workout")}>
+              <li onClick={() => navigate("/routines")}>
                 <img src="images/workout.png" alt="Workout" />
                 <span>Routines</span>
-              </li>
-              <li onClick={() => navigate("/food")}>
-                <img src="images/search.png" alt="Food Search" />
-                <span>Food Search</span>
               </li>
             </ul>
           </div>

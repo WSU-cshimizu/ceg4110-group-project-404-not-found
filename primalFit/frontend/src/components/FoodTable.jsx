@@ -9,7 +9,7 @@ const FoodTable = (props) => {
     const [message, setMessage] = useState({ success: false, message: "" });
 
     const addFoodToUser = async (e, food) => {
-        const res = await controller.login("test1@test1.com", "password1");
+        const res = await controller.login("test3@test3.com", "password3");
         const { id } = await res.json();
         controller
             .addFood(

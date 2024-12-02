@@ -22,7 +22,7 @@ function Dashboard() {
     const fetchUserData = async () => {
       try {
         setLoading(true);
-        const response = await controller.login("test3@test3.com", "password3");
+        const response = await controller.login("test1@test1.com", "password1");
         if (!response.ok) {
           throw new Error(`Error: ${response.status} - ${response.statusText}`);
         }
@@ -39,15 +39,18 @@ function Dashboard() {
           name: food.name,
           mealType: food.mealType,
           calories: food.calories,
-          proteins: food.proteins,
-          carbs: food.carbohydrates,
+          proteins: food.protein,
+          carbs: food.carbs,
         }));
+
         setFoodLog(parsedFoodLog);
 
         // Parse and set workout history
         const parsedWorkoutHistory = data.routines.map(
           (routine) => `${routine.day}: ${routine.name}`
         );
+
+        console.log(data.routines[0]);
         setWorkoutHistory(parsedWorkoutHistory);
 
         // Parse and set user goals
@@ -95,6 +98,7 @@ function Dashboard() {
     return <p className="error-message">{error}</p>;
   }
 
+  //console.log(workoutHistory);
   return (
     <div className="dashboard">
       {/* Menu buttons */}
@@ -115,13 +119,9 @@ function Dashboard() {
               <img src="images/apple.png" alt="Nutrition" />
               <span>Nutrition</span>
             </li>
-            <li>
+            <li onClick={() => navigate("/routines")}>
               <img src="images/workout.png" alt="Routines" />
               <span>Routines</span>
-            </li>
-            <li>
-              <img src="images/search.png" alt="Food Search" />
-              <span>Food Search</span>
             </li>
           </ul>
         </div>
@@ -186,7 +186,7 @@ function Dashboard() {
           <h2>Log Foods</h2>
           {["Breakfast", "Lunch", "Dinner"].map((mealType) => {
             const filteredFoods = foodLog.filter(
-              (item) => item.mealType === mealType
+              (item) => item.mealType === mealType.toLowerCase()
             );
             return (
               <div key={mealType}>

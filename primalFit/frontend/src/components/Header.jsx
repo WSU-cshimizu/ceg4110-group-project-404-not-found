@@ -5,6 +5,12 @@ import "./Header.css";
 import { NutritionContext } from "../pages/DailyNutrition"; // Import NutritionContext
 
 function Header({ data }) {
+  const caloriesPercentage = Math.round(
+    (data.calories / data.caloriesGoal) * 100
+  );
+  const proteinPercentage = Math.round((data.protein / data.proteinGoal) * 100);
+  const carbsPercentage = Math.round((data.carbs / data.carbsGoal) * 100);
+
   return (
     <div className="Header-row">
       <div className="Header-section">
@@ -17,7 +23,7 @@ function Header({ data }) {
           unit="cal"
         />
         <p className="percentage">
-          {Math.round((data.calories / data.caloriesGoal) * 100)}%
+          {isFinite(caloriesPercentage) ? caloriesPercentage : 0}%
         </p>
       </div>
       <div className="Header-section">
@@ -30,7 +36,7 @@ function Header({ data }) {
           unit="g"
         />
         <p className="percentage">
-          {Math.round((data.protein / data.proteinGoal) * 100)}%
+          {isFinite(proteinPercentage) ? proteinPercentage : 0}%
         </p>
       </div>
       <div className="Header-section">
@@ -43,7 +49,7 @@ function Header({ data }) {
           unit="g"
         />
         <p className="percentage">
-          {Math.round((data.carbs / data.carbsGoal) * 100)}%
+          {isFinite(carbsPercentage) ? carbsPercentage : 0}%
         </p>
       </div>
     </div>
