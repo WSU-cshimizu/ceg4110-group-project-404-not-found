@@ -1,185 +1,199 @@
 /* Overall page layout */
-/* Overall page layout */
+/* Container for the entire Daily Nutrition page */
 .daily-nutrition {
-    background-color: #f0ead6; /* Background color */
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* Full viewport height */
-    box-sizing: border-box;
+    background-color: #f0ead6; /* Sets the page background color to the standard beige */
+    display: flex; /* Uses flexbox for layout */
+    flex-direction: column; /* Stacks elements vertically */
+    min-height: 100vh; /* Ensures the page takes up at least the full viewport height */
+    box-sizing: border-box; /* Includes padding and border in total width and height */
     color: #000000; /* Default text color for the page */
-    padding: 0; /* Remove padding to align sections */
-    overflow-y: auto; /* Enable scrolling if content overflows */
+    padding: 0; /* Removes default padding for alignment */
+    overflow-y: auto; /* Enables vertical scrolling if content exceeds viewport height */
 }
 
-
 /* Title styling */
+/* Styles for the page title "Daily Nutrition" */
 .nutrition-title {
-    font-size: 3rem;
-    font-weight: bold;
+    font-size: 3rem; /* Large font size for the title */
+    font-weight: bold; /* Makes the title text bold */
     color: #000000; /* Black text color */
-    margin: 20px 0; /* Add spacing above and below the title */
-    text-align: center;
-    height: 90px;
+    margin: 20px 0; /* Adds spacing above and below the title */
+    text-align: center; /* Centers the title text */
+    height: 90px; /* Fixed height to align consistently */
 }
 
 /* Section container styling */
+/* Wrapper for meal sections (Breakfast, Lunch, Dinner) */
 .nutrition-sections {
-    display: flex; /* Use flexbox to arrange sections horizontally */
-    justify-content: space-between; /* Add equal spacing between the sections */
-    align-items: stretch; /* Make sections equal in height */
-    flex-grow: 1; /* Allow sections to expand and fill available space */
-    margin: 0; /* Remove default margin */
+    display: flex; /* Uses flexbox to arrange sections horizontally */
+    justify-content: space-between; /* Spaces sections evenly */
+    align-items: stretch; /* Makes all sections equal in height */
+    flex-grow: 1; /* Allows sections to expand and fill available space */
+    margin: 0; /* Removes default margin */
 }
 
 /* Section styling */
-/* Section styling */
+/* Individual meal section styling */
 .nutrition-section {
-    flex: 1; /* Ensure each section takes up equal space */
-    background-color: #f0ead6; /* Match the standard background color */
-    border: 2px solid #494f55; /* Add a border for visual separation */
-    border-radius: 0; /* Remove rounded corners for a seamless look */
-    box-sizing: border-box; /* Include padding and border in width/height calculation */
-    padding: 10px;
-    display: flex;
-    flex-direction: column; /* Stack content inside the section */
-    justify-content: space-between; /* Space items equally within the section */
-    margin: 0; /* Remove margins for a seamless layout */
-    border-top: 5px solid #494f55;
+    flex: 1; /* Ensures each section takes up equal space */
+    background-color: #f0ead6; /* Matches the standard background color */
+    border: 2px solid #494f55; /* Adds a dark border around each section */
+    border-radius: 0; /* Removes rounded corners */
+    box-sizing: border-box; /* Includes padding and border in width/height calculation */
+    padding: 10px; /* Adds padding inside the section */
+    display: flex; /* Uses flexbox for layout inside the section */
+    flex-direction: column; /* Stacks items vertically */
+    justify-content: space-between; /* Spaces items equally within the section */
+    margin: 0; /* Removes margins for a seamless layout */
+    border-top: 5px solid #494f55; /* Thicker top border for section separation */
 }
 
 /* Section title styling */
+/* Styles for meal section titles (e.g., Breakfast, Lunch) */
 .nutrition-section h2 {
-    font-size: 2rem;
+    font-size: 2rem; /* Large font size for meal titles */
     color: #000000; /* Black text color */
-    margin-bottom: 10px; /* Slight spacing below the section title */
-    border-bottom: 5px solid #494f55;
+    margin-bottom: 10px; /* Adds space below the title */
+    border-bottom: 5px solid #494f55; /* Underlines the title with a bold border */
 }
 
 /* Control buttons styling */
-/* Control buttons styling */
+/* Wrapper for the add and delete buttons in each section */
 .controls {
-    display: flex;
-    justify-content: flex-end;
-    gap: 15px;
-    margin-bottom: 10px;
-    position: relative; /* Ensure positioning is relative to the section */
-    top: -48px; /* Move the controls up by 30px */
+    display: flex; /* Uses flexbox to arrange buttons horizontally */
+    justify-content: flex-end; /* Aligns buttons to the right */
+    gap: 15px; /* Adds spacing between buttons */
+    margin-bottom: 10px; /* Adds space below the buttons */
+    position: relative; /* Ensures positioning is relative to the section */
+    top: -48px; /* Moves the buttons upwards for alignment */
 }
 
+/* Add and delete button styles */
 .add-button,
 .delete-button {
-    background: none;
-    border: none;
-    cursor: pointer;
+    background: none; /* Removes default button background */
+    border: none; /* Removes default button border */
+    cursor: pointer; /* Changes cursor to pointer on hover */
 }
 
+/* Icon styles for add and delete buttons */
 .add-button img,
 .delete-button img {
-    width: 30px; /* Adjust size of the icons */
-    height: 30px;
-    object-fit: contain;
+    width: 30px; /* Sets the icon width */
+    height: 30px; /* Sets the icon height */
+    object-fit: contain; /* Ensures the icon maintains its aspect ratio */
 }
 
+/* Hover effect for add and delete button icons */
 .add-button:hover img,
 .delete-button:hover img {
-    opacity: 0.8; /* Slight transparency for hover effect */
+    opacity: 0.8; /* Adds transparency for a hover effect */
 }
 
 /* Food items styling */
+/* Wrapper for the list of food items in each section */
 .food-items {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    flex-grow: 1; /* Expand to fill remaining space */
-  }
-  
-  .food-item {
-    background-color: #D9D9D9; /* Match the standard background color */
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    color: #000000; /* Black text color */
-    display: flex;
-    justify-content: space-between; /* Space between details and trash icon */
-    align-items: center; /* Align items vertically */
-    position: relative; /* Needed for icon alignment */
-  }
-  
-  .food-details {
-    flex-grow: 1; /* Ensure details take up remaining space */
-  }
-  
-  .food-delete-button {
-    display: none; /* Initially hidden */
-    background: none;
-    border: none;
-    cursor: pointer;
-    position: absolute;
-    top: 10px; /* Align with food name */
-    right: 10px;
-  }
-  
-  .food-delete-button img {
-    width: 20px;
+    display: flex; /* Uses flexbox for layout */
+    flex-direction: column; /* Stacks food items vertically */
+    gap: 10px; /* Adds spacing between food items */
+    flex-grow: 1; /* Expands to fill available space */
+}
+
+/* Individual food item styling */
+.food-item {
+    background-color: #D9D9D9; /* Light gray background for food items */
+    padding: 10px; /* Adds padding inside the food item */
+    border-radius: 5px; /* Rounds the corners slightly */
+    border: 1px solid #ccc; /* Adds a light border around each food item */
+    color: #000000; /* Black text color for food details */
+    display: flex; /* Uses flexbox for layout */
+    justify-content: space-between; /* Spaces details and trash icon */
+    align-items: center; /* Aligns items vertically */
+    position: relative; /* Needed for positioning the trash icon */
+}
+
+/* Wrapper for food item details (e.g., name, calories) */
+.food-details {
+    flex-grow: 1; /* Ensures the details take up remaining space */
+}
+
+/* Delete button inside food items */
+.food-delete-button {
+    display: none; /* Initially hides the delete button */
+    background: none; /* Removes default button background */
+    border: none; /* Removes default button border */
+    cursor: pointer; /* Changes cursor to pointer on hover */
+    position: absolute; /* Positions the button relative to the food item */
+    top: 10px; /* Aligns with the food name */
+    right: 10px; /* Aligns to the right of the food item */
+}
+
+/* Styles for the delete button icon */
+.food-delete-button img {
+    width: 20px; /* Smaller icon size for the delete button */
     height: 20px;
-  }
-  
-  .food-item:hover .food-delete-button {
-    display: block; /* Show button on hover of the food item */
-  }
-  
-  .food-item .food-delete-button {
-    display: block; /* Show button when toggled */
-  }
-  
-  
-  .food-delete-button:hover img {
-    opacity: 0.8; /* Slight transparency for hover effect */
-  }
-  
+}
+
+/* Show delete button on hover over food item */
+.food-item:hover .food-delete-button {
+    display: block; /* Displays the delete button */
+}
+
+/* Hover effect for the delete button icon */
+.food-delete-button:hover img {
+    opacity: 0.8; /* Adds transparency for a hover effect */
+}
 
 /* Macros display styling */
+/* Wrapper for the macros table at the bottom of each section */
 .macros {
-    margin-top: 20px;
-    font-size: 1.2rem;
+    margin-top: 20px; /* Adds spacing above the macros table */
+    font-size: 1.2rem; /* Sets the font size for the text */
     color: #000000; /* Black text color */
 }
 
+/* Macros table styling */
 .macros table {
-    width: 100%; /* Full width of the container */
-    border-collapse: collapse; /* Remove space between table cells */
-    text-align: center; /* Center-align text */
-    background-color: #f0ead6; /* Match the background */
+    width: 100%; /* Makes the table span the full width of the container */
+    border-collapse: collapse; /* Removes spacing between table cells */
+    text-align: center; /* Centers text inside table cells */
+    background-color: #f0ead6; /* Matches the background color */
 }
 
+/* Table header and cell styling */
 .macros th,
 .macros td {
-    border: 2px solid #494f55; /* Add a border to cells */
-    padding: 5px 10px; /* Add padding for better spacing */
-    font-size: 1.2rem; /* Adjust font size */
+    border: 2px solid #494f55; /* Adds a dark border around cells */
+    padding: 5px 10px; /* Adds padding inside cells */
+    font-size: 1.2rem; /* Adjusts font size */
     color: #000000; /* Black text color */
 }
 
+/* Styling for table headers */
 .macros th {
-    font-weight: bold; /* Bold font for the headers */
-    background-color: #d4cbb3; /* Slightly different shade for headers */
+    font-weight: bold; /* Makes headers bold */
+    background-color: #d4cbb3; /* Slightly darker background for headers */
 }
 
+/* Styling for table data cells */
 .macros td {
-    font-size: 1rem; /* Slightly smaller font for the data row */
+    font-size: 1rem; /* Smaller font size for table data */
 }
+
+/* Error message styling */
+/* General error message styling */
 .error-message {
-    color: red;
-    font-size: 1.2rem;
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  .no-food-logged {
-    color: #494f55;
-    font-size: 1rem;
-    text-align: center;
-    margin: 10px 0;
-    font-style: italic;
-  }
-  
+    color: red; /* Red text for errors */
+    font-size: 1.2rem; /* Larger font size */
+    text-align: center; /* Centers the text */
+    margin-top: 20px; /* Adds spacing above the message */
+}
+
+/* Placeholder text when no food is logged */
+.no-food-logged {
+    color: #494f55; /* Dark gray text */
+    font-size: 1rem; /* Smaller font size */
+    text-align: center; /* Centers the text */
+    margin: 10px 0; /* Adds spacing above and below */
+    font-style: italic; /* Italicizes the text */
+}

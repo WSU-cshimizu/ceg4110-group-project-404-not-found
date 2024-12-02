@@ -1,27 +1,61 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate from React Router
-import Button from "../components/Button"; // Corrected path for Button component
-import "../pages/AccountPage.css"; // Corrected path for styles
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Button from "../components/Button"; // Adjusted path for Button component
+import "../pages/AccountPage.css"; // Adjusted path for styles
 
 function AccountPage() {
   const [menuVisible, setMenuVisible] = useState(false); // State to toggle menu visibility
-  const [accountData, setAccountData] = useState({
-    personalInfo: {
-      name: "Mike Cox",
-      weight: "150/155 lbs",
-      height: "6'4\"",
-      birthday: "4/20/1969",
-    },
-    loginInfo: {
-      email: "mikecox@gmail.com",
-      password: "Change Password",
-    },
-  });
+  const [accountData, setAccountData] = useState(null); // State to hold account data
+  const [editingField, setEditingField] = useState(null); // Currently editing field
+  const [tempValue, setTempValue] = useState(""); // Temporary value for field editing
+  const [loading, setLoading] = useState(true); // Loading state
+  const [error, setError] = useState(null); // Error state
+  const navigate = useNavigate(); // Navigation hook
 
-  const [editingField, setEditingField] = useState(null);
-  const [tempValue, setTempValue] = useState("");
-
-  const navigate = useNavigate(); // Initialize navigation hook
+  // Fetch user data from backend
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch("/api/users/1"); // Example endpoint
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} - ${response.statusText}`);
+        }
+  
+        // Check if the content type is JSON
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+          throw new Error("Invalid content type received, expected JSON");
+        }
+  
+  
+        // Map response data
+        const mappedData = {
+          personalInfo: {
+            name: response.name,
+            weight: `${response.weight} lbs / ${response.weightGoal} lbs`,
+            height: `${Math.floor(response.height)}'${Math.round((response.height % 1) * 12)}"`,
+            birthday: response.birthdate,
+          },
+          loginInfo: {
+            email: response.email,
+            password: "Change Password",
+          },
+        };
+  
+        setAccountData(mappedData);
+        setError(null);
+      } catch (err) {
+        console.error("Failed to fetch user data:", err.message);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchUserData();
+  }, []);
+  
 
   // Toggle menu visibility
   const toggleMenu = () => setMenuVisible(!menuVisible);
@@ -32,24 +66,44 @@ function AccountPage() {
     setTempValue(currentValue);
   };
 
-  // Save changes (on Enter key press)
-  const handleSave = () => {
-    setAccountData((prevData) => {
-      const updatedData = { ...prevData };
-      if (editingField in updatedData.personalInfo) {
-        updatedData.personalInfo[editingField] = tempValue;
-      } else if (editingField in updatedData.loginInfo) {
-        updatedData.loginInfo[editingField] = tempValue;
+  // Save changes and send them to the backend
+  const handleSave = async () => {
+    if (!editingField) return;
+
+    try {
+      const updatedAccountData = { ...accountData };
+      if (editingField in updatedAccountData.personalInfo) {
+        updatedAccountData.personalInfo[editingField] = tempValue;
+      } else if (editingField in updatedAccountData.loginInfo) {
+        updatedAccountData.loginInfo[editingField] = tempValue;
       }
-      return updatedData;
-    });
-    setEditingField(null); // Exit editing mode
+
+      // Prepare payload for the backend
+      const payload = {
+        [editingField]: tempValue,
+      };
+
+      const response = await fetch("/api/users/123", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) throw new Error("Failed to save changes");
+
+      setAccountData(updatedAccountData);
+      setError(null);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setEditingField(null);
+    }
   };
 
-  // Cancel editing (on Escape key press)
-  const handleCancel = () => {
-    setEditingField(null); // Exit editing mode without saving
-  };
+  // Cancel editing
+  const handleCancel = () => setEditingField(null);
 
   // Render either input field or text based on editing state
   const renderField = (field, value) =>
@@ -68,9 +122,24 @@ function AccountPage() {
       value
     );
 
+  const getIconPath = (field) => {
+    const iconPaths = {
+      name: "src/images/user.png",
+      weight: "src/images/scale.png",
+      height: "src/images/height.png",
+      birthday: "src/images/birthday-cake.png",
+      email: "src/images/email.png",
+      password: "src/images/password.png",
+    };
+
+    return iconPaths[field] || "src/images/default.png"; // Fallback to default icon
+  };
+
+  if (loading) return <p>Loading account data...</p>;
+  if (error) return <p className="error-message">{error}</p>;
+
   return (
     <div className="account-page">
-      {/* Sliding Menu */}
       {menuVisible && (
         <div className="menu">
           <button className="menu-close" onClick={toggleMenu}>
@@ -97,84 +166,42 @@ function AccountPage() {
         </div>
       )}
 
-      {/* Menu Button */}
-      <Button type="menu" onClick={toggleMenu} /> {/* Toggle menu */}
+      <Button type="menu" onClick={toggleMenu} />
+      <Button type="account" />
 
-      <Button type="account" /> {/* Navigate to Account Page */}
-
-      {/* Page Title */}
       <h1 className="account-page-title">Account Info</h1>
 
-      {/* Account Info Sections */}
       <div className="account-info-container">
-        {/* Personal Information Section */}
         <div className="account-info-section">
           <h2>Personal Information</h2>
-          <div className="account-item">
-            <img src="src/images/user.png" alt="User Icon" />
-            <span>{renderField("name", accountData.personalInfo.name)}</span>
-            <button
-              className="edit-button"
-              onClick={() => handleEditStart("name", accountData.personalInfo.name)}
-            >
-              <img src="src/images/edit.png" alt="Edit Icon" />
-            </button>
-          </div>
-          <div className="account-item">
-            <img src="src/images/scale.png" alt="Weight Icon" />
-            <span>{renderField("weight", accountData.personalInfo.weight)}</span>
-            <button
-              className="edit-button"
-              onClick={() => handleEditStart("weight", accountData.personalInfo.weight)}
-            >
-              <img src="src/images/edit.png" alt="Edit Icon" />
-            </button>
-          </div>
-          <div className="account-item">
-            <img src="src/images/height.png" alt="Height Icon" />
-            <span>{renderField("height", accountData.personalInfo.height)}</span>
-            <button
-              className="edit-button"
-              onClick={() => handleEditStart("height", accountData.personalInfo.height)}
-            >
-              <img src="src/images/edit.png" alt="Edit Icon" />
-            </button>
-          </div>
-          <div className="account-item">
-            <img src="src/images/birthday-cake.png" alt="Birthday Icon" />
-            <span>{renderField("birthday", accountData.personalInfo.birthday)}</span>
-            <button
-              className="edit-button"
-              onClick={() => handleEditStart("birthday", accountData.personalInfo.birthday)}
-            >
-              <img src="src/images/edit.png" alt="Edit Icon" />
-            </button>
-          </div>
+          {Object.entries(accountData.personalInfo).map(([field, value]) => (
+            <div className="account-item" key={field}>
+              <img src={getIconPath(field)} alt={`${field} Icon`} />
+              <span>{renderField(field, value)}</span>
+              <button
+                className="edit-button"
+                onClick={() => handleEditStart(field, value)}
+              >
+                <img src="src/images/edit.png" alt="Edit Icon" />
+              </button>
+            </div>
+          ))}
         </div>
 
-        {/* Account Login Information Section */}
         <div className="account-info-section">
           <h2>Account Login Information</h2>
-          <div className="account-item">
-            <img src="src/images/email.png" alt="Email Icon" />
-            <span>{renderField("email", accountData.loginInfo.email)}</span>
-            <button
-              className="edit-button"
-              onClick={() => handleEditStart("email", accountData.loginInfo.email)}
-            >
-              <img src="src/images/edit.png" alt="Edit Icon" />
-            </button>
-          </div>
-          <div className="account-item">
-            <img src="src/images/Password.png" alt="Password Icon" />
-            <span>{renderField("password", accountData.loginInfo.password)}</span>
-            <button
-              className="edit-button"
-              onClick={() => handleEditStart("password", accountData.loginInfo.password)}
-            >
-              <img src="src/images/edit.png" alt="Edit Icon" />
-            </button>
-          </div>
+          {Object.entries(accountData.loginInfo).map(([field, value]) => (
+            <div className="account-item" key={field}>
+              <img src={getIconPath(field)} alt={`${field} Icon`} />
+              <span>{renderField(field, value)}</span>
+              <button
+                className="edit-button"
+                onClick={() => handleEditStart(field, value)}
+              >
+                <img src="src/images/edit.png" alt="Edit Icon" />
+              </button>
+            </div>
+          ))}
         </div>
       </div>
     </div>

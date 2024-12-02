@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate from React Router
 import Header from "../components/Header"; // Adjusted path for Header component
 import Button from "../components/Button"; // Adjusted path for Button component
-import "../pages/Dashboard.css"; // Adjusted path for Dashboard styles
+import "../pages/Dashboard.css";
+import { NutritionContext } from "../pages/Daily_Nutrition"; // Import NutritionContext
 
 function Dashboard() {
-  const [menuVisible, setMenuVisible] = useState(false); // State to toggle menu visibility
-  const navigate = useNavigate(); // Initialize navigation hook
-
+  const [menuVisible, setMenuVisible] = React.useState(false); // State to toggle menu visibility
+  const navigate = useNavigate(); // Navigation hook
+  
   // Header data to display progress in the header
   const HeaderData = {
     calories: 500,
