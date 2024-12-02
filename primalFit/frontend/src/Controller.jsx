@@ -121,7 +121,7 @@ const updateRoutine = async (userId, routineId, name) => {
         name,
         "days": []
     }
-    const response = await patch(url, routine);
+    const response = await patch(url, data);
     return response.json();
 }
 
@@ -164,6 +164,19 @@ const getAllFoods = async (userId) => {
 
 const addFood = async (userId, name, calories, protein, carbs, fats, mealType) => {
     const url = `${baseUrl}/users/${userId}/foods`;
+
+    if (typeof calories == "string") {
+        calories = parseInt(calories.replace(',', ""))
+    }
+    if (typeof protein == "string") {
+        protein = parseInt(protein.replace(',', ""))
+    }
+    if (typeof carbs == "string") {
+        carbs = parseInt(carbs.replace(',', ""))
+    }
+    if (typeof calories == "string") {
+        fats = parseInt(fats.replace(',', ""))
+    }
 
     const data = {
         name,
