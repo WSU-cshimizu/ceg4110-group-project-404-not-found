@@ -44,9 +44,11 @@ const login = async (email, password) => {
         password
     }
 
-    const response = await post(url, data)
+    return await post(url, data);
 
-    return await response.json();
+    //const response = await post(url, data)
+
+    //return await response.json();
 }
 
 const registerUser = async (name, email, password, birthdate, weight, weightGoal, height, isMale, activityLevel) => {

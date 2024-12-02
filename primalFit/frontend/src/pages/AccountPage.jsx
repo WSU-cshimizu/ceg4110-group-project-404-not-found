@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Button from "../components/Button"; // Adjusted path for Button component
 import "../pages/AccountPage.css"; // Adjusted path for styles
 
+const controller = require("../Controller");
+
 function AccountPage() {
   const [menuVisible, setMenuVisible] = useState(false); // State to toggle menu visibility
   const [accountData, setAccountData] = useState(null); // State to hold account data
@@ -17,7 +19,7 @@ function AccountPage() {
     const fetchUserData = async () => {
       try {
         setLoading(true);
-        const response = await fetch("/api/users/1"); // Example endpoint
+        const response = await controller.login("test3@test3.com", "password3");
         if (!response.ok) {
           throw new Error(`Error: ${response.status} - ${response.statusText}`);
         }
@@ -124,12 +126,12 @@ function AccountPage() {
 
   const getIconPath = (field) => {
     const iconPaths = {
-      name: "src/images/user.png",
-      weight: "src/images/scale.png",
-      height: "src/images/height.png",
-      birthday: "src/images/birthday-cake.png",
-      email: "src/images/email.png",
-      password: "src/images/password.png",
+      name: "images/user.png",
+      weight: "images/scale.png",
+      height: "images/height.png",
+      birthday: "images/birthday-cake.png",
+      email: "/images/email.png",
+      password: "/images/password.png",
     };
 
     return iconPaths[field] || "src/images/default.png"; // Fallback to default icon
