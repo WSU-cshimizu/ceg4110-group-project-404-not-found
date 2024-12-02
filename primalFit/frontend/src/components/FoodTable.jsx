@@ -10,6 +10,7 @@ const FoodTable = (props) => {
     const [message, setMessage] = useState({ success: false, message: "" });
 
     const addFoodToUser = async (e, food) => {
+        
         const { id } = await controller.login("test3@test3.com", "password3");
         controller.addFood(id, food.food, food.calories, food.protein, food.carbs, food.fat, mealType)
             .then((resJson) => {
@@ -60,6 +61,7 @@ const FoodTable = (props) => {
     //     //const response = await controller.getAllFoods(1);
     //     //const response = await controller.addFood(3, "chocolate", 23, 53, 13, 78, "lunch");
     //     //const response = await controller.deleteFood(5);
+    //     //const response = await controller.updateExercise(2,3, {"caloriesBurned":100});
     //     // console.log(response)
     // }
 

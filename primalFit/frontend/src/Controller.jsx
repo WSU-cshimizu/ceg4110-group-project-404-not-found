@@ -17,11 +17,11 @@ const post = async (url, data, options) => {
     })
 }
 
-const put = async (url, data, options) => {
-    return await fetch(url, {
-        method: "PUT", body: JSON.stringify(data), headers: headers, ...options
-    })
-}
+// const put = async (url, data, options) => {
+//     return await fetch(url, {
+//         method: "PUT", body: JSON.stringify(data), headers: headers, ...options
+//     })
+// }
 
 const patch = async (url, data, options) => {
     return await fetch(url, {
@@ -150,6 +150,12 @@ const createExercise = async (routineId, name, type, duration, caloriesBurned, v
     return response.json();
 }
 
+const updateExercise = async (routineId, exerciseId, exercise) => {
+    const url = `${baseUrl}/routines/${routineId}/exercises/${exerciseId}`;
+    const response = await patch(url, exercise);
+    return response.json();
+}
+
 const deleteExercise = async (exerciseId) => {
     const url = `${baseUrl}/exercises/${exerciseId}`;
     const response = await del(url);
@@ -212,6 +218,7 @@ module.exports = {
     deleteRoutine,
     getAllExercises,
     createExercise,
+    updateExercise,
     deleteExercise,
     getAllFoods,
     addFood,
