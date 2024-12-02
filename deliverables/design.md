@@ -15,7 +15,7 @@
     
 3. ***Routine Layout***
     - A routine object shall contain a days of the week
-    - A routine shall be composed of workout objects in an ordered list
+    - A routine shall be composed of exercise objects in an ordered list
     ![CRUD ](MVD_Images/RoutinepageExpanded.png)
 
 
@@ -27,13 +27,15 @@
 
     ![Registration Page](MVD_Images/RegisterPage.png)
 
+
+## Requirement 3: The user shall be able to login to the website and have there data saved for later use.
 2. ***Login Page***
     - A user shall be prompted to login to the website if they want to access their fitness history
     ![Login Page](MVD_Images/LoginPage.png)
     - Once a user has been created a comparison will be made in a flask api to determine if the user exist when logging in 
     ![Login Flow Chart](../assets/flow-chart/Login_Page.drawio.png)
 
-## Requirement 3: A user shall be able to search common foods and input them into their meals for the day
+## Requirement 4: A user shall be able to search common foods and input them into their meals for the day
 
 1. ***Food Search Page*** 
     - This page shall have a text field that allows users to search for foods, it will then generate responses that match the search. 

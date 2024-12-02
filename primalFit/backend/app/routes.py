@@ -238,12 +238,33 @@ def create_exercise(rid):
     json_values = new_exercise.to_json()
     return(jsonify(json_values), 201) 
 
+@bp.route("/routines/<int:rid>/exercises/<int:eid>", methods =["PATCH"])
+def update_exercise(rid,eid):
+    routine = Routine.query.filter(Routine.id == rid).first()
+    exercise_update = db.session.get(Exercise, eid)
+
+    if not routine:
+        return jsonify({"message": "Rotine not found"}), 404
+    if not exercise_update:
+        return jsonify({"message" : "Exercise does not exist"}), 404
+    
+    data = request.json
+    exercise_update.name = data.get("name", exercise_update.name)
+    exercise_update.type = data.get("type", exercise_update.type)
+    exercise_update.duration = data.get("duration", exercise_update.duration)
+    exercise_update.video_url = data.get("videoUrl", exercise_update.video_url)
+    exercise_update.calories_burned = data.get("caloriesBurned", exercise_update.calories_burned)
+    db.session.commit()
+    json_values = exercise_update.to_json()
+    return (json_values, 201) 
+
+
 @bp.route("/exercises/<int:eid>", methods = ["DELETE"])
 def delete_exercise(eid):
     exercise_to_delete = Exercise.query.get(eid)
 
-    if not Exercise:
-        return jsonify({"message": "Exercise Not Found"}), 404
+    if not exercise_to_delete:
+        return jsonify({"message": "The exercise does not exsit"}), 404
     
     db.session.delete(exercise_to_delete)
     db.session.commit()
