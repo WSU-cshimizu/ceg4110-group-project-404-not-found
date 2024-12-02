@@ -16,14 +16,14 @@ function Button({ type, onClick, position }) {
 
   // Define the mapping of button types to their respective icons
   const icons = {
-    menu: { src: "src/images/Menu.png", defaultPosition: { left: "10px", top: "20px" } },
-    account: { src: "src/images/account.png", defaultPosition: { right: "10px", top: "20px" } },
-    user: { src: "src/images/user.png" },
-    scale: { src: "src/images/scale.png" },
-    height: { src: "src/images/height.png" },
-    birthday: { src: "src/images/birthday-cake.png" },
-    email: { src: "src/images/email.png" },
-    password: { src: "src/images/Password.png" },
+    menu: { src: "images/Menu.png", defaultPosition: { left: "10px", top: "20px" } },
+    account: { src: "images/account.png", defaultPosition: { right: "10px", top: "20px" } },
+    user: { src: "images/user.png" },
+    scale: { src: "images/scale.png" },
+    height: { src: "images/height.png" },
+    birthday: { src: "images/birthday-cake.png" },
+    email: { src: "images/email.png" },
+    password: { src: "images/Password.png" },
   };
 
   const icon = icons[type];

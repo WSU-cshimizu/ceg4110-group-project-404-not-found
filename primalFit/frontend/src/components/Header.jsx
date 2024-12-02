@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Progress_bar from "./Progress_bar";
 import "./Header.css";
-import { NutritionContext } from "../pages/Daily_Nutrition"; // Import NutritionContext
+import { NutritionContext } from "../pages/DailyNutrition"; // Import NutritionContext
 
 function Header({ data }) {
   return (

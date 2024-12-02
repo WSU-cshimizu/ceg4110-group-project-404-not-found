@@ -3,12 +3,11 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate from React
 import Header from "../components/Header"; // Adjusted path for Header component
 import Button from "../components/Button"; // Adjusted path for Button component
 import "../pages/Dashboard.css";
-import { NutritionContext } from "../pages/Daily_Nutrition"; // Import NutritionContext
 
 function Dashboard() {
   const [menuVisible, setMenuVisible] = React.useState(false); // State to toggle menu visibility
   const navigate = useNavigate(); // Navigation hook
-  
+
   // Header data to display progress in the header
   const HeaderData = {
     calories: 500,
@@ -67,23 +66,23 @@ function Dashboard() {
       {menuVisible && (
         <div className="menu">
           <button className="menu-close" onClick={toggleMenu}>
-            <img src="src/images/Menu.png" alt="Close Menu" />
+            <img src="images/Menu.png" alt="Close Menu" />
           </button>
           <ul>
             <li onClick={() => navigate("/")}>
-              <img src="src/images/data-analysis.png" alt="Dashboard" />
+              <img src="images/data-analysis.png" alt="Dashboard" />
               <span>Dashboard</span>
             </li>
             <li onClick={() => navigate("/nutrition")}>
-              <img src="src/images/apple.png" alt="Nutrition" />
+              <img src="images/apple.png" alt="Nutrition" />
               <span>Nutrition</span>
             </li>
             <li>
-              <img src="src/images/workout.png" alt="Routines" />
+              <img src="images/workout.png" alt="Routines" />
               <span>Routines</span>
             </li>
             <li>
-              <img src="src/images/search.png" alt="Food Search" />
+              <img src="images/search.png" alt="Food Search" />
               <span>Food Search</span>
             </li>
           </ul>

@@ -23,28 +23,31 @@ function AccountPage() {
         if (!response.ok) {
           throw new Error(`Error: ${response.status} - ${response.statusText}`);
         }
-  
+
         // Check if the content type is JSON
         const contentType = response.headers.get("content-type");
         if (!contentType || !contentType.includes("application/json")) {
           throw new Error("Invalid content type received, expected JSON");
         }
-  
-  
+
+        const user = await response.json();
+
         // Map response data
         const mappedData = {
           personalInfo: {
-            name: response.name,
-            weight: `${response.weight} lbs / ${response.weightGoal} lbs`,
-            height: `${Math.floor(response.height)}'${Math.round((response.height % 1) * 12)}"`,
-            birthday: response.birthdate,
+            name: user.name,
+            weight: `${user.weight} lbs / ${user.weightGoal} lbs`,
+            height: `${Math.floor(user.height)}'${Math.round(
+              (user.height % 1) * 12
+            )}"`,
+            birthday: user.birthdate,
           },
           loginInfo: {
-            email: response.email,
+            email: user.email,
             password: "Change Password",
           },
         };
-  
+
         setAccountData(mappedData);
         setError(null);
       } catch (err) {
@@ -54,10 +57,9 @@ function AccountPage() {
         setLoading(false);
       }
     };
-  
+
     fetchUserData();
   }, []);
-  
 
   // Toggle menu visibility
   const toggleMenu = () => setMenuVisible(!menuVisible);
@@ -157,11 +159,11 @@ function AccountPage() {
               <span>Nutrition</span>
             </li>
             <li onClick={() => navigate("/routines")}>
-              <img src="src/images/workout.png" alt="Routines" />
+              <img src="images/workout.png" alt="Routines" />
               <span>Routines</span>
             </li>
             <li onClick={() => navigate("/food-search")}>
-              <img src="src/images/search.png" alt="Food Search" />
+              <img src="images/search.png" alt="Food Search" />
               <span>Food Search</span>
             </li>
           </ul>
@@ -184,7 +186,7 @@ function AccountPage() {
                 className="edit-button"
                 onClick={() => handleEditStart(field, value)}
               >
-                <img src="src/images/edit.png" alt="Edit Icon" />
+                <img src="images/edit.png" alt="Edit Icon" />
               </button>
             </div>
           ))}
