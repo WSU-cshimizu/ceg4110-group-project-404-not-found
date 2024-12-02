@@ -333,6 +333,35 @@ Add an exercise to the routine
 }
 ```
 
+### PATCH: /routines/:rid/exercises/:eid
+Update an exercise in the routine
+
+**Body**
+```json
+{
+    "name":"String",
+    "type":"String",
+    "duration":"Double",
+    "caloriesBurned":"Integer",
+    "videoUrl":"String"
+}
+```
+
+**Response: 201 OK**
+```json
+{
+    "id":"Integer",
+    "routineId":"Integer",
+    "name":"String",
+    "type":"String",
+    "duration":"Double",
+    "caloriesBurned":"Integer",
+    "videoUrl":"String",
+    "date":"Date (2024-11-12)"
+}
+```
+
+
 ### DELETE: /exercises/:eid
 Delete an exercise in the routine
 
