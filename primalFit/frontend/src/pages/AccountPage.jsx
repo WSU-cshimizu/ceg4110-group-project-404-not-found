@@ -37,9 +37,7 @@ function AccountPage() {
           personalInfo: {
             name: user.name,
             weight: `${user.weight} lbs / ${user.weightGoal} lbs`,
-            height: `${Math.floor(user.height)}'${Math.round(
-              (user.height % 1) * 12
-            )}"`,
+            height: `${Math.floor(user.height)}'${Math.round((user.height % 1) * 12)}"`,
             birthday: user.birthdate,
           },
           loginInfo: {

@@ -1,67 +1,105 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate from React Router
-import Header from "../components/Header"; // Adjusted path for Header component
-import Button from "../components/Button"; // Adjusted path for Button component
+import { useNavigate } from "react-router-dom";
+import Header from "../components/Header";
+import Button from "../components/Button";
 import "../pages/Dashboard.css";
 
+const controller = require("../Controller");
+
 function Dashboard() {
-  const [menuVisible, setMenuVisible] = React.useState(false); // State to toggle menu visibility
-  const navigate = useNavigate(); // Navigation hook
+  const [menuVisible, setMenuVisible] = useState(false);
+  const [foodLog, setFoodLog] = useState([]); // Food log data
+  const [workoutHistory, setWorkoutHistory] = useState([]); // Workout history data
+  const [totalCalories, setTotalCalories] = useState(0); // Total calories
+  const [totalProteins, setTotalProteins] = useState(0); // Total proteins
+  const [totalCarbs, setTotalCarbs] = useState(0); // Total carbs
+  const [goals, setGoals] = useState({}); // Goals data
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-  // Header data to display progress in the header
-  const HeaderData = {
-    calories: 500,
-    caloriesGoal: 2500,
-    protein: 100,
-    proteinGoal: 125,
-    carbs: 30,
-    carbsGoal: 300,
-  };
-
-  // Workout data to display in the Workouts section
-  const WorkoutData = [
-    { name: "Leg", day: "Tuesday", time: "3:00 - 5:00 PM" },
-    { name: "Pull", day: "Wednesday", time: "3:00 - 5:00 PM" },
-    { name: "Tri", day: "Saturday", time: "3:00 - 5:00 PM" },
-  ];
-
-  // State for History section lists
-  const [foodHistory, setFoodHistory] = useState([]);
-  const [workoutHistory, setWorkoutHistory] = useState([]);
-
-  // State for dynamic food lists
-  const [breakfastItems, setBreakfastItems] = useState([]);
-  const [dinnerItems, setDinnerItems] = useState([]);
-  const [lunchItems, setLunchItems] = useState([]);
-
-  // Simulate fetching data from an API
   useEffect(() => {
-    const fetchedHistoryData = {
-      food: ["Breakfast: Eggs and Toast", "Lunch: Grilled Chicken Salad", "Dinner: Salmon and Rice"],
-      workouts: ["Monday: Chest and Triceps", "Wednesday: Back and Biceps", "Friday: Legs"],
+    const fetchUserData = async () => {
+      try {
+        setLoading(true);
+        const response = await controller.login("test3@test3.com", "password3");
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} - ${response.statusText}`);
+        }
+
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+          throw new Error("Invalid content type received, expected JSON");
+        }
+
+        const data = await response.json();
+
+        // Parse and set food log
+        const parsedFoodLog = data.eatenFood.map((food) => ({
+          name: food.name,
+          mealType: food.mealType,
+          calories: food.calories,
+          proteins: food.proteins,
+          carbs: food.carbohydrates,
+        }));
+        setFoodLog(parsedFoodLog);
+
+        // Parse and set workout history
+        const parsedWorkoutHistory = data.routines.map(
+          (routine) => `${routine.day}: ${routine.name}`
+        );
+        setWorkoutHistory(parsedWorkoutHistory);
+
+        // Parse and set user goals
+        setGoals({
+          calorieGoal: data.calorieGoal,
+          proteinGoal: data.proteinGoal,
+          carbohydrateGoal: data.carbohydrateGoal,
+        });
+
+        // Calculate total macros
+        const totalCalories = parsedFoodLog.reduce(
+          (sum, item) => sum + item.calories,
+          0
+        );
+        const totalProteins = parsedFoodLog.reduce(
+          (sum, item) => sum + item.proteins,
+          0
+        );
+        const totalCarbs = parsedFoodLog.reduce(
+          (sum, item) => sum + item.carbs,
+          0
+        );
+
+        setTotalCalories(totalCalories);
+        setTotalProteins(totalProteins);
+        setTotalCarbs(totalCarbs);
+      } catch (err) {
+        console.error("Failed to fetch user data:", err.message);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    const fetchedFoodData = {
-      breakfast: ["Eggs", "Toast", "Orange Juice"],
-      dinner: ["Grilled Chicken", "Rice", "Salad"],
-      supper: ["Soup", "Bread"],
-    };
-
-    setFoodHistory(fetchedHistoryData.food);
-    setWorkoutHistory(fetchedHistoryData.workouts);
-    setBreakfastItems(fetchedFoodData.breakfast);
-    setDinnerItems(fetchedFoodData.dinner);
-    setLunchItems(fetchedFoodData.supper);
+    fetchUserData();
   }, []);
 
-  const toggleMenu = () => {
-    setMenuVisible(!menuVisible);
-  };
+  const toggleMenu = () => setMenuVisible(!menuVisible);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p className="error-message">{error}</p>;
+  }
 
   return (
     <div className="dashboard">
-      <Button type="menu" onClick={toggleMenu} /> {/* Opens the menu */}
-      <Button type="account" /> {/* Navigate to the Account Page */}
+      {/* Menu buttons */}
+      <Button type="menu" onClick={toggleMenu} />
+      <Button type="account" />
 
       {menuVisible && (
         <div className="menu">
@@ -89,22 +127,35 @@ function Dashboard() {
         </div>
       )}
 
-      <div>
-        <Header data={HeaderData} />
-      </div>
+      {/* Header Section */}
+      <Header
+        data={{
+          calories: totalCalories,
+          caloriesGoal: goals.calorieGoal || 2500,
+          protein: totalProteins,
+          proteinGoal: goals.proteinGoal || 125,
+          carbs: totalCarbs,
+          carbsGoal: goals.carbohydrateGoal || 300,
+        }}
+      />
 
+      {/* Main Page Content */}
       <div className="main-page-container">
+        {/* History Section */}
         <div className="section History">
           <h2>History</h2>
           <div className="history-subsections">
+            {/* Food History */}
             <div className="subsection Food">
               <h3>Food</h3>
               <ul>
-                {foodHistory.map((item, index) => (
-                  <li key={index}>{item}</li>
+                {foodLog.map((item, index) => (
+                  <li key={index}>{`${item.mealType}: ${item.name}`}</li>
                 ))}
               </ul>
             </div>
+
+            {/* Workout History */}
             <div className="subsection Workout">
               <h3>Workout</h3>
               <ul>
@@ -116,47 +167,44 @@ function Dashboard() {
           </div>
         </div>
 
+        {/* Workouts Section */}
         <div className="logger"></div>
-
         <div className="section Workouts">
           <h2>Workouts</h2>
           <div className="workout-list">
-            {WorkoutData.map((workout, index) => (
+            {workoutHistory.map((workout, index) => (
               <div key={index} className="workout-item">
-                <p>
-                  <strong>{workout.name}:</strong> {workout.day} {workout.time}
-                </p>
+                <p>{workout}</p>
               </div>
             ))}
           </div>
         </div>
 
+        {/* Log Foods Section */}
         <div className="logger"></div>
-
         <div className="section Log-Foods">
           <h2>Log Foods</h2>
-
-          <h3>Breakfast</h3>
-          <ul>
-            {breakfastItems.map((item, index) => (
-              <li key={index}>{item}</li>
-            ))}
-          </ul>
-          <h3>Lunch</h3>
-          <ul>
-            {lunchItems.map((item, index) => (
-              <li key={index}>{item}</li>
-            ))}
-          </ul>
-          <h3>Dinner</h3>
-          <ul>
-            {dinnerItems.map((item, index) => (
-              <li key={index}>{item}</li>
-            ))}
-          </ul>
+          {["Breakfast", "Lunch", "Dinner"].map((mealType) => {
+            const filteredFoods = foodLog.filter(
+              (item) => item.mealType === mealType
+            );
+            return (
+              <div key={mealType}>
+                <h3>{mealType}</h3>
+                <ul>
+                  {filteredFoods.map((food, index) => (
+                    <li key={index}>
+                      <strong>{food.name}</strong>
+                      <p>Calories: {food.calories} cal</p>
+                      <p>Proteins: {food.proteins} g</p>
+                      <p>Carbs: {food.carbs} g</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
         </div>
-
-        <div className="logger"></div>
       </div>
     </div>
   );

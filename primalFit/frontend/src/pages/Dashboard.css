@@ -141,32 +141,46 @@ body {
   border-bottom: 5px solid #494f55; /* Add a bottom border for the title */
 }
 
+.Log-Foods {
+  border: none;
+  padding: 15px;
+  overflow-y: auto;
+  color: #000000;
+}
+
 /* Subsection titles within Log Foods */
 .Log-Foods h3 {
-  font-size: 1.8rem; /* Font size for subsection titles */
-  margin-top: 15px; /* Space above subsections */
-  text-align: left; /* Align text to the left */
-  color: #000000; /* Black text for subsection titles */
-  border-bottom: 3px solid #494f55; /* Bottom border for subsections */
-  padding-bottom: 5px; /* Spacing below subsection headers */
+  font-size: 1.8rem;
+  margin-top: 15px;
+  text-align: left;
+  color: #000000;
+  border-bottom: 3px solid #494f55;
+  padding-bottom: 5px;
 }
 
-/* List styling within Log Foods section */
+/* Food list styling */
 .Log-Foods ul {
-  list-style-type: none; /* Remove bullet points */
-  padding: 0; /* Remove padding */
-  margin: 0; /* Remove margin */
-  margin-top: -10px; /* Adjust for better alignment */
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  margin-top: -10px;
 }
 
-/* List item styling for Log Foods section */
+/* Food item styling */
 .Log-Foods li {
-  font-size: 1.5rem; /* Slightly larger text size */
-  font-weight: bold; /* Bold text */
-  color: #000000; /* Black text for list items */
-  margin-bottom: 10px; /* Space between items */
-  text-align: left; /* Align text to the left */
-  padding-left: 10px; /* Add slight padding for readability */
+  font-size: 1.5rem;
+  color: #000000;
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: #f0ead6;
+  border-radius: 8px;
+}
+
+.Log-Foods li strong {
+  display: block;
+  font-size: 1.6rem;
+  color: #000000;
+  margin-bottom: 5px;
 }
 
 /* Sliding menu styles */
