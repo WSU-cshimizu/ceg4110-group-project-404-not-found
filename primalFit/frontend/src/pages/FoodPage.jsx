@@ -9,6 +9,7 @@ export default function FoodPage(props) {
   const mealType = props.mealType || "breakfast"
 
   const [foodList, setFoodList] = useState([]);
+  // const [exercisesList, setExercises] = useState([]);
   const [query, setQuery] = useState("");
 
   const { fetchCsvData } = useFetch();
@@ -25,6 +26,7 @@ export default function FoodPage(props) {
   // Get food List on load
   useEffect(() => {
     fetchCsvData("/data/nutrients.csv", setFoodList);
+    // fetchCsvData("data/Functional_Fitness_Exercise_Database.csv", setExercises);
   }, [])
 
   return (

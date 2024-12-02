@@ -6,7 +6,7 @@ const useFetch = () => {
         return data.map((item) => {
             const sanitizedItem = {};
             Object.keys(item).forEach(key => {
-                const sanitizedKey = key.toLowerCase();
+                const sanitizedKey = key.toLowerCase().replace(/(\s|-)+/g, '_');
                 sanitizedItem[sanitizedKey] = item[key] == 't' ? 0 : item[key];
             });
             return sanitizedItem;
