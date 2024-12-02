@@ -14,43 +14,50 @@ function DailyNutrition() {
   const [overallProtein, setOverallProtein] = useState(0); // Total protein
   const [overallCarbs, setOverallCarbs] = useState(0); // Total carbs
   const navigate = useNavigate();
+  const userId = 1; // Replace with dynamic user ID if needed
 
-  // Mock data to simulate backend API response
   useEffect(() => {
-    const mockResponse = {
-      foods: [
-        { name: "Eggs", mealType: "Breakfast", calories: 150, proteins: 12, carbs: 1, fats: 10 },
-        { name: "Toast", mealType: "Breakfast", calories: 120, proteins: 4, carbs: 20, fats: 2 },
-        { name: "Chicken Salad", mealType: "Lunch", calories: 350, proteins: 30, carbs: 15, fats: 15 },
-        { name: "Steak", mealType: "Dinner", calories: 400, proteins: 35, carbs: 5, fats: 25 },
-        { name: "Mashed Potatoes", mealType: "Dinner", calories: 200, proteins: 5, carbs: 30, fats: 5 },
-      ],
+    const fetchFoods = async () => {
+      try {
+        const response = await fetch(`/users/${userId}/foods`);
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} - ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        const foods = data.foods;
+
+        // Group data by meal type
+        const groupedData = foods.reduce((acc, food) => {
+          acc[food.mealType] = acc[food.mealType] || [];
+          acc[food.mealType].push(food);
+          return acc;
+        }, {});
+
+        setMealData(groupedData);
+
+        // Initialize trash can visibility
+        const initialTrashCanState = Object.keys(groupedData).reduce((acc, meal) => {
+          acc[meal] = false;
+          return acc;
+        }, {});
+        setShowTrashCans(initialTrashCanState);
+
+        // Calculate overall totals
+        const totalCalories = foods.reduce((sum, item) => sum + item.calories, 0);
+        const totalProteins = foods.reduce((sum, item) => sum + item.proteins, 0);
+        const totalCarbs = foods.reduce((sum, item) => sum + item.carbs, 0);
+
+        setOverallCalories(totalCalories);
+        setOverallProtein(totalProteins);
+        setOverallCarbs(totalCarbs);
+      } catch (error) {
+        console.error("Failed to fetch foods:", error.message);
+      }
     };
 
-    const groupedData = mockResponse.foods.reduce((acc, food) => {
-      acc[food.mealType] = acc[food.mealType] || [];
-      acc[food.mealType].push(food);
-      return acc;
-    }, {});
-
-    setMealData(groupedData);
-
-    // Initialize trash can visibility
-    const initialTrashCanState = Object.keys(groupedData).reduce((acc, meal) => {
-      acc[meal] = false;
-      return acc;
-    }, {});
-    setShowTrashCans(initialTrashCanState);
-
-    // Calculate overall totals
-    const totalCalories = mockResponse.foods.reduce((sum, item) => sum + item.calories, 0);
-    const totalProteins = mockResponse.foods.reduce((sum, item) => sum + item.proteins, 0);
-    const totalCarbs = mockResponse.foods.reduce((sum, item) => sum + item.carbs, 0);
-
-    setOverallCalories(totalCalories);
-    setOverallProtein(totalProteins);
-    setOverallCarbs(totalCarbs);
-  }, []);
+    fetchFoods();
+  }, [userId]);
 
   // Toggle menu visibility
   const toggleMenu = () => setMenuVisible(!menuVisible);

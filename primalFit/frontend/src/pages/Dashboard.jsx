@@ -5,70 +5,100 @@ import Button from "../components/Button";
 import "../pages/Dashboard.css";
 
 function Dashboard() {
-  const [menuVisible, setMenuVisible] = useState(false); // State for toggling the sliding menu
-  const [foodLog, setFoodLog] = useState([]); // Food log data for the Log Foods section
-  const [workoutHistory, setWorkoutHistory] = useState([]); // Workout history data for History subsection
-  const [workoutLog, setWorkoutLog] = useState([]); // Detailed workout log for Workouts section
+  const [menuVisible, setMenuVisible] = useState(false);
+  const [foodLog, setFoodLog] = useState([]); // Food log data
+  const [workoutHistory, setWorkoutHistory] = useState([]); // Workout history data
+  const [totalCalories, setTotalCalories] = useState(0); // Total calories
+  const [totalProteins, setTotalProteins] = useState(0); // Total proteins
+  const [totalCarbs, setTotalCarbs] = useState(0); // Total carbs
+  const [goals, setGoals] = useState({}); // Goals data
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // Total macros (calories, proteins, carbs) for Header
-  const [totalCalories, setTotalCalories] = useState(0);
-  const [totalProteins, setTotalProteins] = useState(0);
-  const [totalCarbs, setTotalCarbs] = useState(0);
-
   useEffect(() => {
-    // Mock food data similar to API response
-    const mockFoodResponse = {
-      foods: [
-        { name: "Eggs", mealType: "Breakfast", calories: 150, proteins: 12, carbs: 1 },
-        { name: "Toast", mealType: "Breakfast", calories: 120, proteins: 4, carbs: 20 },
-        { name: "Grilled Chicken", mealType: "Lunch", calories: 350, proteins: 30, carbs: 15 },
-        { name: "Rice", mealType: "Lunch", calories: 200, proteins: 5, carbs: 40 },
-        { name: "Steak", mealType: "Dinner", calories: 400, proteins: 35, carbs: 5 },
-        { name: "Mashed Potatoes", mealType: "Dinner", calories: 200, proteins: 5, carbs: 30 },
-      ],
+    const fetchUserData = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch("/api/users/1"); // Adjust to your API endpoint
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} - ${response.statusText}`);
+        }
+
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+          throw new Error("Invalid content type received, expected JSON");
+        }
+
+        const data = await response.json();
+
+        // Parse and set food log
+        const parsedFoodLog = data.eatenFood.map((food) => ({
+          name: food.name,
+          mealType: food.mealType,
+          calories: food.calories,
+          proteins: food.proteins,
+          carbs: food.carbohydrates,
+        }));
+        setFoodLog(parsedFoodLog);
+
+        // Parse and set workout history
+        const parsedWorkoutHistory = data.routines.map(
+          (routine) => `${routine.day}: ${routine.name}`
+        );
+        setWorkoutHistory(parsedWorkoutHistory);
+
+        // Parse and set user goals
+        setGoals({
+          calorieGoal: data.calorieGoal,
+          proteinGoal: data.proteinGoal,
+          carbohydrateGoal: data.carbohydrateGoal,
+        });
+
+        // Calculate total macros
+        const totalCalories = parsedFoodLog.reduce(
+          (sum, item) => sum + item.calories,
+          0
+        );
+        const totalProteins = parsedFoodLog.reduce(
+          (sum, item) => sum + item.proteins,
+          0
+        );
+        const totalCarbs = parsedFoodLog.reduce(
+          (sum, item) => sum + item.carbs,
+          0
+        );
+
+        setTotalCalories(totalCalories);
+        setTotalProteins(totalProteins);
+        setTotalCarbs(totalCarbs);
+      } catch (err) {
+        console.error("Failed to fetch user data:", err.message);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    // Mock workout history similar to API response
-    const mockWorkoutHistory = [
-      "Monday: Chest and Triceps",
-      "Wednesday: Back and Biceps",
-      "Friday: Legs",
-    ];
-
-    // Mock detailed workout log for Workouts section
-    const mockWorkoutLog = [
-      { name: "Leg Day", day: "Tuesday" },
-      { name: "Pull Day", day: "Wednesday" },
-      { name: "Push Day", day: "Friday" },
-    ];
-
-    // Set state with mock data
-    setFoodLog(mockFoodResponse.foods);
-    setWorkoutHistory(mockWorkoutHistory);
-    setWorkoutLog(mockWorkoutLog);
-
-    // Calculate total macros for Header
-    const totalCalories = mockFoodResponse.foods.reduce((sum, item) => sum + item.calories, 0);
-    const totalProteins = mockFoodResponse.foods.reduce((sum, item) => sum + item.proteins, 0);
-    const totalCarbs = mockFoodResponse.foods.reduce((sum, item) => sum + item.carbs, 0);
-
-    // Update state for total macros
-    setTotalCalories(totalCalories);
-    setTotalProteins(totalProteins);
-    setTotalCarbs(totalCarbs);
+    fetchUserData();
   }, []);
 
-  // Toggle the sliding menu
   const toggleMenu = () => setMenuVisible(!menuVisible);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p className="error-message">{error}</p>;
+  }
 
   return (
     <div className="dashboard">
-      {/* Buttons for menu and account navigation */}
+      {/* Menu buttons */}
       <Button type="menu" onClick={toggleMenu} />
       <Button type="account" />
 
-      {/* Sliding Menu */}
       {menuVisible && (
         <div className="menu">
           <button className="menu-close" onClick={toggleMenu}>
@@ -96,18 +126,16 @@ function Dashboard() {
       )}
 
       {/* Header Section */}
-      <div>
-        <Header
-          data={{
-            calories: totalCalories,
-            caloriesGoal: 2500,
-            protein: totalProteins,
-            proteinGoal: 125,
-            carbs: totalCarbs,
-            carbsGoal: 300,
-          }}
-        />
-      </div>
+      <Header
+        data={{
+          calories: totalCalories,
+          caloriesGoal: goals.calorieGoal || 2500,
+          protein: totalProteins,
+          proteinGoal: goals.proteinGoal || 125,
+          carbs: totalCarbs,
+          carbsGoal: goals.carbohydrateGoal || 300,
+        }}
+      />
 
       {/* Main Page Content */}
       <div className="main-page-container">
@@ -115,7 +143,7 @@ function Dashboard() {
         <div className="section History">
           <h2>History</h2>
           <div className="history-subsections">
-            {/* Food History Subsection */}
+            {/* Food History */}
             <div className="subsection Food">
               <h3>Food</h3>
               <ul>
@@ -124,7 +152,8 @@ function Dashboard() {
                 ))}
               </ul>
             </div>
-            {/* Workout History Subsection */}
+
+            {/* Workout History */}
             <div className="subsection Workout">
               <h3>Workout</h3>
               <ul>
@@ -141,11 +170,9 @@ function Dashboard() {
         <div className="section Workouts">
           <h2>Workouts</h2>
           <div className="workout-list">
-            {workoutLog.map((workout, index) => (
+            {workoutHistory.map((workout, index) => (
               <div key={index} className="workout-item">
-                <p>
-                  <strong>{workout.name}:</strong> {workout.day}
-                </p>
+                <p>{workout}</p>
               </div>
             ))}
           </div>
@@ -156,7 +183,9 @@ function Dashboard() {
         <div className="section Log-Foods">
           <h2>Log Foods</h2>
           {["Breakfast", "Lunch", "Dinner"].map((mealType) => {
-            const filteredFoods = foodLog.filter((item) => item.mealType === mealType);
+            const filteredFoods = foodLog.filter(
+              (item) => item.mealType === mealType
+            );
             return (
               <div key={mealType}>
                 <h3>{mealType}</h3>
