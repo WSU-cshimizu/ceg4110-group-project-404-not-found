@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import "../pages/Daily_Nutrition.css";
 
+const controller = require("../Controller");
+
 // Create a context for nutrition totals
 export const NutritionContext = createContext();
 
@@ -19,13 +21,12 @@ function DailyNutrition() {
   useEffect(() => {
     const fetchFoods = async () => {
       try {
-        const response = await fetch(`/users/${userId}/foods`);
+        const response = await controller.getAllFoods(userId);
         if (!response.ok) {
           throw new Error(`Error: ${response.status} - ${response.statusText}`);
         }
 
-        const data = await response.json();
-        const foods = data.foods;
+        const foods = await response.json();
 
         // Group data by meal type
         const groupedData = foods.reduce((acc, food) => {
@@ -37,15 +38,25 @@ function DailyNutrition() {
         setMealData(groupedData);
 
         // Initialize trash can visibility
-        const initialTrashCanState = Object.keys(groupedData).reduce((acc, meal) => {
-          acc[meal] = false;
-          return acc;
-        }, {});
+        const initialTrashCanState = Object.keys(groupedData).reduce(
+          (acc, meal) => {
+            acc[meal] = false;
+            return acc;
+          },
+          {}
+        );
+
         setShowTrashCans(initialTrashCanState);
 
         // Calculate overall totals
-        const totalCalories = foods.reduce((sum, item) => sum + item.calories, 0);
-        const totalProteins = foods.reduce((sum, item) => sum + item.proteins, 0);
+        const totalCalories = foods.reduce(
+          (sum, item) => sum + item.calories,
+          0
+        );
+        const totalProteins = foods.reduce(
+          (sum, item) => sum + item.proteins,
+          0
+        );
         const totalCarbs = foods.reduce((sum, item) => sum + item.carbs, 0);
 
         setOverallCalories(totalCalories);
@@ -57,7 +68,7 @@ function DailyNutrition() {
     };
 
     fetchFoods();
-  }, [userId]);
+  }, []);
 
   // Toggle menu visibility
   const toggleMenu = () => setMenuVisible(!menuVisible);
@@ -72,11 +83,33 @@ function DailyNutrition() {
 
   // Redirect to food search page
   const handleAddButtonClick = (meal) => {
-    navigate(`/food-search?meal=${meal}`);
+    navigate(`/food`, { state: meal });
+  };
+
+  const deleteFoodItem = async (foodId, meal) => {
+    try {
+      const response = await controller.deleteFood(foodId);
+      if (!response.ok) {
+        throw new Error(
+          `Failed to delete food item : ${Response.status} - ${Response.statusText}`
+        );
+      }
+      const mealName = meal.toLowerCase();
+      let mealToModify = structuredClone(mealData);
+      mealToModify[mealName] = mealToModify[mealName].filter(
+        (food) => food.id !== foodId
+      );
+      setMealData(mealToModify);
+      console.log(`Food item ${foodId} deleted`);
+    } catch (error) {
+      console.error("Error deleting food item.", error.message);
+    }
   };
 
   return (
-    <NutritionContext.Provider value={{ overallCalories, overallProtein, overallCarbs }}>
+    <NutritionContext.Provider
+      value={{ overallCalories, overallProtein, overallCarbs }}
+    >
       <div className="daily-nutrition">
         <Button type="menu" onClick={toggleMenu} />
         <Button type="account" />
@@ -84,23 +117,23 @@ function DailyNutrition() {
         {menuVisible && (
           <div className="menu">
             <button className="menu-close" onClick={toggleMenu}>
-              <img src="src/images/Menu.png" alt="Close Menu" />
+              <img src="images/Menu.png" alt="Close Menu" />
             </button>
             <ul>
               <li onClick={() => navigate("/")}>
-                <img src="src/images/data-analysis.png" alt="Dashboard" />
+                <img src="images/data-analysis.png" alt="Dashboard" />
                 <span>Dashboard</span>
               </li>
               <li onClick={() => navigate("/nutrition")}>
-                <img src="src/images/apple.png" alt="Nutrition" />
+                <img src="images/apple.png" alt="Nutrition" />
                 <span>Nutrition</span>
               </li>
-              <li onClick={() => navigate("/routines")}>
-                <img src="src/images/workout.png" alt="Routines" />
+              <li onClick={() => navigate("/workout")}>
+                <img src="images/workout.png" alt="Workout" />
                 <span>Routines</span>
               </li>
-              <li onClick={() => navigate("/food-search")}>
-                <img src="src/images/search.png" alt="Food Search" />
+              <li onClick={() => navigate("/food")}>
+                <img src="images/search.png" alt="Food Search" />
                 <span>Food Search</span>
               </li>
             </ul>
@@ -111,21 +144,42 @@ function DailyNutrition() {
 
         <div className="nutrition-sections">
           {["Breakfast", "Lunch", "Dinner"].map((meal) => {
-            const foodItems = mealData[meal] || [];
-            const totalCalories = foodItems.reduce((sum, item) => sum + item.calories, 0);
-            const totalProteins = foodItems.reduce((sum, item) => sum + item.proteins, 0);
-            const totalCarbs = foodItems.reduce((sum, item) => sum + item.carbs, 0);
-            const totalFats = foodItems.reduce((sum, item) => sum + item.fats, 0);
+            const foodItems = mealData[meal.toLowerCase()] || [];
+            const totalCalories = foodItems.reduce(
+              (sum, item) => sum + item.calories,
+              0
+            );
+            const totalProteins = foodItems.reduce(
+              (sum, item) => sum + item.protein,
+              0
+            );
+            const totalCarbs = foodItems.reduce(
+              (sum, item) => sum + item.carbs,
+              0
+            );
+            const totalFats = foodItems.reduce(
+              (sum, item) => sum + item.fats,
+              0
+            );
 
             return (
-              <div className={`nutrition-section ${meal.toLowerCase()}`} key={meal}>
+              <div
+                className={`nutrition-section ${meal.toLowerCase()}`}
+                key={meal}
+              >
                 <h2>{meal}</h2>
                 <div className="controls">
-                  <button className="add-button" onClick={() => handleAddButtonClick(meal)}>
-                    <img src="src/images/plus.png" alt="Add" />
+                  <button
+                    className="add-button"
+                    onClick={() => handleAddButtonClick(meal)}
+                  >
+                    <img src="images/plus.png" alt="Add" />
                   </button>
-                  <button className="delete-button" onClick={() => toggleTrashCans(meal)}>
-                    <img src="src/images/trash-can.png" alt="Toggle Trash Cans" />
+                  <button
+                    className="delete-button"
+                    onClick={() => toggleTrashCans(meal)}
+                  >
+                    <img src="images/trash-can.png" alt="Toggle Trash Cans" />
                   </button>
                 </div>
                 <div className="food-items">
@@ -135,13 +189,16 @@ function DailyNutrition() {
                         <div className="food-details">
                           <p>{food.name}</p>
                           <p>Calories: {food.calories} cal</p>
-                          <p>Proteins: {food.proteins} g</p>
+                          <p>Proteins: {food.protein} g</p>
                           <p>Fats: {food.fats} g</p>
                           <p>Carbs: {food.carbs} g</p>
                         </div>
                         {showTrashCans[meal] && (
-                          <button className="food-delete-button">
-                            <img src="src/images/trash-can.png" alt="Delete" />
+                          <button
+                            className="food-delete-button"
+                            onClick={() => deleteFoodItem(food.id, meal)}
+                          >
+                            <img src="images/trash-can.png" alt="Delete" />
                           </button>
                         )}
                       </div>

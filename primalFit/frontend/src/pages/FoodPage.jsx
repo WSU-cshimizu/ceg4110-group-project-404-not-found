@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import SearchBar from '../components/SearchBar'
+import SearchBar from "../components/SearchBar";
 
 import useFetch from "../hooks/useFetch";
 import FoodTable from "../components/FoodTable";
+import { useLocation } from "react-router-dom";
 
-export default function FoodPage(props) {
+export default function FoodPage() {
+  const { state } = useLocation();
 
-  const mealType = props.mealType || "breakfast"
+  const mealType = state.toLowerCase();
 
   const [foodList, setFoodList] = useState([]);
   // const [exercisesList, setExercises] = useState([]);
@@ -18,16 +20,15 @@ export default function FoodPage(props) {
     return data.filter((item) => {
       if (item.food) {
         return item.food.toLowerCase().includes(query.toLowerCase());
-      }
-      else return false;
-    })
+      } else return false;
+    });
   };
 
   // Get food List on load
   useEffect(() => {
     fetchCsvData("/data/nutrients.csv", setFoodList);
     // fetchCsvData("data/Functional_Fitness_Exercise_Database.csv", setExercises);
-  }, [])
+  }, []);
 
   return (
     <div>
