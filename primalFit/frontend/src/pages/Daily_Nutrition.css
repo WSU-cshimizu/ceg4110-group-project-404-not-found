@@ -1,0 +1,185 @@
+/* Overall page layout */
+/* Overall page layout */
+.daily-nutrition {
+    background-color: #f0ead6; /* Background color */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Full viewport height */
+    box-sizing: border-box;
+    color: #000000; /* Default text color for the page */
+    padding: 0; /* Remove padding to align sections */
+    overflow-y: auto; /* Enable scrolling if content overflows */
+}
+
+
+/* Title styling */
+.nutrition-title {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #000000; /* Black text color */
+    margin: 20px 0; /* Add spacing above and below the title */
+    text-align: center;
+    height: 90px;
+}
+
+/* Section container styling */
+.nutrition-sections {
+    display: flex; /* Use flexbox to arrange sections horizontally */
+    justify-content: space-between; /* Add equal spacing between the sections */
+    align-items: stretch; /* Make sections equal in height */
+    flex-grow: 1; /* Allow sections to expand and fill available space */
+    margin: 0; /* Remove default margin */
+}
+
+/* Section styling */
+/* Section styling */
+.nutrition-section {
+    flex: 1; /* Ensure each section takes up equal space */
+    background-color: #f0ead6; /* Match the standard background color */
+    border: 2px solid #494f55; /* Add a border for visual separation */
+    border-radius: 0; /* Remove rounded corners for a seamless look */
+    box-sizing: border-box; /* Include padding and border in width/height calculation */
+    padding: 10px;
+    display: flex;
+    flex-direction: column; /* Stack content inside the section */
+    justify-content: space-between; /* Space items equally within the section */
+    margin: 0; /* Remove margins for a seamless layout */
+    border-top: 5px solid #494f55;
+}
+
+/* Section title styling */
+.nutrition-section h2 {
+    font-size: 2rem;
+    color: #000000; /* Black text color */
+    margin-bottom: 10px; /* Slight spacing below the section title */
+    border-bottom: 5px solid #494f55;
+}
+
+/* Control buttons styling */
+/* Control buttons styling */
+.controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-bottom: 10px;
+    position: relative; /* Ensure positioning is relative to the section */
+    top: -48px; /* Move the controls up by 30px */
+}
+
+.add-button,
+.delete-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.add-button img,
+.delete-button img {
+    width: 30px; /* Adjust size of the icons */
+    height: 30px;
+    object-fit: contain;
+}
+
+.add-button:hover img,
+.delete-button:hover img {
+    opacity: 0.8; /* Slight transparency for hover effect */
+}
+
+/* Food items styling */
+.food-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-grow: 1; /* Expand to fill remaining space */
+  }
+  
+  .food-item {
+    background-color: #D9D9D9; /* Match the standard background color */
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    color: #000000; /* Black text color */
+    display: flex;
+    justify-content: space-between; /* Space between details and trash icon */
+    align-items: center; /* Align items vertically */
+    position: relative; /* Needed for icon alignment */
+  }
+  
+  .food-details {
+    flex-grow: 1; /* Ensure details take up remaining space */
+  }
+  
+  .food-delete-button {
+    display: none; /* Initially hidden */
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: 10px; /* Align with food name */
+    right: 10px;
+  }
+  
+  .food-delete-button img {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .food-item:hover .food-delete-button {
+    display: block; /* Show button on hover of the food item */
+  }
+  
+  .food-item .food-delete-button {
+    display: block; /* Show button when toggled */
+  }
+  
+  
+  .food-delete-button:hover img {
+    opacity: 0.8; /* Slight transparency for hover effect */
+  }
+  
+
+/* Macros display styling */
+.macros {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    color: #000000; /* Black text color */
+}
+
+.macros table {
+    width: 100%; /* Full width of the container */
+    border-collapse: collapse; /* Remove space between table cells */
+    text-align: center; /* Center-align text */
+    background-color: #f0ead6; /* Match the background */
+}
+
+.macros th,
+.macros td {
+    border: 2px solid #494f55; /* Add a border to cells */
+    padding: 5px 10px; /* Add padding for better spacing */
+    font-size: 1.2rem; /* Adjust font size */
+    color: #000000; /* Black text color */
+}
+
+.macros th {
+    font-weight: bold; /* Bold font for the headers */
+    background-color: #d4cbb3; /* Slightly different shade for headers */
+}
+
+.macros td {
+    font-size: 1rem; /* Slightly smaller font for the data row */
+}
+.error-message {
+    color: red;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .no-food-logged {
+    color: #494f55;
+    font-size: 1rem;
+    text-align: center;
+    margin: 10px 0;
+    font-style: italic;
+  }
+  

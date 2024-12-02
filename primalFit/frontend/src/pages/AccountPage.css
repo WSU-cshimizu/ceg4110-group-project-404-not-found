@@ -1,0 +1,245 @@
+/* Overall Account Page Styling */
+.account-page {
+  background-color: #f0ead6;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px;
+  box-sizing: border-box;
+  position: relative;
+  overflow-x: hidden;
+  color: #000000; /* Black text */
+}
+
+/* Hide content when menu is active */
+.menu-active {
+  overflow: hidden;
+}
+
+/* Menu Styling */
+.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100%;
+  background-color: #f0ead6; /* Consistent beige background */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  transform: translateX(0); /* Slide-in effect */
+  transition: transform 0.3s ease-in-out;
+  padding: 0;
+  box-sizing: border-box;
+  border-right: 10px solid #494f55; /* Right border */
+  overflow-y: auto;
+}
+
+/* Menu item list styling */
+.menu ul {
+  list-style: none;
+  margin: 50px 0 0; /* Push the menu items down by 50px */
+  padding: 0;
+  width: 100%; /* Full width of the menu container */
+  text-align: center; /* Center-align text inside menu items */
+}
+
+/* Individual menu items */
+.menu li {
+  display: flex; /* Arrange icons and text horizontally */
+  align-items: center; /* Align items vertically */
+  padding: 15px 10px; /* Add padding to menu items */
+  cursor: pointer; /* Show pointer cursor on hover */
+  color: #000000; /* Black text color */
+  border-bottom: 5px solid #494f55; /* Add a border below each menu item */
+}
+
+/* Images in the menu */
+.menu li img {
+  width: 40px; /* Standard size for icons */
+  height: 40px; /* Standard size for icons */
+}
+
+/* Text inside the menu */
+.menu li span {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #494f55;
+  flex-grow: 1;
+  text-align: left;
+  margin-left: 10px;
+}
+
+/* Close Button in the Menu */
+.menu-close {
+  position: absolute;
+  top: 10px; /* Place close button 10px from the top */
+  left: 10px; /* Place close button 10px from the left */
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.menu-close img {
+  width: 40px; /* Standard size for the close button */
+  height: 40px; /* Standard size for the close button */
+}
+
+/* Menu Toggle Button Styling */
+.menu-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1100;
+}
+
+.menu-toggle img {
+  width: 40px; /* Standard size for the toggle button */
+  height: 40px; /* Standard size for the toggle button */
+}
+
+/* Page Title Styling */
+.account-page-title {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #000000; /* Black text */
+  margin-top: 70px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+/* Account Info Container */
+.account-info-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  gap: 20px;
+}
+
+/* Section Styling */
+.account-info-section {
+  flex: 1;
+  min-width: 300px;
+  margin: 0 20px;
+  box-sizing: border-box;
+  color: #000000; /* Black text */
+}
+
+/* Section Headers */
+.account-info-section h2 {
+  font-size: 2.5rem;
+  color: #000000; /* Black text */
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+/* Account Items Styling */
+.account-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+/* Icons in Account Items */
+.account-item img {
+  width: 50px;
+  height: 50px;
+}
+
+/* Text Styling in Account Items */
+.account-item span {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #000000; /* Black text */
+}
+
+/* Edit Button Styling */
+.edit-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+}
+
+.edit-button img {
+  width: 30px;
+  height: 30px;
+}
+
+/* Media Query: Adjust layout for smaller screens */
+@media screen and (max-width: 768px) {
+  .account-info-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .account-page-title {
+    font-size: 2.5rem;
+  }
+
+  .account-info-section h2 {
+    font-size: 2rem;
+  }
+
+  .account-item span {
+    font-size: 1.6rem;
+  }
+
+  .account-item img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .edit-button img {
+    width: 25px;
+    height: 25px;
+  }
+
+  .menu-toggle img,
+  .menu-close img {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+/* Media Query: Adjust layout for very small screens */
+@media screen and (max-width: 480px) {
+  .account-page-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  .account-info-section h2 {
+    font-size: 1.8rem;
+  }
+
+  .account-item span {
+    font-size: 1.4rem;
+  }
+
+  .account-item img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .edit-button img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .menu-toggle img,
+  .menu-close img {
+    width: 30px;
+    height: 30px;
+  }
+}
