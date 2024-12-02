@@ -134,7 +134,7 @@ function AccountPage() {
       password: "/images/password.png",
     };
 
-    return iconPaths[field] || "src/images/default.png"; // Fallback to default icon
+    return iconPaths[field] || "images/default.png"; // Fallback to default icon
   };
 
   if (loading) return <p>Loading account data...</p>;
@@ -145,15 +145,15 @@ function AccountPage() {
       {menuVisible && (
         <div className="menu">
           <button className="menu-close" onClick={toggleMenu}>
-            <img src="src/images/Menu.png" alt="Close Menu" />
+            <img src="/images/Menu.png" alt="Close Menu" />
           </button>
           <ul>
             <li onClick={() => navigate("/")}>
-              <img src="src/images/data-analysis.png" alt="Dashboard" />
+              <img src="images/data-analysis.png" alt="Dashboard" />
               <span>Dashboard</span>
             </li>
             <li onClick={() => navigate("/nutrition")}>
-              <img src="src/images/apple.png" alt="Nutrition" />
+              <img src="/images/apple.png" alt="Nutrition" />
               <span>Nutrition</span>
             </li>
             <li onClick={() => navigate("/routines")}>
@@ -200,7 +200,7 @@ function AccountPage() {
                 className="edit-button"
                 onClick={() => handleEditStart(field, value)}
               >
-                <img src="src/images/edit.png" alt="Edit Icon" />
+                <img src="images/edit.png" alt="Edit Icon" />
               </button>
             </div>
           ))}
