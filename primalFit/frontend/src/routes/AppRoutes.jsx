@@ -20,6 +20,7 @@ function AppRoutes() {
       <Route path="/nutrition" element={<DailyNutrition />} />
       <Route path="/routines" element={<Routines />} />
       <Route path="/food" element={<FoodPage />} />
+      <Route path="/workout" element={<WorkoutPage/>}/>
     </Routes>
   );
 }
