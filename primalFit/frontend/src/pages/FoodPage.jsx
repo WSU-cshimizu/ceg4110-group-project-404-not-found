@@ -8,7 +8,7 @@ import { useLocation } from "react-router-dom";
 export default function FoodPage() {
   const { state } = useLocation();
 
-  const mealType = state.toLowerCase();
+  const mealType = state?.toLowerCase();
 
   const [foodList, setFoodList] = useState([]);
   const [query, setQuery] = useState("");
