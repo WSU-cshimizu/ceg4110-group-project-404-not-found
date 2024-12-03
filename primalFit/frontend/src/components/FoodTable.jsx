@@ -81,7 +81,7 @@ const FoodTable = (props) => {
     // }
 
     return (
-        <div>
+        <div className="overflow-y-auto h-screen">
             <p className={message.success ? "text-green-500" : "text-red-500"}>
                 {message.message ? message.message : ""}
             </p>

@@ -79,3 +79,78 @@
 .routine-exercises p {
   margin: 5px 0;
 }
+.day-section {
+  margin-bottom: 20px;
+  border: 2px solid #494f55;
+  padding: 10px;
+  background-color: #f0ead6;
+  border-radius: 5px;
+}
+
+.day-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.routines-list {
+  margin-top: 10px;
+}
+
+.routine {
+  background-color: #d9d9d9;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.no-routines {
+  font-style: italic;
+  color: #494f55;
+}
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #f0ead6;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.popup-content {
+  text-align: center;
+}
+
+.exercise-list {
+  max-height: 200px;
+  overflow-y: auto;
+  margin: 10px 0;
+}
+
+.exercise-item {
+  cursor: pointer;
+  padding: 5px;
+  background: #d9d9d9;
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+
+.exercise-item:hover {
+  background: #c4c4c4;
+}
+
+.sets-reps {
+  margin-top: 10px;
+}
+
+.popup-controls {
+  margin-top: 10px;
+}
+
+.popup-controls button {
+  margin: 5px;
+}

@@ -22,7 +22,7 @@ function Dashboard() {
     const fetchUserData = async () => {
       try {
         setLoading(true);
-        const response = await controller.login("test1@test1.com", "password1");
+        const response = await controller.login("test3@test3.com", "password3");
         if (!response.ok) {
           throw new Error(`Error: ${response.status} - ${response.statusText}`);
         }
@@ -47,10 +47,9 @@ function Dashboard() {
 
         // Parse and set workout history
         const parsedWorkoutHistory = data.routines.map(
-          (routine) => `${routine.day}: ${routine.name}`
+          (routine) => `${routine.name}`
         );
 
-        console.log(data.routines[0]);
         setWorkoutHistory(parsedWorkoutHistory);
 
         // Parse and set user goals
@@ -98,7 +97,6 @@ function Dashboard() {
     return <p className="error-message">{error}</p>;
   }
 
-  //console.log(workoutHistory);
   return (
     <div className="dashboard">
       {/* Menu buttons */}
@@ -122,6 +120,14 @@ function Dashboard() {
             <li onClick={() => navigate("/routines")}>
               <img src="images/workout.png" alt="Routines" />
               <span>Routines</span>
+            </li>
+            <li onClick={() => navigate("/workout-videos")}>
+              <img src="images/video.png" alt="Routines" />
+              <span>Videos</span>
+            </li>
+            <li onClick={() => navigate("/login")}>
+              <img src="images/log-out.png" alt="Log Out" />
+              <span>Log Out</span>
             </li>
           </ul>
         </div>

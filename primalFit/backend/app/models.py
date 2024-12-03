@@ -87,11 +87,11 @@ class Exercise(db.Model):
     
     id:int = db.Column(db.Integer, primary_key=True)
     routine_id:int = db.Column(db.Integer, db.ForeignKey('routines.id'))
-    name:str = db.Column(db.String, unique=True, nullable=False)
+    name:str = db.Column(db.String, nullable=False)
     type:str = db.Column(db.String, nullable=False)
     duration:float = db.Column(db.Double, default=0)
     calories_burned:float = db.Column(db.Double, default=0)
-    video_url:str = db.Column(db.String, unique=True, nullable=False)
+    video_url:str = db.Column(db.String, nullable=False)
     date = db.Column(db.DateTime, default=date.today)
 
     def __repr__(self):

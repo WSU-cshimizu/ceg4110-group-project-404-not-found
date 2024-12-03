@@ -11,7 +11,6 @@ export default function FoodPage() {
   const mealType = state.toLowerCase();
 
   const [foodList, setFoodList] = useState([]);
-  // const [exercisesList, setExercises] = useState([]);
   const [query, setQuery] = useState("");
 
   const { fetchCsvData } = useFetch();
@@ -27,11 +26,10 @@ export default function FoodPage() {
   // Get food List on load
   useEffect(() => {
     fetchCsvData("/data/nutrients.csv", setFoodList);
-    // fetchCsvData("data/Functional_Fitness_Exercise_Database.csv", setExercises);
   }, []);
 
   return (
-    <div>
+    <div className="mx-10 my-5">
       <h1 className="text-center text-2xl mb-2">Food Search</h1>
       <SearchBar onChange={(q) => setQuery(q)} />
       <FoodTable foodList={search(foodList)} mealType={mealType} />
