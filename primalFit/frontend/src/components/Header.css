@@ -1,0 +1,64 @@
+/* Main container for all progress bars */
+.Header-row {
+  display: flex; /* Arrange sections in a row */
+  justify-content: space-around; /* Space them evenly */
+  align-items: center; /* Align vertically */
+  margin-top: 50px; /* Add spacing at the top */
+  text-align: center; /* Center-align text */
+  color: #000000; /* Black text for all text elements */
+}
+
+/* Each individual progress bar section */
+.Header-section {
+  display: flex;
+  flex-direction: column; /* Stack title, bar, and percentage */
+  align-items: center; /* Center-align within the section */
+  width: 30%; /* Equal width for each section */
+  color: #000000; /* Black text for section contents */
+}
+
+/* Percentage displayed below the bar */
+.percentage {
+  font-size: 2rem; /* Larger font size */
+  font-weight: bold; /* Bold font */
+  margin-top: 10px; /* Add spacing above percentage */
+  color: #000000; /* Black text for percentage */
+}
+
+/* Loading spinner container */
+.loading-container {
+  display: flex;
+  flex-direction: column; /* Stack spinner and text vertically */
+  align-items: center; /* Center horizontally */
+  justify-content: center; /* Center vertically */
+  height: 100vh; /* Full screen height */
+  color: #000000; /* Black text for loading text */
+}
+
+/* Loading spinner animation */
+.loading-spinner {
+  width: 50px; /* Spinner size */
+  height: 50px;
+  border: 6px solid #f3f3f3; /* Light gray background */
+  border-top: 6px solid #3498db; /* Blue color for spinning effect */
+  border-radius: 50%; /* Circular shape */
+  animation: spin 1s linear infinite; /* Infinite spin animation */
+}
+
+/* Text displayed below spinner */
+.loading-text {
+  font-size: 1.2rem; /* Font size for the text */
+  font-weight: bold; /* Bold text */
+  margin-top: 20px; /* Spacing above the text */
+  color: #000000; /* Black text for loading message */
+}
+
+/* Keyframes for the spinning effect */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); /* Start at 0 degrees */
+  }
+  100% {
+    transform: rotate(360deg); /* Full rotation */
+  }
+}

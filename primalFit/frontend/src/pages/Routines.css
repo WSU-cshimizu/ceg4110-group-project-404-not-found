@@ -1,0 +1,156 @@
+/* Overall Routines page layout */
+.routines-page {
+  background-color: #f0ead6;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  color: #000000;
+}
+
+/* Title styling */
+.routines-title {
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+/* Search bar styling */
+.search-bar {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Routines list container */
+.routines-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Individual routine container */
+.routine {
+  background-color: #d9d9d9;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+/* Routine header styling */
+.routine-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.routine-header h3 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.routine-header p {
+  font-size: 1rem;
+  margin: 0;
+  color: #666;
+}
+
+/* Routine controls (edit, delete, complete buttons) */
+.routine-controls button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.routine-controls img {
+  width: 20px;
+  height: 20px;
+}
+
+/* Routine exercises list */
+.routine-exercises {
+  margin-top: 10px;
+  padding-left: 10px;
+  font-size: 1rem;
+}
+
+.routine-exercises p {
+  margin: 5px 0;
+}
+.day-section {
+  margin-bottom: 20px;
+  border: 2px solid #494f55;
+  padding: 10px;
+  background-color: #f0ead6;
+  border-radius: 5px;
+}
+
+.day-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.routines-list {
+  margin-top: 10px;
+}
+
+.routine {
+  background-color: #d9d9d9;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.no-routines {
+  font-style: italic;
+  color: #494f55;
+}
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #f0ead6;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.popup-content {
+  text-align: center;
+}
+
+.exercise-list {
+  max-height: 200px;
+  overflow-y: auto;
+  margin: 10px 0;
+}
+
+.exercise-item {
+  cursor: pointer;
+  padding: 5px;
+  background: #d9d9d9;
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+
+.exercise-item:hover {
+  background: #c4c4c4;
+}
+
+.sets-reps {
+  margin-top: 10px;
+}
+
+.popup-controls {
+  margin-top: 10px;
+}
+
+.popup-controls button {
+  margin: 5px;
+}

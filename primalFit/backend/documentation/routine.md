@@ -1,13 +1,38 @@
 # Routine
 
+This object is going to be associated with a user and it will essentially be a list of Exercises that the user can create, edit, delete and use to follow the workout. 
+
 ## API Documentation
 
+Most of these calls will need the user ID in the body or in the 
+query parameter. 
+
+
+| Method | Uri                      | Description                                                          |
+|--------|--------------------------|----------------------------------------------------------------------|
+| GET    | /routines                | get all routines associated with the user                            |
+| POST   | /routines                | create a new routine for a specific user                             |
+| PUT    | /routines/:id            | Edit the routine                                                     |
+| DELETE | /routines/:id            | Delete the routine if the userId matches                             |
+| GET    | /routines/:id/exercises  | Get all exercises for a specific routine                             |
+| PUT    | /routines/:id/exercises  | Update the list of exercises in the routine by providing a new list  |
+
 ### Get all Routines
->
+> GET: /routines
+
+#### Parameters
+
+```
+userId: Integer
+```
+
+
 ### Get a Routine
 > GET: /routine/:id
 #### Parameters
-> None
+```
+userId: Integer
+```
 
 #### Response
 ```javascript

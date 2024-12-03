@@ -5,9 +5,11 @@ services:
       - 3000:3000
     volumes:
       - ./frontend:/src
+      - /frontend/node_modules
     command: npm start
   backend:
     build: ./backend
+    entrypoint: ["sh", "/usr/src/entrypoint.sh"] # new
     ports:
       - 5000:5000
     depends_on:

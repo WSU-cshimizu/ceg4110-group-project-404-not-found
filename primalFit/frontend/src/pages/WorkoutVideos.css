@@ -1,0 +1,117 @@
+.workout-videos-page {
+  background-color: #f0ead6; /* Match the standard beige background */
+  color: #000000; /* Black text for visibility */
+  padding: 20px; /* Add padding around the page */
+}
+
+/* Button container to hold menu and account buttons */
+.button-container {
+  display: flex; /* Arrange buttons horizontally */
+  justify-content: flex-start; /* Align buttons to the left */
+  gap: 10px; /* Add spacing between buttons */
+  padding: 10px 20px; /* Add padding for spacing */
+}
+
+/* Container for main content to push it below the button container */
+.content-container {
+  margin-top: 20px; /* Add space below the button container */
+  padding: 20px; /* Add padding for the content */
+}
+
+/* Center text styles */
+.text-center {
+  text-align: center; /* Center-align text */
+}
+
+/* Exercise list styles */
+.exercise-list {
+  display: flex; /* Use flexbox to arrange items */
+  flex-wrap: wrap; /* Allow items to wrap onto new lines */
+  gap: 15px; /* Increase spacing between items */
+  margin: 20px 0; /* Add margin above and below the list */
+  padding: 20px; /* Add padding inside the list box */
+  background-color: #f0ead6; /* Match the page background */
+  border: 2px solid #494f55; /* Add a border around the list */
+  border-radius: 10px; /* Slightly round the corners */
+  max-height: 400px; /* Limit height to prevent overflow */
+  overflow-y: auto; /* Enable vertical scrolling if needed */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+/* Individual exercise item styles */
+.exercise-item {
+  padding: 15px; /* Increase padding for larger clickable area */
+  background-color: #d9d9d9; /* Light gray background */
+  border: 1px solid #ccc; /* Add a light border */
+  cursor: pointer; /* Indicate clickable items */
+  border-radius: 8px; /* Slightly round corners */
+  font-size: 1.2rem; /* Larger font size for readability */
+  flex: 1 1 calc(33% - 30px); /* Items take up 1/3 of the row minus spacing */
+  text-align: center; /* Center-align the text */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Add hover effects */
+}
+
+/* Hover effects for exercise items */
+.exercise-item:hover {
+  background-color: #c5c5c5; /* Slightly darker gray on hover */
+  transform: scale(1.05); /* Slight zoom effect */
+}
+
+/* Custom scrollbar styles for exercise list */
+.exercise-list::-webkit-scrollbar {
+  width: 10px; /* Custom scrollbar width */
+}
+
+.exercise-list::-webkit-scrollbar-thumb {
+  background: #494f55; /* Scrollbar color */
+  border-radius: 5px; /* Rounded scrollbar */
+}
+
+.exercise-list::-webkit-scrollbar-track {
+  background: #f0ead6; /* Track background color */
+}
+
+/* Video player section */
+.video-player {
+  margin-top: 20px; /* Add space above the video player */
+}
+
+.video-player h2 {
+  text-align: center; /* Center-align the video title */
+}
+
+.video-player iframe {
+  display: block; /* Center-align the iframe */
+  margin: 0 auto;
+  max-width: 100%; /* Make iframe responsive */
+  height: auto;
+  border: 2px solid #494f55; /* Add border around the iframe */
+  border-radius: 8px; /* Round iframe corners */
+}
+
+/* Video controls styles */
+.video-controls {
+  display: flex; /* Arrange controls horizontally */
+  justify-content: center; /* Center the controls */
+  align-items: center; /* Align controls vertically */
+  gap: 10px; /* Add spacing between controls */
+  margin-top: 10px; /* Add margin above the controls */
+}
+
+.video-controls button {
+  background-color: #494f55; /* Dark background for buttons */
+  color: #ffffff; /* White text for contrast */
+  border: none; /* Remove default button border */
+  padding: 5px 10px; /* Add padding for click area */
+  cursor: pointer; /* Show pointer cursor on hover */
+  border-radius: 3px; /* Round the button corners */
+}
+
+.video-controls button:hover {
+  background-color: #3b3e44; /* Darker background on hover */
+}
+
+.video-controls input[type="range"] {
+  width: 150px; /* Set width for the range input */
+}
