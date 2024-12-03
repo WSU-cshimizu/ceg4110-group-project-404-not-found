@@ -19,8 +19,8 @@ function AppRoutes() {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/account" element={<AccountPage />} />
       <Route path="/nutrition" element={<DailyNutrition />} />
-      <Route path="/old-routines" element={<Routines />} />
-      <Route path="/routines" element={<UserRoutines />}></Route>
+      <Route path="/new-routines" element={<UserRoutines />} />
+      <Route path="/routines" element={<Routines />}/>
       <Route path="/food" element={<FoodPage />} />
       <Route path="/workout-videos" element={<WorkoutVideos />} />
     </Routes>
